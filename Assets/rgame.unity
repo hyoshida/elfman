@@ -288,6 +288,7 @@ GameObject:
   - 50: {fileID: 1732273089}
   - 61: {fileID: 1732273088}
   - 58: {fileID: 1732273087}
+  - 114: {fileID: 1732273090}
   m_Layer: 0
   m_Name: unity-chan-wait
   m_TagString: Untagged
@@ -403,6 +404,17 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &1732273090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1732273083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 905367f25e8e545c8b8612166679302d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2080559115
 Prefab:
   m_ObjectHideFlags: 0
