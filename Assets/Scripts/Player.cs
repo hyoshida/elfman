@@ -6,14 +6,13 @@ public class Player : MonoBehaviour {
 
     private Animator _animator;
     private Rigidbody2D _rigidbody2D;
-
-    [SerializeField]
-    private GameObject _camera;
+    private Camera _camera;
 
     // Use this for initialization
     void Start() {
         _animator = GetComponent<Animator>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
+        _camera = Camera.main;
     }
 
     // Update is called once per frame
@@ -55,9 +54,9 @@ public class Player : MonoBehaviour {
         }
 
         //カメラ表示領域の左下をワールド座標に変換
-        Vector2 min = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
+        Vector2 min = _camera.ViewportToWorldPoint(new Vector2(0, 0));
         //カメラ表示領域の右上をワールド座標に変換
-        Vector2 max = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
+        Vector2 max = _camera.ViewportToWorldPoint(new Vector2(1, 1));
 
         Vector2 playerPosition = transform.position;
         // Playerのx座標の移動範囲をClampメソッドで制限
