@@ -6,12 +6,16 @@ public class Player : MonoBehaviour {
     public const int JUMP_POWER = 700;
 
     [SerializeField]
-    private LayerMask groundLayer;
+    private LayerMask _groundLayer;
+
+    [SerializeField]
+    private GameObject _bullet;
 
     private Animator _animator;
     private Rigidbody2D _rigidbody2D;
     private Camera _camera;
     private bool _isGrounded;
+
 
     // Use this for initialization
     void Start() {
@@ -26,7 +30,7 @@ public class Player : MonoBehaviour {
         _isGrounded = Physics2D.Linecast(
             transform.position + transform.up * 1,
             transform.position - transform.up * 0.05f,
-            groundLayer
+            _groundLayer
         );
 
         // スペースキーを押し
@@ -52,6 +56,12 @@ public class Player : MonoBehaviour {
         // アニメーションに反映する
         _animator.SetBool("isJumping", isJumping);
         _animator.SetBool("isFalling", isFalling);
+
+        // 弾を打つ
+        if (Input.GetKeyDown("left ctrl")) {
+            _animator.SetTrigger("shot");
+            Instantiate(_bullet, transform.position + new Vector3(0f, 1.2f, 0f), transform.rotation);
+        }
     }
 
     void FixedUpdate() {
