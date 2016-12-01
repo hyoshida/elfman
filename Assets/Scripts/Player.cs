@@ -3,10 +3,15 @@ using System.Collections;
 
 public class Player : MonoBehaviour {
     public const float SPEED = 4f;
+    public const int JUMP_POWER = 700;
+
+    [SerializeField]
+    private LayerMask groundLayer;
 
     private Animator _animator;
     private Rigidbody2D _rigidbody2D;
     private Camera _camera;
+    private bool _isGrounded;
 
     // Use this for initialization
     void Start() {
@@ -17,6 +22,36 @@ public class Player : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        // LinecastでPlayerの足元に地面があるか判定
+        _isGrounded = Physics2D.Linecast(
+            transform.position + transform.up * 1,
+            transform.position - transform.up * 0.05f,
+            groundLayer
+        );
+
+        // スペースキーを押し
+        if (Input.GetKeyDown("space")) {
+            // 着地してたとき
+            if (_isGrounded) {
+                // runアニメーションを止めて、jumpアニメーションを実行
+                _animator.SetBool("run", false);
+                _animator.SetTrigger("jump");
+                // 着地判定をfalse
+                _isGrounded = false;
+                // AddForceにて上方向へ力を加える
+                _rigidbody2D.AddForce(Vector2.up * JUMP_POWER);
+            }
+        }
+
+        // 上下への移動速度を取得
+        float velY = _rigidbody2D.velocity.y;
+        // 移動速度が0.1より大きければ上昇
+        bool isJumping = (velY > 0.1f);
+        // 移動速度が-0.1より小さければ下降
+        bool isFalling = (velY < -0.1f);
+        // アニメーションに反映する
+        _animator.SetBool("isJumping", isJumping);
+        _animator.SetBool("isFalling", isFalling);
     }
 
     void FixedUpdate() {
