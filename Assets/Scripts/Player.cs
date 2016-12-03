@@ -34,8 +34,8 @@ public class Player : MonoBehaviour {
             _groundLayer
         );
 
-        // スペースキーを押し
-        if (Input.GetKeyDown("space")) {
+        // ジャンプボタンを押し
+        if (Input.GetButtonDown("Jump")) {
             // 着地してたとき
             if (_isGrounded) {
                 // runアニメーションを止めて、jumpアニメーションを実行
@@ -59,15 +59,16 @@ public class Player : MonoBehaviour {
         _animator.SetBool("isFalling", isFalling);
 
         // 弾を打つ
-        if (Input.GetKeyDown("left ctrl")) {
+        if (Input.GetButtonDown("Fire1")) {
             _animator.SetTrigger("shot");
             Instantiate(_bullet, transform.position + new Vector3(0f, 1.2f, 0f), transform.rotation);
         }
     }
 
     void FixedUpdate() {
-        // 左キー: -1、右キー: 1
-        float x = Input.GetAxisRaw("Horizontal");
+        // 左=-1、右=1
+        float axis = Input.GetAxisRaw("Horizontal");
+        int x = (axis == 0) ? 0 : ((axis > 0) ? 1 : -1);
         if (x != 0) {
             // 入力方向へ移動
             _rigidbody2D.velocity = new Vector2(x * SPEED, _rigidbody2D.velocity.y);
