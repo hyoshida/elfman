@@ -15,13 +15,14 @@ public class Player : MonoBehaviour {
     Rigidbody2D _rigidbody2D;
     Camera _camera;
     bool _isGrounded;
-
+    Renderer _renderer;
 
     // Use this for initialization
     void Start() {
         _animator = GetComponent<Animator>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _camera = Camera.main;
+        _renderer = GetComponent<Renderer>();
     }
 
     // Update is called once per frame
@@ -86,6 +87,12 @@ public class Player : MonoBehaviour {
         }
     }
 
+    void OnCollisionEnter2D(Collision2D collision) {
+        if (collision.gameObject.tag == "Enemy") {
+            StartCoroutine("DamageAndInvinciblePhase");
+        }
+    }
+
     void moveCamera() {
         const int THRESHOLD = 4;
 
@@ -107,5 +114,25 @@ public class Player : MonoBehaviour {
         // Playerのx座標の移動範囲をClampメソッドで制限
         playerPosition.x = Mathf.Clamp(playerPosition.x, min.x + 0.5f, max.x);
         transform.position = playerPosition;
+    }
+
+    IEnumerator DamageAndInvinciblePhase() {
+        // レイヤーをInvincibleに変更
+        gameObject.layer = LayerMask.NameToLayer("Invincible");
+
+        // 10回点滅
+        for (int i = 0; i < 10; i++) {
+            // 透明にする
+            _renderer.material.color = new Color(1, 1, 1, 0);
+            // 0.05秒待つ
+            yield return new WaitForSeconds(0.05f);
+            // 元に戻す
+            _renderer.material.color = new Color(1, 1, 1, 1);
+            // 0.05秒待つ
+            yield return new WaitForSeconds(0.05f);
+        }
+
+        // レイヤーをPlayerに戻す
+        gameObject.layer = LayerMask.NameToLayer("Player");
     }
 }
