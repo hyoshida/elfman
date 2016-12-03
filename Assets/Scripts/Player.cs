@@ -6,15 +6,15 @@ public class Player : MonoBehaviour {
     public const int JUMP_POWER = 700;
 
     [SerializeField]
-    private LayerMask _groundLayer;
+    LayerMask _groundLayer;
 
     [SerializeField]
-    private GameObject _bullet;
+    GameObject _bullet;
 
-    private Animator _animator;
-    private Rigidbody2D _rigidbody2D;
-    private Camera _camera;
-    private bool _isGrounded;
+    Animator _animator;
+    Rigidbody2D _rigidbody2D;
+    Camera _camera;
+    bool _isGrounded;
 
 
     // Use this for initialization
@@ -86,7 +86,7 @@ public class Player : MonoBehaviour {
         }
     }
 
-    private void moveCamera() {
+    void moveCamera() {
         const int THRESHOLD = 4;
 
         // 画面中央から左に少し移動した位置をユニティちゃんが超えたら

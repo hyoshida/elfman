@@ -4,7 +4,7 @@ using System.Collections;
 public class Bullet : MonoBehaviour {
     public const int SPEED = 10;
 
-    private GameObject _player;
+    GameObject _player;
 
     void Start() {
         _player = GameObject.FindWithTag("Player");
