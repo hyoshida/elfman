@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class Scene : MonoBehaviour {
@@ -11,7 +12,7 @@ public class Scene : MonoBehaviour {
     }
 
     public void onClickStartButton() {
-        Application.LoadLevel("elfman");
+        SceneManager.LoadScene("elfman");
     }
 
     public void onClickExitButton() {
