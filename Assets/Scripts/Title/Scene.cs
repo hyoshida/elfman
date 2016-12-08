@@ -16,5 +16,6 @@ public class Scene : MonoBehaviour {
     }
 
     public void onClickExitButton() {
+        Application.Quit();
     }
 }
