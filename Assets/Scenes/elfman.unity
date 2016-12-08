@@ -1679,6 +1679,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   _bullet: {fileID: 1410004786914882, guid: 2b1ee39abfbb56e42b02e9bea4804fff, type: 2}
+  _life: {fileID: 1953078712}
 --- !u!1 &1735641505
 GameObject:
   m_ObjectHideFlags: 0
