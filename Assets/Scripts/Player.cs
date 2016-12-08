@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Player : MonoBehaviour {
@@ -10,6 +11,9 @@ public class Player : MonoBehaviour {
 
     [SerializeField]
     GameObject _bullet;
+
+    [SerializeField]
+    GameObject _life;
 
     Animator _animator;
     Rigidbody2D _rigidbody2D;
@@ -79,7 +83,7 @@ public class Player : MonoBehaviour {
             // 走る
             _animator.SetBool("run", true);
             // カメラをプレイヤーに追従させる
-            moveCamera();
+            MoveCamera();
         } else {
             // 横移動の速度を0にしてピタッと止まるようにする
             _rigidbody2D.velocity = new Vector2(0, _rigidbody2D.velocity.y);
@@ -90,11 +94,19 @@ public class Player : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.tag == "Enemy") {
-            StartCoroutine("DamageAndInvinciblePhase");
+            Damage();
         }
     }
 
-    void moveCamera() {
+    void Damage() {
+        var image = _life.GetComponent<Image>();
+        if (image) {
+            image.fillAmount -= 0.1f;
+        }
+        StartCoroutine("DamageAndInvinciblePhase");
+    }
+
+    void MoveCamera() {
         const int THRESHOLD = 4;
 
         // 画面中央から左に少し移動した位置をユニティちゃんが超えたら
