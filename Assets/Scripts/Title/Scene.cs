@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
-using System.Collections;
 
 public class Scene : MonoBehaviour {
     // Use this for initialization
@@ -12,10 +10,10 @@ public class Scene : MonoBehaviour {
     }
 
     public void onClickStartButton() {
-        SceneManager.LoadScene("elfman");
+        GameManager.Instance.SwitchScene(GameScene.elfman);
     }
 
     public void onClickExitButton() {
-        Application.Quit();
+        GameManager.Instance.Quit();
     }
 }
