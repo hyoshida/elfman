@@ -6,22 +6,22 @@ using UnityEngine.UI;
 namespace Stage {
     public class Scene : MonoBehaviour {
         [SerializeField]
-        GameObject _lifeGauge;
+        GameObject _player;
 
         [SerializeField]
         GameObject _gameOverLabel;
 
-        Image _lifeGaugeImage;
+        Player _playerInstance;
         bool _gameOvered;
 
         // Use this for initialization
         void Start() {
-            _lifeGaugeImage = _lifeGauge.GetComponent<Image>();
+            _playerInstance = _player.GetComponent<Player>();
         }
 
         // Update is called once per frame
         void Update() {
-            if (_lifeGaugeImage.fillAmount <= 0) {
+            if (_playerInstance.IsDead) {
                 GameOver();
             }
         }

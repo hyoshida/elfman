@@ -190,7 +190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2c11b41bd1a772439ef843557e76cc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lifeGauge: {fileID: 1953078712}
+  _player: {fileID: 1732273083}
   _gameOverLabel: {fileID: 1154262819}
 --- !u!1001 &19675560
 Prefab:
@@ -3671,7 +3671,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   _bullet: {fileID: 1410004786914882, guid: 2b1ee39abfbb56e42b02e9bea4804fff, type: 2}
-  _life: {fileID: 1953078712}
+  _lifeGauge: {fileID: 1953078712}
 --- !u!1 &1735641505
 GameObject:
   m_ObjectHideFlags: 0
