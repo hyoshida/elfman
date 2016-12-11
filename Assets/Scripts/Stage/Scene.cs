@@ -21,6 +21,9 @@ namespace Stage {
 
         // Update is called once per frame
         void Update() {
+            if (_gameOvered) {
+                return;
+            }
             if (_playerInstance.IsDead) {
                 GameOver();
             }
@@ -32,6 +35,7 @@ namespace Stage {
             }
             _gameOvered = true;
             _gameOverLabel.SetActive(true);
+            Destroy(_player);
         }
     }
 }
