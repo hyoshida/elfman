@@ -28,6 +28,10 @@ public class Player : MonoBehaviour {
                 return true;
             }
 
+            if (transform.position.y < _camera.transform.position.y - 10) {
+                return true;
+            }
+
             return false;
         }
     }
