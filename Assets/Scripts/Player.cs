@@ -13,13 +13,28 @@ public class Player : MonoBehaviour {
     GameObject _bullet;
 
     [SerializeField]
-    GameObject _life;
+    GameObject _lifeGauge;
 
     Animator _animator;
     Rigidbody2D _rigidbody2D;
     Camera _camera;
     bool _isGrounded;
     Renderer _renderer;
+    Image _lifeGaugeImage;
+
+    public bool IsDead {
+        get {
+            if (_lifeGaugeImage.fillAmount <= 0) {
+                return true;
+            }
+
+            if (transform.position.y < _camera.transform.position.y - 10) {
+                return true;
+            }
+
+            return false;
+        }
+    }
 
     // Use this for initialization
     void Start() {
@@ -27,6 +42,7 @@ public class Player : MonoBehaviour {
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _camera = Camera.main;
         _renderer = GetComponent<Renderer>();
+        _lifeGaugeImage = _lifeGauge.GetComponent<Image>();
     }
 
     // Update is called once per frame
@@ -99,10 +115,7 @@ public class Player : MonoBehaviour {
     }
 
     void Damage() {
-        var image = _life.GetComponent<Image>();
-        if (image) {
-            image.fillAmount -= 0.1f;
-        }
+        _lifeGaugeImage.fillAmount -= 0.1f;
         StartCoroutine("DamageAndInvinciblePhase");
     }
 
