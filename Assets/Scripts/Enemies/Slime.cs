@@ -31,7 +31,15 @@ public class Slime : MonoBehaviour {
 	// Update is called once per frame
 	void Update() {
         UpdateForAI();
-	}
+    }
+
+    void OnCollisionEnter2D(Collision2D collision) {
+        if (collision.gameObject.tag == "Wall") {
+            Vector2 scale = gameObject.transform.localScale;
+            scale.x *= -1;
+            gameObject.transform.localScale = scale;
+        }
+    }
 
     void UpdateForAI() {
         switch (_aiState) {
@@ -54,7 +62,8 @@ public class Slime : MonoBehaviour {
                 break;
             case AIState.Walking:
                 if (AnimatorIsPlaying("slime-walk")) {
-                    _rigidbody2D.velocity = new Vector2(SPEED, _rigidbody2D.velocity.y);
+                    float direction = gameObject.transform.localScale.x;
+                    _rigidbody2D.velocity = new Vector2(SPEED * direction, _rigidbody2D.velocity.y);
                 } else {
                     _rigidbody2D.velocity = new Vector2(0, _rigidbody2D.velocity.y);
                     _prevAiState = AIState.Walking;
