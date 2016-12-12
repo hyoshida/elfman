@@ -13,7 +13,7 @@ enum AIState {
 }
 
 public class Slime : MonoBehaviour {
-    public const int SPEED = -1;
+    public const int SPEED = -3;
 
     AIState _aiState;
     AIState _prevAiState;
