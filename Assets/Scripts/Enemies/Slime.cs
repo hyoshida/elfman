@@ -21,15 +21,15 @@ public class Slime : MonoBehaviour {
     Rigidbody2D _rigidbody2D;
     float _waitingTime;
 
-	// Use this for initialization
-	void Start() {
+    // Use this for initialization
+    void Start() {
         _aiState = AIState.Idle;
         _animator = GetComponent<Animator>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
-	}
+    }
 
-	// Update is called once per frame
-	void Update() {
+    // Update is called once per frame
+    void Update() {
         UpdateForAI();
     }
 
