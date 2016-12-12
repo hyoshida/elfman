@@ -14,9 +14,9 @@ enum AIState {
 
 public class Slime : MonoBehaviour {
     public const int SPEED = -1;
-    public const float WAIT_SECONDS = 0.5f;
 
     AIState _aiState;
+    AIState _prevAiState;
     Animator _animator;
     Rigidbody2D _rigidbody2D;
     float _waitingTime;
@@ -36,26 +36,40 @@ public class Slime : MonoBehaviour {
     void UpdateForAI() {
         switch (_aiState) {
             case AIState.Idle:
-                _aiState = (Random.value >= 0.5f) ? AIState.Walk : AIState.Wait;
+                _aiState = (_prevAiState == AIState.Waiting) ? AIState.Walk : AIState.Wait;
                 _waitingTime = 0;
                 break;
             case AIState.Wait:
-                _waitingTime += Time.deltaTime;
-                if (_waitingTime >= WAIT_SECONDS) {
+                _aiState = AIState.Waiting;
+                break;
+            case AIState.Waiting:
+                if (!AnimatorIsPlaying("slime-wait")) {
+                    _prevAiState = AIState.Waiting;
                     _aiState = AIState.Idle;
                 }
                 break;
             case AIState.Walk:
                 _aiState = AIState.Walking;
                 _animator.SetTrigger("walk");
-                _rigidbody2D.velocity = new Vector2(SPEED, _rigidbody2D.velocity.y);
                 break;
             case AIState.Walking:
-                if (!_animator.GetBool("walk")) {
-                    _rigidbody2D.velocity = new Vector2(-0, _rigidbody2D.velocity.y);
+                if (AnimatorIsPlaying("slime-walk")) {
+                    _rigidbody2D.velocity = new Vector2(SPEED, _rigidbody2D.velocity.y);
+                } else {
+                    _rigidbody2D.velocity = new Vector2(0, _rigidbody2D.velocity.y);
+                    _prevAiState = AIState.Walking;
                     _aiState = AIState.Idle;
                 }
                 break;
         }
+    }
+
+    bool AnimatorIsPlaying(string stateName) {
+        return AnimatorIsPlaying() && _animator.GetCurrentAnimatorStateInfo(0).IsName(stateName);
+    }
+
+    bool AnimatorIsPlaying() {
+        AnimatorStateInfo animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+        return animatorStateInfo.length > animatorStateInfo.normalizedTime;
     }
 }
