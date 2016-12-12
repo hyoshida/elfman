@@ -404,7 +404,7 @@ GameObject:
   - component: {fileID: 97470804}
   - component: {fileID: 97470803}
   - component: {fileID: 97470805}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -599,7 +599,7 @@ GameObject:
   - component: {fileID: 120426139}
   - component: {fileID: 120426138}
   - component: {fileID: 120426137}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: Enemy (2)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -934,7 +934,7 @@ GameObject:
   - component: {fileID: 341290918}
   - component: {fileID: 341290917}
   - component: {fileID: 341290916}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: Enemy (1)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -1139,7 +1139,7 @@ GameObject:
   - component: {fileID: 458839119}
   - component: {fileID: 458839118}
   - component: {fileID: 458839117}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: Enemy (5)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -1613,7 +1613,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 635384521}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.69, y: -0.12, z: 4}
+  m_LocalPosition: {x: 7.31, y: -0.12, z: 4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1401692387}
@@ -1682,9 +1682,9 @@ CircleCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: -0.5}
+  m_Offset: {x: 0, y: -0.65}
   serializedVersion: 2
-  m_Radius: 0.25
+  m_Radius: 0.35
 --- !u!50 &635384526
 Rigidbody2D:
   serializedVersion: 4
@@ -1704,7 +1704,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 6
+  m_Constraints: 4
 --- !u!114 &635384527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2066,7 +2066,7 @@ GameObject:
   - component: {fileID: 786900848}
   - component: {fileID: 786900847}
   - component: {fileID: 786900846}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: Enemy (6)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -2276,7 +2276,7 @@ GameObject:
   - component: {fileID: 862948247}
   - component: {fileID: 862948246}
   - component: {fileID: 862948245}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: Enemy (3)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -3184,7 +3184,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1401692387}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Enemies
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4199,7 +4199,7 @@ GameObject:
   - component: {fileID: 1813988481}
   - component: {fileID: 1813988480}
   - component: {fileID: 1813988479}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: Enemy (4)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -4626,7 +4626,7 @@ GameObject:
   - component: {fileID: 1969026203}
   - component: {fileID: 1969026202}
   - component: {fileID: 1969026201}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: Enemy (7)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
