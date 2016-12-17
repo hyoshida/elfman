@@ -7,8 +7,8 @@ public class Scene : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (Input.GetButtonDown("Fire1")) {
-            //onClickStartButton();
+        if (Input.GetButtonDown("Submit")) {
+            onClickStartButton();
         }
     }
 
