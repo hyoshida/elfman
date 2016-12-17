@@ -404,8 +404,9 @@ GameObject:
   - component: {fileID: 97470804}
   - component: {fileID: 97470803}
   - component: {fileID: 97470805}
+  - component: {fileID: 97470806}
   m_Layer: 12
-  m_Name: Enemy
+  m_Name: Ghost
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -521,6 +522,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38b5ac8c4afbb544885bf3a0cba484e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &97470806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 97470799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2ebada532c3e9d4cbaae6e5f270d851, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &118603175
 Prefab:
   m_ObjectHideFlags: 0
@@ -599,8 +611,9 @@ GameObject:
   - component: {fileID: 120426139}
   - component: {fileID: 120426138}
   - component: {fileID: 120426137}
+  - component: {fileID: 120426143}
   m_Layer: 12
-  m_Name: Enemy (2)
+  m_Name: Ghost (2)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -716,6 +729,17 @@ Transform:
   m_Father: {fileID: 1401692387}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &120426143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 120426136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2ebada532c3e9d4cbaae6e5f270d851, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &146067086 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4000011454869728, guid: 93b66e4f6c1bf4d5994a1fc46ae5a6f6,
@@ -938,8 +962,9 @@ GameObject:
   - component: {fileID: 341290918}
   - component: {fileID: 341290917}
   - component: {fileID: 341290916}
+  - component: {fileID: 341290922}
   m_Layer: 12
-  m_Name: Enemy (1)
+  m_Name: Ghost (1)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1055,6 +1080,17 @@ Transform:
   m_Father: {fileID: 1401692387}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &341290922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 341290915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2ebada532c3e9d4cbaae6e5f270d851, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &341851073 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4000011454869728, guid: 93b66e4f6c1bf4d5994a1fc46ae5a6f6,
@@ -1143,8 +1179,9 @@ GameObject:
   - component: {fileID: 458839119}
   - component: {fileID: 458839118}
   - component: {fileID: 458839117}
+  - component: {fileID: 458839123}
   m_Layer: 12
-  m_Name: Enemy (5)
+  m_Name: Ghost (5)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1260,6 +1297,17 @@ Transform:
   m_Father: {fileID: 1401692387}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &458839123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 458839116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2ebada532c3e9d4cbaae6e5f270d851, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &493192349
 Prefab:
   m_ObjectHideFlags: 0
@@ -1603,6 +1651,7 @@ GameObject:
   - component: {fileID: 635384525}
   - component: {fileID: 635384527}
   - component: {fileID: 635384526}
+  - component: {fileID: 635384528}
   m_Layer: 11
   m_Name: Slime
   m_TagString: Enemy
@@ -1617,8 +1666,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 635384521}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.31, y: -0.12, z: 4}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 6.44, y: 0.13, z: 4}
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1}
   m_Children: []
   m_Father: {fileID: 1401692387}
   m_RootOrder: 8
@@ -1718,6 +1767,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6777068b4c5d2b64badd166d3a9788fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &635384528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 635384521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38b5ac8c4afbb544885bf3a0cba484e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &640954566 stripped
@@ -2070,8 +2130,9 @@ GameObject:
   - component: {fileID: 786900848}
   - component: {fileID: 786900847}
   - component: {fileID: 786900846}
+  - component: {fileID: 786900852}
   m_Layer: 12
-  m_Name: Enemy (6)
+  m_Name: Ghost (6)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2187,6 +2248,17 @@ Transform:
   m_Father: {fileID: 1401692387}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &786900852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 786900845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2ebada532c3e9d4cbaae6e5f270d851, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &792605540 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4000011454869728, guid: 93b66e4f6c1bf4d5994a1fc46ae5a6f6,
@@ -2280,8 +2352,9 @@ GameObject:
   - component: {fileID: 862948247}
   - component: {fileID: 862948246}
   - component: {fileID: 862948245}
+  - component: {fileID: 862948251}
   m_Layer: 12
-  m_Name: Enemy (3)
+  m_Name: Ghost (3)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2397,6 +2470,17 @@ Transform:
   m_Father: {fileID: 1401692387}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &862948251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 862948244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2ebada532c3e9d4cbaae6e5f270d851, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &886222523 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4000011454869728, guid: 93b66e4f6c1bf4d5994a1fc46ae5a6f6,
@@ -4211,8 +4295,9 @@ GameObject:
   - component: {fileID: 1813988481}
   - component: {fileID: 1813988480}
   - component: {fileID: 1813988479}
+  - component: {fileID: 1813988485}
   m_Layer: 12
-  m_Name: Enemy (4)
+  m_Name: Ghost (4)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4328,6 +4413,17 @@ Transform:
   m_Father: {fileID: 1401692387}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1813988485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1813988478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2ebada532c3e9d4cbaae6e5f270d851, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1817880297 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4000011454869728, guid: 93b66e4f6c1bf4d5994a1fc46ae5a6f6,
@@ -4638,8 +4734,9 @@ GameObject:
   - component: {fileID: 1969026203}
   - component: {fileID: 1969026202}
   - component: {fileID: 1969026201}
+  - component: {fileID: 1969026207}
   m_Layer: 12
-  m_Name: Enemy (7)
+  m_Name: Ghost (7)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4755,6 +4852,17 @@ Transform:
   m_Father: {fileID: 1401692387}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1969026207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1969026200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2ebada532c3e9d4cbaae6e5f270d851, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1997313520
 Prefab:
   m_ObjectHideFlags: 0
