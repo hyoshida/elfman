@@ -59,7 +59,9 @@ public class GameManager {
     }
 
     void SwitchScene(GameScene scene) {
-        SceneManager.LoadScene(scene.ToString());
+        FadeManager.Instance.Run(() =>
+            SceneManager.LoadScene(scene.ToString())
+        );
         _currentScene = scene;
     }
 }
