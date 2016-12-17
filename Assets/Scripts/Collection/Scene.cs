@@ -24,6 +24,10 @@ namespace Collection {
         IEnumerator LoadMasterAndCreateCollectionItems() {
             yield return Master.Load();
             CreateCollectionItems();
+
+            // なんかviewportのサイズがおかしくなるので直す
+            RectTransform viewportTransform = _content.transform.parent as RectTransform;
+            viewportTransform.sizeDelta = new Vector2(-17, 0);
         }
 
         void CreateCollectionItems() {
@@ -49,7 +53,7 @@ namespace Collection {
             int offset = 75;
             int gap = 50;
             RectTransform rectTransform = item.transform as RectTransform;
-            item.transform.position = new Vector3(offset + (rectTransform.rect.width + gap) * col, rectTransform.rect.height * row * -1);
+            item.transform.position = new Vector2(offset + (rectTransform.rect.width + gap) * col, rectTransform.rect.height * row * -1);
             item.transform.SetParent(_content.transform, false);
 
             GameObject still = item.transform.Find("Image").gameObject;
