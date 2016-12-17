@@ -31,14 +31,12 @@ namespace Collection {
         }
 
         void CreateCollectionItems() {
-            int index = 0;
             foreach (var stillMaster in Master.Instance.stillMasters) {
-                CreateCollectionItem(stillMaster, index);
-                index++;
+                CreateCollectionItem(stillMaster);
             }
         }
 
-        void CreateCollectionItem(StillMaster stillMaster, int index) {
+        void CreateCollectionItem(StillMaster stillMaster) {
             string path = Path.Combine(Application.streamingAssetsPath, stillMaster.imagePath);
 
             byte[] data = File.ReadAllBytes(path);
@@ -47,14 +45,7 @@ namespace Collection {
 
             Sprite sprite = Sprite.Create(texture as Texture2D, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
 
-            GameObject item = Instantiate(_collectionItem);
-            int col = index % 2;
-            int row = index / 2;
-            int offset = 75;
-            int gap = 50;
-            RectTransform rectTransform = item.transform as RectTransform;
-            item.transform.position = new Vector2(offset + (rectTransform.rect.width + gap) * col, rectTransform.rect.height * row * -1);
-            item.transform.SetParent(_content.transform, false);
+            GameObject item = Instantiate(_collectionItem, _content.transform);
 
             GameObject still = item.transform.Find("Image").gameObject;
             Image image = still.GetComponent<Image>();
