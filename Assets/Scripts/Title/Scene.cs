@@ -7,10 +7,13 @@ public class Scene : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        if (Input.GetButtonDown("Fire1")) {
+            onClickStartButton();
+        }
     }
 
     public void onClickStartButton() {
-        GameManager.Instance.SwitchScene(GameScene.elfman);
+        GameManager.Instance.GotoStage(1);
     }
 
     public void onClickExitButton() {

@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public enum GameScene {
     Title,
+    Still,
     elfman
 }
 
@@ -26,11 +27,42 @@ public class GameManager {
         }
     }
 
-    public void SwitchScene(GameScene scene) {
-        SceneManager.LoadScene(scene.ToString());
+    GameScene _currentScene;
+    uint _currentStageCode;
+
+    public GameScene CurrentScene {
+        get {
+            return _currentScene;
+        }
+    }
+
+    public uint CurrentStageCode {
+        get {
+            return _currentStageCode;
+        }
     }
 
     public void Quit() {
         Application.Quit();
+    }
+
+    public void GotoTitle() {
+        SwitchScene(GameScene.Title);
+    }
+
+    public void GotoStill() {
+        SwitchScene(GameScene.Still);
+    }
+
+    public void GotoStage(uint stageCode) {
+        SwitchScene(GameScene.elfman);
+        _currentStageCode = stageCode;
+    }
+
+    void SwitchScene(GameScene scene) {
+        FadeManager.Instance.Run(() =>
+            SceneManager.LoadScene(scene.ToString())
+        );
+        _currentScene = scene;
     }
 }
