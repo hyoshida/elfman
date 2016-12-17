@@ -55,7 +55,7 @@ namespace Stage {
 
         void UpdateForGameOverState() {
             if (Input.GetButtonDown("Fire1")) {
-                GameManager.Instance.SwitchScene(GameScene.Title);
+                GameManager.Instance.GotoStill();
             }
         }
     }

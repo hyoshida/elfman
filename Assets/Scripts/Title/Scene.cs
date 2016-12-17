@@ -10,7 +10,7 @@ public class Scene : MonoBehaviour {
     }
 
     public void onClickStartButton() {
-        GameManager.Instance.SwitchScene(GameScene.elfman);
+        GameManager.Instance.GotoStage(1);
     }
 
     public void onClickExitButton() {
