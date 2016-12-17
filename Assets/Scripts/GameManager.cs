@@ -16,8 +16,6 @@ public class GameManager {
 	});
 
     private static GameManager _instance;
-    private static GameScene _currentScene;
-    private static uint _currentStageCode;
 
     public static GameManager Instance {
         get {
@@ -29,13 +27,16 @@ public class GameManager {
         }
     }
 
-    public static GameScene CurrentScene {
+    GameScene _currentScene;
+    uint _currentStageCode;
+
+    public GameScene CurrentScene {
         get {
             return _currentScene;
         }
     }
 
-    public static uint CurrentStageCode {
+    public uint CurrentStageCode {
         get {
             return _currentStageCode;
         }
