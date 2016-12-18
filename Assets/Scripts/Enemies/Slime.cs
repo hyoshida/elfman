@@ -19,7 +19,6 @@ public class Slime : MonoBehaviour {
     AIState _prevAiState;
     Animator _animator;
     Rigidbody2D _rigidbody2D;
-    float _waitingTime;
 
     // Use this for initialization
     void Start() {
@@ -45,7 +44,6 @@ public class Slime : MonoBehaviour {
         switch (_aiState) {
             case AIState.Idle:
                 _aiState = (_prevAiState == AIState.Waiting) ? AIState.Walk : AIState.Wait;
-                _waitingTime = 0;
                 break;
             case AIState.Wait:
                 _aiState = AIState.Waiting;

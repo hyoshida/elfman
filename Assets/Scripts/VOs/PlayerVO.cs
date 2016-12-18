@@ -39,7 +39,7 @@ public class PlayerVO {
         foreach (string code in unlockedStillCodesString.Split(',')) {
             try {
                 unlockedStillCodes.Add(uint.Parse(code));
-            } catch (System.FormatException _error) {
+            } catch (System.FormatException) {
                 // エラーは無視する
             }
         }
