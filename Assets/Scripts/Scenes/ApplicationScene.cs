@@ -16,15 +16,11 @@ public class ApplicationScene : MonoBehaviour {
     }
 
     IEnumerator Load() {
-        yield return Master.Load();
-        PlayerVO.Instance.Load();
+        if (!_loaded) {
+            yield return Master.Load();
+            PlayerVO.Instance.Load();
 
-        _loaded = true;
-
-        // 作ってみたけど使いづらい
-        // MethodInfo method = GetType().GetMethod("OnLoaded", BindingFlags.Instance | BindingFlags.NonPublic);
-        // if (method != null) {
-        //     method.Invoke(this, null);
-        // }
+            _loaded = true;
+        }
     }
 }
