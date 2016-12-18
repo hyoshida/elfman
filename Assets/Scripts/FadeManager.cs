@@ -11,11 +11,7 @@ public class FadeManager : SingletonMonoBehaviour<FadeManager> {
 
     void Start() {
         DontDestroyOnLoad(gameObject);
-
-        _texture = new Texture2D(32, 32, TextureFormat.RGB24, false);
-        _texture.ReadPixels(new Rect(0, 0, 32, 32), 0, 0, false);
-        _texture.SetPixel(0, 0, Color.white);
-        _texture.Apply();
+        StartCoroutine(CreateTexture());
     }
 
     void OnGUI() {
@@ -30,6 +26,15 @@ public class FadeManager : SingletonMonoBehaviour<FadeManager> {
 
     public void Run(Action onFadeOut, float interval = DEFAULT_INTERVAL) {
         StartCoroutine(TransitionScene(onFadeOut, interval));
+    }
+
+    IEnumerator CreateTexture() {
+        // Refs http://answers.unity3d.com/questions/326384/texture2dreadpixels-unknown-error-not-inside-drawi.html
+        yield return new WaitForEndOfFrame();
+        _texture = new Texture2D(32, 32, TextureFormat.RGB24, false);
+        _texture.ReadPixels(new Rect(0, 0, 32, 32), 0, 0, false);
+        _texture.SetPixel(0, 0, Color.white);
+        _texture.Apply();
     }
 
     IEnumerator TransitionScene(Action onFadeOut, float interval) {
