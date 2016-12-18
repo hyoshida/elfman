@@ -7,15 +7,10 @@ public enum GameScene {
     Title,
     Collection,
     Still,
-    elfman
+    Stage1
 }
 
 public class GameManager {
-    public static readonly ReadOnlyCollection<string> SCENES = Array.AsReadOnly(new string[] {
-        "Title",
-        "elfman"
-	});
-
     private static GameManager _instance;
 
     public static GameManager Instance {
@@ -60,7 +55,8 @@ public class GameManager {
     }
 
     public void GotoStage(uint stageCode) {
-        SwitchScene(GameScene.elfman);
+        // TODO: ステージ選択できるようにする
+        SwitchScene(GameScene.Stage1);
         _currentStageCode = stageCode;
     }
 
