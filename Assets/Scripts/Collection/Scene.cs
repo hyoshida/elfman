@@ -35,20 +35,20 @@ namespace Collection {
 
         void CreateCollectionItems() {
             foreach (var stillMaster in Master.Instance.stillMasters) {
-                CreateCollectionItem(stillMaster);
+                StartCoroutine(CreateCollectionItem(stillMaster));
             }
         }
 
-        void CreateCollectionItem(StillMaster stillMaster) {
-            string path = Path.Combine(Application.streamingAssetsPath, stillMaster.imagePath);
-
-            byte[] data = File.ReadAllBytes(path);
-            Texture2D texture = new Texture2D(1, 1);
-            texture.LoadImage(data);
-
-            Sprite sprite = Sprite.Create(texture as Texture2D, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
-
+        IEnumerator CreateCollectionItem(StillMaster stillMaster) {
+            // 場所だけ取って非表示にしておく
             GameObject item = Instantiate(_collectionItem, _content.transform);
+            item.SetActive(false);
+
+            // 画像をロードする
+            yield return stillMaster.LoadImageTexture();
+
+            Texture2D texture = stillMaster.imageTexture;
+            Sprite sprite = Sprite.Create(texture as Texture2D, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
 
             GameObject still = item.transform.Find("Image").gameObject;
             Image image = still.GetComponent<Image>();
@@ -57,6 +57,9 @@ namespace Collection {
             GameObject title = item.transform.Find("Title").gameObject;
             Text text = title.GetComponent<Text>();
             text.text = stillMaster.title;
+
+            // 全部終わったら表示する
+            item.SetActive(true);
         }
     }
 }
