@@ -6,7 +6,9 @@ using UnityEngine;
 
 [Serializable]
 class StillMaster {
+    public uint code = 0;
     public uint stageCode = 0;
+    public bool boss = false;
     public string imagePath = "";
     public string title = "";
     public List<string> texts = new List<string> { };

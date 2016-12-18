@@ -15,39 +15,39 @@ public class PlayerVO {
         }
     }
 
-    public List<uint> clearedStageCodes;
+    public List<uint> unlockedStillCodes;
 
     public void Load() {
-        LoadClearedStageCodes();
+        LoadUnlockedStillCodes();
     }
 
     public void Save() {
-        SaveClearedStageCodes();
+        SaveUnlockedStillCodes();
         PlayerPrefs.Save();
     }
 
-    public void ClearStage(uint stageCode) {
-        clearedStageCodes.Add(stageCode);
+    public void UnlockStill(uint stillCode) {
+        unlockedStillCodes.Add(stillCode);
         Save();
     }
 
-    void LoadClearedStageCodes() {
-        string clearedStageCodesString = PlayerPrefs.GetString("clearedStageCodes", "");
+    void LoadUnlockedStillCodes() {
+        string unlockedStillCodesString = PlayerPrefs.GetString("unlockedStillCodes", "");
 
-        clearedStageCodes = new List<uint> { };
+        unlockedStillCodes = new List<uint> { };
 
-        foreach (string code in clearedStageCodesString.Split(',')) {
+        foreach (string code in unlockedStillCodesString.Split(',')) {
             try {
-                clearedStageCodes.Add(uint.Parse(code));
+                unlockedStillCodes.Add(uint.Parse(code));
             } catch (System.FormatException _error) {
                 // エラーは無視する
             }
         }
     }
 
-    void SaveClearedStageCodes() {
-        var array = clearedStageCodes.Select((code) => code.ToString()).Distinct().ToArray();
-        string clearedStageCodesString = string.Join(",", array);
-        PlayerPrefs.SetString("clearedStageCodes", clearedStageCodesString);
+    void SaveUnlockedStillCodes() {
+        var array = unlockedStillCodes.Select((code) => code.ToString()).Distinct().ToArray();
+        string unlockedStillCodesString = string.Join(",", array);
+        PlayerPrefs.SetString("unlockedStillCodes", unlockedStillCodesString);
     }
 }

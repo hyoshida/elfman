@@ -19,7 +19,8 @@ namespace Still {
             _text = _textArea.GetComponent<Text>();
 
             uint stageCode = GameManager.Instance.CurrentStageCode;
-            _stillMaster = Master.Instance.FindStillMasterBy(stageCode);
+            bool boss = false;
+            _stillMaster = Master.Instance.FindStillMasterBy(stageCode, boss);
         }
 
         // Update is called once per frame

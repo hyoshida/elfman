@@ -25,9 +25,9 @@ namespace Collection {
         }
 
         void CreateCollectionItems() {
-            List<uint> clearedStageCodes = PlayerVO.Instance.clearedStageCodes;
+            List<uint> unlockedStillCodes = PlayerVO.Instance.unlockedStillCodes;
             foreach (var stillMaster in Master.Instance.stillMasters) {
-                if (clearedStageCodes.IndexOf(stillMaster.stageCode) == -1) {
+                if (unlockedStillCodes.IndexOf(stillMaster.code) == -1) {
                     continue;
                 }
                 CreateCollectionItem(stillMaster);
