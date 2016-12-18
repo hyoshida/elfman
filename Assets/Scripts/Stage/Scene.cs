@@ -9,7 +9,7 @@ namespace Stage {
         GameOver,
     }
 
-    public class Scene : MonoBehaviour {
+    public class Scene : ApplicationScene {
         [SerializeField]
         GameObject _player;
 

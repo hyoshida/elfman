@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace Collection {
-    public class Scene : MonoBehaviour {
+    public class Scene : ApplicationScene {
         [SerializeField]
         GameObject _collectionItem;
 
@@ -13,7 +13,8 @@ namespace Collection {
         GameObject _content;
 
         // Use this for initialization
-        void Start() {
+        IEnumerator Start() {
+            yield return WaitForLoad();
             CreateCollectionItems();
         }
 

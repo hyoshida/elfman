@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace Still {
-    public class Scene : MonoBehaviour {
+    public class Scene : ApplicationScene {
         [SerializeField]
         GameObject _textArea;
 

@@ -1,33 +1,29 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Scene : MonoBehaviour {
-    // Use this for initialization
-    void Start() {
-        StartCoroutine(LoadMaster());
-        PlayerVO.Instance.Load();
-    }
-
-    // Update is called once per frame
-    void Update() {
-        if (Input.GetButtonDown("Submit")) {
-            onClickStartButton();
+namespace Title {
+    public class Scene : ApplicationScene {
+        // Use this for initialization
+        void Start() {
         }
-    }
 
-    public void onClickStartButton() {
-        GameManager.Instance.GotoStage(1);
-    }
+        // Update is called once per frame
+        void Update() {
+            if (Input.GetButtonDown("Submit")) {
+                onClickStartButton();
+            }
+        }
 
-    public void onClickCollectionButton() {
-        GameManager.Instance.GotoCollection();
-    }
+        public void onClickStartButton() {
+            GameManager.Instance.GotoStage(1);
+        }
 
-    public void onClickExitButton() {
-        GameManager.Instance.Quit();
-    }
+        public void onClickCollectionButton() {
+            GameManager.Instance.GotoCollection();
+        }
 
-    IEnumerator LoadMaster() {
-        yield return Master.Load();
+        public void onClickExitButton() {
+            GameManager.Instance.Quit();
+        }
     }
 }
