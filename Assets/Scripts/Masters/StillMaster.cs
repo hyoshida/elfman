@@ -15,10 +15,9 @@ class StillMaster {
 
     Texture2D _imageTexture;
 
-    public Texture2D imageTexture {
-        get {
-            return _imageTexture;
-        }
+    public Sprite createImageSprite() {
+        Texture2D texture = _imageTexture;
+        return Sprite.Create(texture as Texture2D, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
     }
 
     public IEnumerator Load() {
@@ -26,7 +25,7 @@ class StillMaster {
     }
 
     public IEnumerator LoadImageTexture() {
-        if (!imageTexture) {
+        if (_imageTexture == null) {
             string path = Path.Combine(Application.streamingAssetsPath, imagePath);
             if (path.Contains("://")) {
                 WWW www = new WWW(path);

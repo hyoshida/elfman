@@ -8,6 +8,9 @@ namespace Still {
         [SerializeField]
         GameObject _textArea;
 
+        [SerializeField]
+        GameObject _image;
+
         StillMaster _stillMaster;
         int _textIndex;
         Text _text;
@@ -21,6 +24,9 @@ namespace Still {
             uint stageCode = GameManager.Instance.CurrentStageCode;
             bool boss = false;
             _stillMaster = Master.Instance.FindStillMasterBy(stageCode, boss);
+
+            Image image = _image.GetComponent<Image>();
+            image.sprite = _stillMaster.createImageSprite();
 
             PlayerVO.Instance.UnlockStill(_stillMaster.code);
         }

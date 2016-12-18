@@ -40,14 +40,11 @@ namespace Collection {
         }
 
         void CreateCollectionItem(StillMaster stillMaster) {
-            Texture2D texture = stillMaster.imageTexture;
-            Sprite sprite = Sprite.Create(texture as Texture2D, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
-
             GameObject item = Instantiate(_collectionItem, _content.transform);
 
             GameObject still = item.transform.Find("Image").gameObject;
             Image image = still.GetComponent<Image>();
-            image.sprite = sprite;
+            image.sprite = stillMaster.createImageSprite();
 
             GameObject title = item.transform.Find("Title").gameObject;
             Text text = title.GetComponent<Text>();
