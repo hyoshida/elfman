@@ -9,12 +9,7 @@ public class FadeManager : SingletonMonoBehaviour<FadeManager> {
     bool _isFading;
     float _alpha = 0f;
 
-    void Awake() {
-        if (this != Instance) {
-            Destroy(this);
-            return;
-        }
-
+    void Start() {
         DontDestroyOnLoad(gameObject);
 
         _texture = new Texture2D(32, 32, TextureFormat.RGB24, false);

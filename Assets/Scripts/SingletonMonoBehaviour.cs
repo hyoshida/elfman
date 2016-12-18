@@ -1,38 +1,30 @@
 ﻿//
-// from https://gist.github.com/tsubaki/e0406377a1b014754894
+// Based on https://gist.github.com/tsubaki/e0406377a1b014754894
 //
 using UnityEngine;
 
 public class SingletonMonoBehaviour<T> : MonoBehaviour where T : SingletonMonoBehaviour<T> {
-    protected static T instance;
+    static T _instance;
 
     public static T Instance {
         get {
-            if (instance == null) {
-                instance = (T)FindObjectOfType(typeof(T));
+            if (_instance == null) {
+                _instance = (T)FindObjectOfType(typeof(T));
 
-                if (instance == null) {
+                if (_instance == null) {
                     Debug.LogWarning(typeof(T) + "is nothing");
                 }
             }
 
-            return instance;
+            return _instance;
         }
     }
 
-    protected void Awake() {
-        CheckInstance();
-    }
-
-    protected bool CheckInstance() {
-        if (instance == null) {
-            instance = (T)this;
-            return true;
-        } else if (Instance == this) {
-            return true;
+    void Awake() {
+        if (_instance == null) {
+            _instance = (T)this;
+        } else if (Instance != this) {
+            Destroy(this);
         }
-
-        Destroy(this);
-        return false;
     }
 }
