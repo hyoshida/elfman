@@ -5,6 +5,7 @@ public class Scene : MonoBehaviour {
     // Use this for initialization
     void Start() {
         StartCoroutine(LoadMaster());
+        PlayerVO.Instance.Load();
     }
 
     // Update is called once per frame

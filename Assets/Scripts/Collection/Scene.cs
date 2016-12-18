@@ -1,4 +1,6 @@
 ﻿using System.IO;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,7 +25,11 @@ namespace Collection {
         }
 
         void CreateCollectionItems() {
+            List<uint> clearedStageCodes = PlayerVO.Instance.clearedStageCodes;
             foreach (var stillMaster in Master.Instance.stillMasters) {
+                if (clearedStageCodes.IndexOf(stillMaster.stageCode) == -1) {
+                    continue;
+                }
                 CreateCollectionItem(stillMaster);
             }
 
