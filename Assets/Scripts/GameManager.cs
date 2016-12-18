@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public enum GameScene {
     Title,
+    Collection,
     Still,
     elfman
 }
@@ -48,6 +49,10 @@ public class GameManager {
 
     public void GotoTitle() {
         SwitchScene(GameScene.Title);
+    }
+
+    public void GotoCollection() {
+        SwitchScene(GameScene.Collection);
     }
 
     public void GotoStill() {

@@ -21,6 +21,10 @@ class Master {
                 _instance = JsonUtility.FromJson<Master>(json);
             }
         }
+
+        foreach (var stillMaster in _instance.stillMasters) {
+            yield return stillMaster.Load();
+        }
     }
 
     public static Master Instance {
@@ -31,9 +35,9 @@ class Master {
 
     public List<StillMaster> stillMasters = new List<StillMaster> { };
 
-    public StillMaster FindStillMasterBy(uint stageCode) {
+    public StillMaster FindStillMasterBy(uint code, bool boss) {
         foreach (var stillMaster in stillMasters) {
-            if (stillMaster.stageCode == stageCode) {
+            if (stillMaster.code == code && stillMaster.boss == boss) {
                 return stillMaster;
             }
         }

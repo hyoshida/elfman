@@ -1,7 +1,66 @@
 {
     "stillMasters": [
         {
+            "code": 1,
             "stageCode": 1,
+            "boss": false,
+            "imagePath": "Masters/Images/1.jpg",
+            "title": "スチル１",
+            "texts": [
+                "プレイヤーはしんでしまった。",
+                "しんでしまうとはなさけない！"
+            ]
+        },
+        {
+            "code": 2,
+            "stageCode": 2,
+            "boss": false,
+            "imagePath": "Masters/Images/1.jpg",
+            "title": "スチル２",
+            "texts": [
+                "プレイヤーはしんでしまった。",
+                "しんでしまうとはなさけない！"
+            ]
+        },
+        {
+            "code": 3,
+            "stageCode": 3,
+            "boss": false,
+            "imagePath": "Masters/Images/1.jpg",
+            "title": "スチル３",
+            "texts": [
+                "プレイヤーはしんでしまった。",
+                "しんでしまうとはなさけない！"
+            ]
+        },
+        {
+            "code": 4,
+            "stageCode": 4,
+            "boss": false,
+            "imagePath": "Masters/Images/1.jpg",
+            "title": "スチル４",
+            "texts": [
+                "プレイヤーはしんでしまった。",
+                "しんでしまうとはなさけない！"
+            ]
+        },
+        {
+            "code": 5,
+            "stageCode": 5,
+            "boss": false,
+            "imagePath": "Masters/Images/1.jpg",
+            "title": "スチル５",
+            "texts": [
+                "プレイヤーはしんでしまった。",
+                "しんでしまうとはなさけない！"
+            ]
+        },
+        {
+            "code": 6,
+            "stageCode": 6,
+            "boss": false,
+            "imagePath": "Masters/Images/1.jpg",
+            "title": "スチル６",
             "texts": [
                 "プレイヤーはしんでしまった。",
                 "しんでしまうとはなさけない！"
