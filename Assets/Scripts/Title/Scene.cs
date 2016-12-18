@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class Scene : MonoBehaviour {
     // Use this for initialization
     void Start() {
+        StartCoroutine(LoadMaster());
     }
 
     // Update is called once per frame
@@ -22,5 +24,9 @@ public class Scene : MonoBehaviour {
 
     public void onClickExitButton() {
         GameManager.Instance.Quit();
+    }
+
+    IEnumerator LoadMaster() {
+        yield return Master.Load();
     }
 }

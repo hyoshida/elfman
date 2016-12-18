@@ -17,10 +17,9 @@ namespace Still {
             _textIndex = 0;
 
             _text = _textArea.GetComponent<Text>();
-        }
 
-        void Awake() {
-            StartCoroutine(LoadMaster());
+            uint stageCode = GameManager.Instance.CurrentStageCode;
+            _stillMaster = Master.Instance.FindStillMasterBy(stageCode);
         }
 
         // Update is called once per frame
@@ -28,13 +27,6 @@ namespace Still {
             if (Input.GetButtonDown("Fire1")) {
                 NextText();
             }
-        }
-
-        IEnumerator LoadMaster() {
-            yield return Master.Load();
-
-            uint stageCode = GameManager.Instance.CurrentStageCode;
-            _stillMaster = Master.Instance.FindStillMasterBy(stageCode);
         }
 
         void NextText() {

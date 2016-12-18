@@ -21,6 +21,10 @@ class Master {
                 _instance = JsonUtility.FromJson<Master>(json);
             }
         }
+
+        foreach (var stillMaster in _instance.stillMasters) {
+            yield return stillMaster.Load();
+        }
     }
 
     public static Master Instance {

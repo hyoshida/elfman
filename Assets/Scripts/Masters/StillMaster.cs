@@ -19,6 +19,10 @@ class StillMaster {
         }
     }
 
+    public IEnumerator Load() {
+        yield return LoadImageTexture();
+    }
+
     public IEnumerator LoadImageTexture() {
         if (!imageTexture) {
             string path = Path.Combine(Application.streamingAssetsPath, imagePath);
