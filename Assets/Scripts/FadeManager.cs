@@ -15,7 +15,7 @@ public class FadeManager : SingletonMonoBehaviour<FadeManager> {
     }
 
     void OnGUI() {
-        if (!_isFading) {
+        if (!_isFading || !_texture) {
             return;
         }
 

@@ -12,12 +12,21 @@ public class SingletonMonoBehaviour<T> : MonoBehaviour where T : SingletonMonoBe
                 _instance = (T)FindObjectOfType(typeof(T));
 
                 if (_instance == null) {
-                    Debug.LogWarning(typeof(T) + "is nothing");
+                    _instance = CreateInstance();
+
+                    if (_instance == null) {
+                        Debug.LogWarning(typeof(T) + "is nothing");
+                    }
                 }
             }
 
             return _instance;
         }
+    }
+
+    static T CreateInstance() {
+        GameObject gameObject = new GameObject(typeof(T).FullName);
+        return gameObject.AddComponent<T>();
     }
 
     void Awake() {
