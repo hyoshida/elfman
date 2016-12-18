@@ -21,6 +21,8 @@ namespace Still {
             uint stageCode = GameManager.Instance.CurrentStageCode;
             bool boss = false;
             _stillMaster = Master.Instance.FindStillMasterBy(stageCode, boss);
+
+            PlayerVO.Instance.UnlockStill(_stillMaster.code);
         }
 
         // Update is called once per frame
