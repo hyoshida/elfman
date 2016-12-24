@@ -86,6 +86,9 @@ public class Player : MonoBehaviour {
     }
 
     void FixedUpdate() {
+        // カメラをプレイヤーに追従させる
+        MoveCamera();
+
         // 左=-1、右=1
         float axis = Input.GetAxisRaw("Horizontal");
         int x = (axis == 0) ? 0 : ((axis > 0) ? 1 : -1);
@@ -98,8 +101,8 @@ public class Player : MonoBehaviour {
             transform.localScale = temp;
             // 走る
             _animator.SetBool("run", true);
-            // カメラをプレイヤーに追従させる
-            MoveCamera();
+            // プレイヤーが画面左に後戻りできないようにする
+            TrappingPlayer();
         } else {
             // 横移動の速度を0にしてピタッと止まるようにする
             _rigidbody2D.velocity = new Vector2(0, _rigidbody2D.velocity.y);
@@ -120,17 +123,36 @@ public class Player : MonoBehaviour {
     }
 
     void MoveCamera() {
-        const int THRESHOLD = 4;
+        const float THRESHOLD_X = 4f;
+        const float THRESHOLD_TOP = 5f;
+        const float THRESHOLD_BOTTOM = 2.15f;
 
-        // 画面中央から左に少し移動した位置をユニティちゃんが超えたら
-        if (transform.position.x > _camera.transform.position.x - THRESHOLD) {
-            // カメラの位置を取得
-            Vector3 cameraPosition = _camera.transform.position;
+        Vector3 cameraPosition = _camera.transform.position;
+
+        // 画面中央から左に少し移動しところをPlayerが超えたとき、
+        if (transform.position.x > _camera.transform.position.x - THRESHOLD_X) {
             // Playerの位置から右に少し移動した位置を画面中央にする
-            cameraPosition.x = transform.position.x + THRESHOLD;
-            _camera.transform.position = cameraPosition;
+            cameraPosition.x = transform.position.x + THRESHOLD_X;
         }
 
+        var playerHeight = _renderer.bounds.size.y;
+        Vector2 min = _camera.ViewportToWorldPoint(new Vector2(0, 0));
+        Vector2 max = _camera.ViewportToWorldPoint(new Vector2(1, 1));
+        if ((transform.position.y - playerHeight) > max.y - THRESHOLD_TOP) {
+            cameraPosition.y += (transform.position.y - playerHeight) - (max.y - THRESHOLD_TOP);
+        } else if (transform.position.y < min.y + THRESHOLD_BOTTOM) {
+            cameraPosition.y += transform.position.y - (min.y + THRESHOLD_BOTTOM);
+
+            // TODO: 場所によってカメラの移動限界を変えたい・・・。やっぱりカメラコリジョン必要？
+            if (cameraPosition.y < 0) {
+                cameraPosition.y = 0;
+            }
+        }
+
+        _camera.transform.position = cameraPosition;
+    }
+
+    private void TrappingPlayer() {
         //カメラ表示領域の左下をワールド座標に変換
         Vector2 min = _camera.ViewportToWorldPoint(new Vector2(0, 0));
         //カメラ表示領域の右上をワールド座標に変換
