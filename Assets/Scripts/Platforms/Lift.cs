@@ -17,6 +17,8 @@ public class Lift : MonoBehaviour {
     Rigidbody2D _rigidbody2D;
     Vector3 _defaultPosition;
 
+    GameObject _player;
+
     // Use this for initialization
     void Start() {
         _rigidbody2D = GetComponent<Rigidbody2D>();
@@ -33,6 +35,24 @@ public class Lift : MonoBehaviour {
             _defaultPosition = transform.position;
 
             _rigidbody2D.velocity *= -1;
+        }
+
+        if (_player != null) {
+            _player.transform.position += (Vector3)(_rigidbody2D.velocity * Time.deltaTime);
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision) {
+        GameObject player = collision.gameObject;
+        if (_player == null && player.tag == "Player") {
+            _player = player;
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D collision) {
+        GameObject player = collision.gameObject;
+        if (_player != null && player.tag == "Player") {
+            _player = null;
         }
     }
 
