@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using Assets.Scripts.Utils;
 
 public class Player : MonoBehaviour {
     public const float SPEED = 4f;
@@ -47,13 +48,6 @@ public class Player : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        // LinecastでPlayerの足元に地面があるか判定
-        _isGrounded = Physics2D.Linecast(
-            transform.position + transform.up * 1,
-            transform.position - transform.up * 0.05f,
-            _groundLayer
-        );
-
         // ジャンプボタンを押し
         if (Input.GetButtonDown("Jump")) {
             // 着地してたとき
@@ -114,6 +108,12 @@ public class Player : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.tag == "Enemy") {
             Damage();
+        }
+
+        CollisionUtil util = new CollisionUtil(collision);
+        if (util.IsLayer("Ground")) {
+            HitType hitType = util.HitTest();
+            _isGrounded = (hitType == HitType.GROUND);
         }
     }
 

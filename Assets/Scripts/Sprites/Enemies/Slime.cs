@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.Scripts.Utils;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -34,19 +35,16 @@ public class Slime : MonoBehaviour {
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
-        int groundLayer = LayerMask.NameToLayer("Ground");
-        if (collision.gameObject.layer == groundLayer) {
-            // from http://www.gamedev.net/topic/673693-how-to-check-if-grounded-in-2d-unity-game/#entry5265297
-            foreach (ContactPoint2D contact in collision.contacts) {
-                if (Vector3.Dot(contact.normal, Vector3.up) > GROUND_ANGLE_TOLERANCE) {
-                    // this collider is touching "ground"
-                } else {
-                    // this collider is touching "wall"
-                    Vector2 scale = gameObject.transform.localScale;
-                    scale.x *= -1;
-                    gameObject.transform.localScale = scale;
-                }
-            }
+        CollisionUtil util = new CollisionUtil(collision);
+        if (!util.IsLayer("Ground")) {
+            return;
+        }
+
+        HitType hitType = util.HitTest();
+        if (hitType == HitType.WALL) {
+            Vector2 scale = gameObject.transform.localScale;
+            scale.x *= -1;
+            gameObject.transform.localScale = scale;
         }
     }
 
