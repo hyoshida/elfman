@@ -85,23 +85,22 @@ public class Player : MonoBehaviour {
 
         // 左=-1、右=1
         float axis = Input.GetAxisRaw("Horizontal");
-        int x = (axis == 0) ? 0 : ((axis > 0) ? 1 : -1);
-        if (x != 0) {
-            // 入力方向へ移動
-            _rigidbody2D.velocity = new Vector2(x * SPEED, _rigidbody2D.velocity.y);
-            // localScale.xを-1にすると画像が反転する
-            Vector2 temp = transform.localScale;
-            temp.x = x;
-            transform.localScale = temp;
-            // 走る
+        int direction = (axis == 0) ? 0 : ((axis > 0) ? 1 : -1);
+        if (direction != 0) {
             _animator.SetBool("run", true);
+
+            Vector2 scale = transform.localScale;
+            scale.x = direction;
+            transform.localScale = scale;
+
+            _rigidbody2D.velocity = new Vector2(transform.localScale.x * SPEED, _rigidbody2D.velocity.y);
+
             // プレイヤーが画面左に後戻りできないようにする
             TrappingPlayer();
         } else {
-            // 横移動の速度を0にしてピタッと止まるようにする
-            _rigidbody2D.velocity = new Vector2(0, _rigidbody2D.velocity.y);
-            // 待機
             _animator.SetBool("run", false);
+
+            _rigidbody2D.velocity = new Vector2(0, _rigidbody2D.velocity.y);
         }
     }
 
