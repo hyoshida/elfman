@@ -48,6 +48,42 @@ public class Player : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        if (GameManager.Instance.gameState == GameState.Pause) {
+            return;
+        }
+        ActionPlayer();
+    }
+
+    void FixedUpdate() {
+        // カメラをプレイヤーに追従させる
+        MoveCamera();
+
+        if (GameManager.Instance.gameState == GameState.Pause) {
+            return;
+        }
+
+        // プレイヤーを移動させる
+        MovePlayer();
+    }
+
+    void OnCollisionEnter2D(Collision2D collision) {
+        if (collision.gameObject.tag == "Enemy") {
+            Damage();
+        }
+
+        CollisionUtil util = new CollisionUtil(collision);
+        if (util.IsLayer("Ground")) {
+            HitType hitType = util.HitTest();
+            _isGrounded = (hitType == HitType.GROUND);
+        }
+    }
+
+    void Damage() {
+        _lifeGaugeImage.fillAmount -= 0.1f;
+        StartCoroutine("DamageAndInvinciblePhase");
+    }
+
+    void ActionPlayer() {
         // ジャンプボタンを押し
         if (Input.GetButtonDown("Jump")) {
             // 着地してたとき
@@ -79,49 +115,11 @@ public class Player : MonoBehaviour {
         }
     }
 
-    void FixedUpdate() {
-        // カメラをプレイヤーに追従させる
-        MoveCamera();
-
-        // 左=-1、右=1
-        float axis = Input.GetAxisRaw("Horizontal");
-        int direction = (axis == 0) ? 0 : ((axis > 0) ? 1 : -1);
-        if (direction != 0) {
-            _animator.SetBool("run", true);
-
-            Vector2 scale = transform.localScale;
-            scale.x = direction;
-            transform.localScale = scale;
-
-            _rigidbody2D.velocity = new Vector2(transform.localScale.x * SPEED, _rigidbody2D.velocity.y);
-
-            // プレイヤーが画面左に後戻りできないようにする
-            TrappingPlayer();
-        } else {
-            _animator.SetBool("run", false);
-
-            _rigidbody2D.velocity = new Vector2(0, _rigidbody2D.velocity.y);
-        }
-    }
-
-    void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.gameObject.tag == "Enemy") {
-            Damage();
-        }
-
-        CollisionUtil util = new CollisionUtil(collision);
-        if (util.IsLayer("Ground")) {
-            HitType hitType = util.HitTest();
-            _isGrounded = (hitType == HitType.GROUND);
-        }
-    }
-
-    void Damage() {
-        _lifeGaugeImage.fillAmount -= 0.1f;
-        StartCoroutine("DamageAndInvinciblePhase");
-    }
-
     void MoveCamera() {
+        if (GameManager.Instance.battleMode != BattleMode.Stage) {
+            return;
+        }
+
         const float THRESHOLD_X = 4f;
         const float THRESHOLD_TOP = 5f;
         const float THRESHOLD_BOTTOM = 2.15f;
@@ -149,6 +147,28 @@ public class Player : MonoBehaviour {
         }
 
         _camera.transform.position = cameraPosition;
+    }
+
+    void MovePlayer() {
+        // 左=-1、右=1
+        float axis = Input.GetAxisRaw("Horizontal");
+        int direction = (axis == 0) ? 0 : ((axis > 0) ? 1 : -1);
+        if (direction != 0) {
+            _animator.SetBool("run", true);
+
+            Vector2 scale = transform.localScale;
+            scale.x = direction;
+            transform.localScale = scale;
+
+            _rigidbody2D.velocity = new Vector2(transform.localScale.x * SPEED, _rigidbody2D.velocity.y);
+
+            // プレイヤーが画面左に後戻りできないようにする
+            TrappingPlayer();
+        } else {
+            _animator.SetBool("run", false);
+
+            _rigidbody2D.velocity = new Vector2(0, _rigidbody2D.velocity.y);
+        }
     }
 
     private void TrappingPlayer() {
