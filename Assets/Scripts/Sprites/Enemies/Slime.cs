@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Utils;
+using Assets.Scripts.Extensions;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -57,7 +58,7 @@ public class Slime : MonoBehaviour {
                 _aiState = AIState.Waiting;
                 break;
             case AIState.Waiting:
-                if (!AnimatorIsPlaying("slime-wait")) {
+                if (!_animator.IsPlaying("slime-wait")) {
                     _prevAiState = AIState.Waiting;
                     _aiState = AIState.Idle;
                 }
@@ -67,7 +68,7 @@ public class Slime : MonoBehaviour {
                 _animator.SetTrigger("walk");
                 break;
             case AIState.Walking:
-                if (AnimatorIsPlaying("slime-walk")) {
+                if (_animator.IsPlaying("slime-walk")) {
                     float direction = gameObject.transform.localScale.x;
                     _rigidbody2D.velocity = new Vector2(SPEED * direction, _rigidbody2D.velocity.y);
                 } else {
@@ -77,14 +78,5 @@ public class Slime : MonoBehaviour {
                 }
                 break;
         }
-    }
-
-    bool AnimatorIsPlaying(string stateName) {
-        return AnimatorIsPlaying() && _animator.GetCurrentAnimatorStateInfo(0).IsName(stateName);
-    }
-
-    bool AnimatorIsPlaying() {
-        AnimatorStateInfo animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-        return animatorStateInfo.length > animatorStateInfo.normalizedTime;
     }
 }
