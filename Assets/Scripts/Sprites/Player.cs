@@ -52,18 +52,12 @@ public class Player : MonoBehaviour {
             return;
         }
         ActionPlayer();
+        MovePlayer();
     }
 
     void FixedUpdate() {
         // カメラをプレイヤーに追従させる
         MoveCamera();
-
-        if (GameManager.Instance.gameState == GameState.Pause) {
-            return;
-        }
-
-        // プレイヤーを移動させる
-        MovePlayer();
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
@@ -90,11 +84,12 @@ public class Player : MonoBehaviour {
         if (Input.GetButtonDown("Jump")) {
             // 着地してたとき
             if (_isGrounded) {
+                _isGrounded = false;
+
                 // runアニメーションを止めて、jumpアニメーションを実行
                 _animator.SetBool("run", false);
                 _animator.SetTrigger("jump");
-                // 着地判定をfalse
-                _isGrounded = false;
+
                 // AddForceにて上方向へ力を加える
                 _rigidbody2D.AddForce(Vector2.up * JUMP_POWER);
             }
