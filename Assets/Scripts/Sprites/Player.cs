@@ -74,7 +74,9 @@ public class Player : MonoBehaviour {
         CollisionUtil util = new CollisionUtil(collision);
         if (util.IsLayer("Ground")) {
             HitType hitType = util.HitTest();
-            _isGrounded = (hitType == HitType.GROUND);
+            if (hitType == HitType.GROUND) {
+                _isGrounded = true;
+            }
         }
     }
 
