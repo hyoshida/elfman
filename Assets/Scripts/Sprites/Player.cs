@@ -82,7 +82,7 @@ public class Player : MonoBehaviour {
 
     void Damage() {
         _lifeGaugeImage.fillAmount -= 0.1f;
-        StartCoroutine("DamageAndInvinciblePhase");
+        StartCoroutine(DamageAndInvinciblePhase());
     }
 
     void ActionPlayer() {
