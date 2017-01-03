@@ -10,6 +10,16 @@ public enum GameScene {
     Stage1
 }
 
+public enum GameState {
+    Playing,
+    Pause
+}
+
+public enum BattleMode {
+    Stage,
+    Boss
+}
+
 public class GameManager {
     private static GameManager _instance;
 
@@ -22,6 +32,9 @@ public class GameManager {
             return _instance;
         }
     }
+
+    public GameState gameState;
+    public BattleMode battleMode;
 
     GameScene _currentScene;
     uint _currentStageCode;
@@ -55,6 +68,8 @@ public class GameManager {
     }
 
     public void GotoStage(uint stageCode) {
+        battleMode = BattleMode.Stage;
+
         // TODO: ステージ選択できるようにする
         SwitchScene(GameScene.Stage1);
         _currentStageCode = stageCode;
