@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using DG.Tweening;
 
 public class Gate : MonoBehaviour {
     [SerializeField]
@@ -10,6 +11,7 @@ public class Gate : MonoBehaviour {
 
     GameObject _player;
     bool _closed;
+    bool _playerMoved;
 
     void Start() {
     }
@@ -26,17 +28,23 @@ public class Gate : MonoBehaviour {
 
         _player = collider.gameObject;
         GameManager.Instance.gameState = GameState.Pause;
+
         StartCoroutine(ForceMovePlayer());
     }
 
     IEnumerator ForceMovePlayer() {
-        yield return new WaitForSeconds(0.5f);
+        float during = 1.5f;
+        Vector3 position = new Vector3(_goal.transform.position.x, _player.transform.position.y, _player.transform.position.z);
+        _player.transform.DOMove(position, during).OnComplete(() => _playerMoved = true);
 
-        _player.transform.position = _goal.transform.position;
-
-        yield return new WaitForSeconds(0.5f);
+        // TODO: ここ雑だからなんとかしたい
+        while (!_playerMoved) {
+            yield return null;
+        }
 
         _bossSpawner.GetComponent<BossSpawner>().Spawn();
+
+        // TODO: プレイヤーを立ちモーションにしたい
 
         yield return new WaitForSeconds(1f);
 
