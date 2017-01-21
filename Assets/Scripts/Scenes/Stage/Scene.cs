@@ -7,6 +7,7 @@ namespace Stage {
     enum State {
         Playing,
         GameOver,
+        GameClear,
     }
 
     public class Scene : ApplicationScene {
@@ -17,7 +18,7 @@ namespace Stage {
         GameObject _gameOverLabel;
 
         [SerializeField]
-        GameObject _gate;
+        GameObject _gameClearLabel;
 
         Player _playerInstance;
         bool _gameOvered;
@@ -30,6 +31,14 @@ namespace Stage {
             _state = State.GameOver;
             _gameOverLabel.SetActive(true);
             Destroy(_player);
+        }
+
+        public void GameClear() {
+            if (_state == State.GameClear) {
+                return;
+            }
+            _state = State.GameClear;
+            _gameClearLabel.SetActive(true);
         }
 
         // Use this for initialization
@@ -47,6 +56,9 @@ namespace Stage {
                 case State.GameOver:
                     UpdateForGameOverState();
                     break;
+                case State.GameClear:
+                    UpdateForGameClearState();
+                    break;
             }
         }
 
@@ -59,6 +71,12 @@ namespace Stage {
         void UpdateForGameOverState() {
             if (Input.GetButtonDown("Fire1")) {
                 GameManager.Instance.GotoStill();
+            }
+        }
+
+        void UpdateForGameClearState() {
+            if (Input.GetButtonDown("Fire1")) {
+                GameManager.Instance.GotoStageSelect();
             }
         }
     }

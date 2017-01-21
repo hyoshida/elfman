@@ -7,6 +7,7 @@ public enum GameScene {
     Title,
     Collection,
     Still,
+    StageSelect,
     Stage1
 }
 
@@ -65,6 +66,10 @@ public class GameManager {
 
     public void GotoStill() {
         SwitchScene(GameScene.Still);
+    }
+
+    public void GotoStageSelect() {
+        SwitchScene(GameScene.StageSelect);
     }
 
     public void GotoStage(uint stageCode) {

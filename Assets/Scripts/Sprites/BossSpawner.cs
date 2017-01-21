@@ -36,7 +36,7 @@ public class BossSpawner : MonoBehaviour {
         // TODO: この辺の作りかなり雑
         var stageScene = ApplicationScene.Instance as Stage.Scene;
         if (stageScene) {
-            stageScene.GameOver();
+            stageScene.GameClear();
         }
     }
 }
