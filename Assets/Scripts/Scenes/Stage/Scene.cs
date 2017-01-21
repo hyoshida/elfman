@@ -7,6 +7,7 @@ namespace Stage {
     enum State {
         Playing,
         GameOver,
+        GameClear,
     }
 
     public class Scene : ApplicationScene {
@@ -32,6 +33,14 @@ namespace Stage {
             Destroy(_player);
         }
 
+        public void GameClear() {
+            if (_state == State.GameClear) {
+                return;
+            }
+            _state = State.GameClear;
+            _gameOverLabel.SetActive(true);
+        }
+
         // Use this for initialization
         void Start() {
             _state = State.Playing;
@@ -47,6 +56,9 @@ namespace Stage {
                 case State.GameOver:
                     UpdateForGameOverState();
                     break;
+                case State.GameClear:
+                    UpdateForGameClearState();
+                    break;
             }
         }
 
@@ -59,6 +71,12 @@ namespace Stage {
         void UpdateForGameOverState() {
             if (Input.GetButtonDown("Fire1")) {
                 GameManager.Instance.GotoStill();
+            }
+        }
+
+        void UpdateForGameClearState() {
+            if (Input.GetButtonDown("Fire1")) {
+                GameManager.Instance.GotoStageSelect();
             }
         }
     }
