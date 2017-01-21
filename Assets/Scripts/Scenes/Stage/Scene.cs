@@ -20,9 +20,6 @@ namespace Stage {
         [SerializeField]
         GameObject _gameClearLabel;
 
-        [SerializeField]
-        GameObject _gate;
-
         Player _playerInstance;
         bool _gameOvered;
         State _state;
