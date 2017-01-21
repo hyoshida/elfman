@@ -18,6 +18,9 @@ namespace Stage {
         GameObject _gameOverLabel;
 
         [SerializeField]
+        GameObject _gameClearLabel;
+
+        [SerializeField]
         GameObject _gate;
 
         Player _playerInstance;
@@ -38,7 +41,7 @@ namespace Stage {
                 return;
             }
             _state = State.GameClear;
-            _gameOverLabel.SetActive(true);
+            _gameClearLabel.SetActive(true);
         }
 
         // Use this for initialization
