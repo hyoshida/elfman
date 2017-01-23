@@ -53,11 +53,11 @@ public class Player : MonoBehaviour {
         }
         ActionPlayer();
         MovePlayer();
+        MoveCamera();
     }
 
     void FixedUpdate() {
         // カメラをプレイヤーに追従させる
-        MoveCamera();
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
@@ -87,7 +87,7 @@ public class Player : MonoBehaviour {
                 _isGrounded = false;
 
                 // runアニメーションを止めて、jumpアニメーションを実行
-                _animator.SetBool("run", false);
+                _animator.SetBool("isRunning", false);
                 _animator.SetTrigger("jump");
 
                 // AddForceにて上方向へ力を加える
@@ -151,7 +151,7 @@ public class Player : MonoBehaviour {
         float axis = Input.GetAxisRaw("Horizontal");
         int direction = (axis == 0) ? 0 : ((axis > 0) ? 1 : -1);
         if (direction != 0) {
-            _animator.SetBool("run", true);
+            _animator.SetBool("isRunning", true);
 
             Vector2 scale = transform.localScale;
             scale.x = direction;
@@ -162,7 +162,7 @@ public class Player : MonoBehaviour {
             // プレイヤーが画面左に後戻りできないようにする
             TrappingPlayer();
         } else {
-            _animator.SetBool("run", false);
+            _animator.SetBool("isRunning", false);
 
             _rigidbody2D.velocity = new Vector2(0, _rigidbody2D.velocity.y);
         }
