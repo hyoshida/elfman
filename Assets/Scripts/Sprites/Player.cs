@@ -105,10 +105,15 @@ public class Player : MonoBehaviour {
         _animator.SetBool("isJumping", isJumping);
         _animator.SetBool("isFalling", isFalling);
 
-        // 弾を打つ
+        // 近距離攻撃
         if (Input.GetButtonDown("Fire1")) {
+            _animator.SetTrigger("attack");
+        }
+
+        // 遠距離攻撃
+        if (Input.GetButtonDown("Fire2")) {
             _animator.SetTrigger("shot");
-            Instantiate(_bullet, transform.position + new Vector3(0f, 1.2f, 0f), transform.rotation);
+            Instantiate(_bullet, transform.position + new Vector3(0f, 0f, 0f), transform.rotation);
         }
     }
 
