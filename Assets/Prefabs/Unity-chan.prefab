@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 58113417055201090}
   - component: {fileID: 114295413807224458}
   m_Layer: 10
-  m_Name: Player
+  m_Name: Unity-chan
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
