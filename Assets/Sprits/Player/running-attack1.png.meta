@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 39d1b4aea13166348b91fd4cd93954d9
-timeCreated: 1485189274
+timeCreated: 1485264651
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -10,6 +10,9 @@ TextureImporter:
     21300006: running-attack1_3
     21300008: running-attack1_4
     21300010: running-attack1_5
+    21300012: running-attack1_6
+    21300014: running-attack1_7
+    21300016: running-attack1_8
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -88,7 +91,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 300
         width: 300
         height: 150
       alignment: 0
@@ -101,7 +104,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 300
-        y: 0
+        y: 300
         width: 300
         height: 150
       alignment: 0
@@ -114,7 +117,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 600
-        y: 0
+        y: 300
         width: 300
         height: 150
       alignment: 0
@@ -126,8 +129,8 @@ TextureImporter:
       name: running-attack1_3
       rect:
         serializedVersion: 2
-        x: 900
-        y: 0
+        x: 0
+        y: 150
         width: 300
         height: 150
       alignment: 0
@@ -139,8 +142,8 @@ TextureImporter:
       name: running-attack1_4
       rect:
         serializedVersion: 2
-        x: 1200
-        y: 0
+        x: 300
+        y: 150
         width: 300
         height: 150
       alignment: 0
@@ -152,7 +155,46 @@ TextureImporter:
       name: running-attack1_5
       rect:
         serializedVersion: 2
-        x: 1500
+        x: 600
+        y: 150
+        width: 300
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: running-attack1_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 300
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: running-attack1_7
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 0
+        width: 300
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: running-attack1_8
+      rect:
+        serializedVersion: 2
+        x: 600
         y: 0
         width: 300
         height: 150
