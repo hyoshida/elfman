@@ -2,8 +2,14 @@
 
 namespace Assets.Scripts.Extensions {
     public static class AnimatorExtension {
-        public static bool IsPlaying(this Animator animator, string stateName) {
-            return animator.GetCurrentAnimatorStateInfo(0).IsName(stateName);
+        public static bool IsPlaying(this Animator animator, params string[] stateNames) {
+            AnimatorStateInfo animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            foreach (string stateName in stateNames) {
+                if (animatorStateInfo.IsName(stateName)) {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public static bool IsPlaying(this Animator animator) {

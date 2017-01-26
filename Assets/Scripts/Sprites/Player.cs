@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using Assets.Scripts.Utils;
+using Assets.Scripts.Extensions;
 
 public class Player : MonoBehaviour {
     public const float SPEED = 4f;
@@ -83,7 +84,7 @@ public class Player : MonoBehaviour {
         // ジャンプボタンを押し
         if (Input.GetButtonDown("Jump")) {
             // 着地してたとき
-            if (_isGrounded) {
+            if (_isGrounded && _animator.IsPlaying("waiting", "running", "running-attack1", "jumping5")) {
                 _isGrounded = false;
 
                 // runアニメーションを止めて、jumpアニメーションを実行
