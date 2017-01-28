@@ -6,5 +6,9 @@ public class Enemy : MonoBehaviour {
             Destroy(collider.gameObject);
             Destroy(gameObject);
         }
+
+        if (collider.tag == "Sword") {
+            Destroy(gameObject);
+        }
     }
 }

@@ -106,6 +106,11 @@ public class Player : MonoBehaviour {
         _animator.SetBool("isJumping", isJumping);
         _animator.SetBool("isFalling", isFalling);
 
+        // 着地してなさそう
+        if (isJumping || isFalling) {
+            //_isGrounded = false;
+        }
+
         // 近距離攻撃
         if (Input.GetButtonDown("Fire1")) {
             _animator.SetTrigger("attack");
