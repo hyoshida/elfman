@@ -5,7 +5,7 @@ using Assets.Scripts.Utils;
 using Assets.Scripts.Extensions;
 
 public class Player : MonoBehaviour {
-    public const float SPEED = 4f;
+    public const float SPEED = 8f;
     public const int JUMP_POWER = 700;
 
     [SerializeField]
