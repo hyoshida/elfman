@@ -134,11 +134,8 @@ public class Player : MonoBehaviour {
 
         Vector3 cameraPosition = _camera.transform.position;
 
-        // 画面中央から左に少し移動しところをPlayerが超えたとき、
-        if (transform.position.x > _camera.transform.position.x - THRESHOLD_X) {
-            // Playerの位置から右に少し移動した位置を画面中央にする
-            cameraPosition.x = transform.position.x + THRESHOLD_X;
-        }
+        // Playerの位置から右に少し移動した位置を画面中央にする
+        cameraPosition.x = transform.position.x + THRESHOLD_X;
 
         var playerHeight = _renderer.bounds.size.y;
         Vector2 min = _camera.ViewportToWorldPoint(new Vector2(0, 0));
@@ -169,26 +166,11 @@ public class Player : MonoBehaviour {
             transform.localScale = scale;
 
             _rigidbody2D.velocity = new Vector2(transform.localScale.x * SPEED, _rigidbody2D.velocity.y);
-
-            // プレイヤーが画面左に後戻りできないようにする
-            TrappingPlayer();
         } else {
             _animator.SetBool("isRunning", false);
 
             _rigidbody2D.velocity = new Vector2(0, _rigidbody2D.velocity.y);
         }
-    }
-
-    private void TrappingPlayer() {
-        //カメラ表示領域の左下をワールド座標に変換
-        Vector2 min = _camera.ViewportToWorldPoint(new Vector2(0, 0));
-        //カメラ表示領域の右上をワールド座標に変換
-        Vector2 max = _camera.ViewportToWorldPoint(new Vector2(1, 1));
-
-        Vector2 playerPosition = transform.position;
-        // Playerのx座標の移動範囲をClampメソッドで制限
-        playerPosition.x = Mathf.Clamp(playerPosition.x, min.x + 0.5f, max.x);
-        transform.position = playerPosition;
     }
 
     IEnumerator DamageAndInvinciblePhase() {
