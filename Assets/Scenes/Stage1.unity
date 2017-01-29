@@ -43732,8 +43732,7 @@ Prefab:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 58123550709688656, guid: 3f7966e9b974b3d4984f2664576038bb,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -43817,9 +43816,14 @@ Prefab:
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[7].y
       value: -0.8
       objectReference: {fileID: 0}
+    - target: {fileID: 114842091489783596, guid: 3f7966e9b974b3d4984f2664576038bb,
+        type: 2}
+      propertyPath: _lifeGauge
+      value:
+      objectReference: {fileID: 1953078712}
     m_RemovedComponents:
-    - {fileID: 61023269027308154, guid: 3f7966e9b974b3d4984f2664576038bb, type: 2}
-    - {fileID: 58123550709688656, guid: 3f7966e9b974b3d4984f2664576038bb, type: 2}
+    - {fileID: 0}
+    - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 3f7966e9b974b3d4984f2664576038bb, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &1688368919
