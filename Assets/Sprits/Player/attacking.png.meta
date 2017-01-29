@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 94d22b8f61aae944ca8c434b1de4f5df
-timeCreated: 1485444009
+timeCreated: 1485681947
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -97,7 +97,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 600
+        y: 1800
         width: 300
         height: 150
       alignment: 0
@@ -109,8 +109,8 @@ TextureImporter:
       name: attacking_1
       rect:
         serializedVersion: 2
-        x: 300
-        y: 600
+        x: 0
+        y: 1650
         width: 300
         height: 150
       alignment: 0
@@ -122,8 +122,8 @@ TextureImporter:
       name: attacking_2
       rect:
         serializedVersion: 2
-        x: 600
-        y: 600
+        x: 0
+        y: 1500
         width: 300
         height: 150
       alignment: 0
@@ -136,7 +136,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 450
+        y: 1350
         width: 300
         height: 150
       alignment: 0
@@ -148,8 +148,8 @@ TextureImporter:
       name: attacking_4
       rect:
         serializedVersion: 2
-        x: 300
-        y: 450
+        x: 0
+        y: 1200
         width: 300
         height: 150
       alignment: 0
@@ -161,8 +161,8 @@ TextureImporter:
       name: attacking_5
       rect:
         serializedVersion: 2
-        x: 600
-        y: 450
+        x: 0
+        y: 1050
         width: 300
         height: 150
       alignment: 0
@@ -175,7 +175,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 300
+        y: 900
         width: 300
         height: 150
       alignment: 0
@@ -187,8 +187,8 @@ TextureImporter:
       name: attacking_7
       rect:
         serializedVersion: 2
-        x: 300
-        y: 300
+        x: 0
+        y: 750
         width: 300
         height: 150
       alignment: 0
@@ -200,8 +200,8 @@ TextureImporter:
       name: attacking_8
       rect:
         serializedVersion: 2
-        x: 600
-        y: 300
+        x: 0
+        y: 600
         width: 300
         height: 150
       alignment: 0
@@ -214,7 +214,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 150
+        y: 450
         width: 300
         height: 150
       alignment: 0
@@ -226,8 +226,8 @@ TextureImporter:
       name: attacking_10
       rect:
         serializedVersion: 2
-        x: 300
-        y: 150
+        x: 0
+        y: 300
         width: 300
         height: 150
       alignment: 0
@@ -239,7 +239,7 @@ TextureImporter:
       name: attacking_11
       rect:
         serializedVersion: 2
-        x: 600
+        x: 0
         y: 150
         width: 300
         height: 150
@@ -253,32 +253,6 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 300
-        height: 150
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: attacking_13
-      rect:
-        serializedVersion: 2
-        x: 300
-        y: 0
-        width: 300
-        height: 150
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: attacking_14
-      rect:
-        serializedVersion: 2
-        x: 600
         y: 0
         width: 300
         height: 150
