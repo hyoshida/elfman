@@ -32524,7 +32524,6 @@ GameObject:
   - component: {fileID: 1274844036}
   - component: {fileID: 1274844040}
   - component: {fileID: 1274844039}
-  - component: {fileID: 1274844038}
   - component: {fileID: 1274844037}
   - component: {fileID: 1274844041}
   m_Layer: 8
@@ -32561,26 +32560,6 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 3, y: 1}
---- !u!50 &1274844038
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1274844035}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 3
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!114 &1274844039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43819,7 +43798,7 @@ Prefab:
     - target: {fileID: 114842091489783596, guid: 3f7966e9b974b3d4984f2664576038bb,
         type: 2}
       propertyPath: _lifeGauge
-      value:
+      value: 
       objectReference: {fileID: 1953078712}
     m_RemovedComponents:
     - {fileID: 0}
@@ -44333,7 +44312,6 @@ GameObject:
   - component: {fileID: 1706220743}
   - component: {fileID: 1706220746}
   - component: {fileID: 1706220745}
-  - component: {fileID: 1706220744}
   - component: {fileID: 1706220747}
   m_Layer: 8
   m_Name: lift
@@ -44355,26 +44333,6 @@ Transform:
   m_Father: {fileID: 472213728}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &1706220744
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1706220742}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 3
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!114 &1706220745
 MonoBehaviour:
   m_ObjectHideFlags: 0

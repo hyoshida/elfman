@@ -14,31 +14,27 @@ public class Lift : MonoBehaviour {
     [SerializeField]
     float _speed = 1;
 
-    Rigidbody2D _rigidbody2D;
     Vector3 _defaultPosition;
-
+    Vector2 _velocity;
     GameObject _player;
 
     // Use this for initialization
     void Start() {
-        _rigidbody2D = GetComponent<Rigidbody2D>();
-        _rigidbody2D.velocity = DegreeToVector2(_degree) * _speed;
+        _velocity = DegreeToVector2(_degree) * _speed;
         _defaultPosition = transform.position;
     }
 
-    // Update is called once per frame
-    void Update() {
+    void FixedUpdate() {
+        transform.position += (Vector3)(_velocity * Time.deltaTime);
+
         float distance = Vector3.Distance(_defaultPosition, transform.position);
         if (distance > _distance) {
-            transform.position = (Vector2)_defaultPosition + (_rigidbody2D.velocity / _speed * _distance);
-
-            _defaultPosition = transform.position;
-
-            _rigidbody2D.velocity *= -1;
+            _defaultPosition += (Vector3)(_velocity / _speed * _distance);
+            _velocity *= -1;
         }
 
         if (_player != null) {
-            _player.transform.position += (Vector3)(_rigidbody2D.velocity * Time.deltaTime);
+            _player.transform.position += (Vector3)(_velocity * Time.deltaTime);
         }
     }
 
