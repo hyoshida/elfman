@@ -128,15 +128,13 @@ public class Player : MonoBehaviour {
             return;
         }
 
-        const float THRESHOLD_X = 4f;
-        const float THRESHOLD_TOP = 5f;
-        const float THRESHOLD_BOTTOM = 2.15f;
-
         Vector3 cameraPosition = _camera.transform.position;
 
         // Playerの位置から右に少し移動した位置を画面中央にする
-        cameraPosition.x = transform.position.x + THRESHOLD_X;
+        cameraPosition.x = transform.position.x;
 
+        const float THRESHOLD_TOP = 5f;
+        const float THRESHOLD_BOTTOM = 2.15f;
         var playerHeight = _renderer.bounds.size.y;
         Vector2 min = _camera.ViewportToWorldPoint(new Vector2(0, 0));
         Vector2 max = _camera.ViewportToWorldPoint(new Vector2(1, 1));
