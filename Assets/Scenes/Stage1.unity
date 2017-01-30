@@ -1511,6 +1511,26 @@ GameObject:
   m_PrefabParentObject: {fileID: 1200327709680846, guid: 3f7966e9b974b3d4984f2664576038bb,
     type: 2}
   m_PrefabInternal: {fileID: 1688106913}
+--- !u!114 &55074417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 55074410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2251b651ddeed2489815f26b026e905, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trailSize: 3
+  spacing: 6
+  color: {r: 0, g: 0, b: 1, a: 0.5019608}
+  ghostMaterial: []
+  ghostSpriteSortingOrder: -1
+  renderOnMotion: 1
+  colorAlphaOverride: 1
+  alphaFluctuationOverride: 0.5
+  alphaFluctuationDivisor: 128
 --- !u!1001 &56198382
 Prefab:
   m_ObjectHideFlags: 0
