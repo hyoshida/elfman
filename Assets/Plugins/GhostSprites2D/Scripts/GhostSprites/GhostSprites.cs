@@ -124,6 +124,10 @@ public class GhostSprites : MonoBehaviour
 
 	}
 
+    public bool HasGhosts() {
+        return ghostList.Count > 0;
+    }
+
     private void KillSwitchEngage()
     {
         killSwitch = true;

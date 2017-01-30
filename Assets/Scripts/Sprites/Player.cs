@@ -25,6 +25,7 @@ public class Player : MonoBehaviour {
     bool _isGrounded;
     Renderer _renderer;
     Image _lifeGaugeImage;
+    GhostSprites _ghostSprites;
     int _lastRunningDirection;
     float _lastRunningAt;
     float _lastWaitingAt;
@@ -50,6 +51,7 @@ public class Player : MonoBehaviour {
         _camera = Camera.main;
         _renderer = GetComponent<Renderer>();
         _lifeGaugeImage = _lifeGauge.GetComponent<Image>();
+        _ghostSprites = GetComponent<GhostSprites>();
     }
 
     // Update is called once per frame
@@ -165,6 +167,8 @@ public class Player : MonoBehaviour {
     }
 
     void MovePlayer() {
+        bool isDashing = _animator.GetBool("isDashing");
+
         // 左=-1、右=1
         float axis = Input.GetAxisRaw("Horizontal");
         int direction = (axis == 0) ? 0 : ((axis > 0) ? 1 : -1);
@@ -172,6 +176,8 @@ public class Player : MonoBehaviour {
             float doubleTapTime = _lastWaitingAt - _lastRunningAt;
             if (((doubleTapTime > 0) && (doubleTapTime < 0.15f)) && (_lastRunningDirection == direction)) {
                 _animator.SetBool("isDashing", true);
+                _ghostSprites.enabled = true;
+                isDashing = true;
             }
 
             _lastRunningAt = Time.time;
@@ -183,7 +189,6 @@ public class Player : MonoBehaviour {
             scale.x = direction;
             transform.localScale = scale;
 
-            bool isDashing = _animator.GetBool("isDashing");
             float speed = isDashing ? DASHING_SPEED : RUNNING_SPEED;
             _rigidbody2D.velocity = new Vector2(transform.localScale.x * speed, _rigidbody2D.velocity.y);
         } else {
@@ -193,6 +198,11 @@ public class Player : MonoBehaviour {
             _animator.SetBool("isDashing", false);
 
             _rigidbody2D.velocity = new Vector2(0, _rigidbody2D.velocity.y);
+        }
+
+        if (!isDashing && !_ghostSprites.HasGhosts()) {
+            // 立ち止まったら残像を消す
+            _ghostSprites.enabled = false;
         }
     }
 
