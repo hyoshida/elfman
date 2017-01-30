@@ -5,8 +5,10 @@ using Assets.Scripts.Utils;
 using Assets.Scripts.Extensions;
 
 public class Player : MonoBehaviour {
-    public const float SPEED = 6f;
+    public const float RUNNING_SPEED = 6f;
+    public const float DASHING_SPEED = RUNNING_SPEED * 1.5f;
     public const int JUMP_POWER = 700;
+    public const int DASH_POWER = 7000;
 
     [SerializeField]
     LayerMask _groundLayer;
@@ -23,6 +25,9 @@ public class Player : MonoBehaviour {
     bool _isGrounded;
     Renderer _renderer;
     Image _lifeGaugeImage;
+    int _lastRunningDirection;
+    float _lastRunningAt;
+    float _lastWaitingAt;
 
     public bool IsDead {
         get {
@@ -84,7 +89,7 @@ public class Player : MonoBehaviour {
         // ジャンプボタンを押し
         if (Input.GetButtonDown("Jump")) {
             // 着地してたとき
-            if (_isGrounded && _animator.IsPlaying("waiting", "running", "running-attack1", "jumping5")) {
+            if (_isGrounded && _animator.IsPlaying("waiting", "running", "running-attack1", "dashing", "jumping5")) {
                 _isGrounded = false;
 
                 // runアニメーションを止めて、jumpアニメーションを実行
@@ -114,12 +119,19 @@ public class Player : MonoBehaviour {
         // 近距離攻撃
         if (Input.GetButtonDown("Fire1")) {
             _animator.SetTrigger("attack");
+            _animator.SetBool("isDashing", false);
         }
 
         // 遠距離攻撃
         if (Input.GetButtonDown("Fire2")) {
             _animator.SetTrigger("shot");
             Instantiate(_bullet, transform.position + new Vector3(0f, 0f, 0f), transform.rotation);
+        }
+
+        // ダッシュ
+        if (Input.GetButtonDown("Fire3")) {
+            // _animator.SetTrigger("dash");
+            // _rigidbody2D.AddForce(Vector2.right * DASH_POWER);
         }
     }
 
@@ -157,15 +169,28 @@ public class Player : MonoBehaviour {
         float axis = Input.GetAxisRaw("Horizontal");
         int direction = (axis == 0) ? 0 : ((axis > 0) ? 1 : -1);
         if (direction != 0) {
+            float doubleTapTime = _lastWaitingAt - _lastRunningAt;
+            if (((doubleTapTime > 0) && (doubleTapTime < 0.15f)) && (_lastRunningDirection == direction)) {
+                _animator.SetBool("isDashing", true);
+            }
+
+            _lastRunningAt = Time.time;
+            _lastRunningDirection = direction;
+
             _animator.SetBool("isRunning", true);
 
             Vector2 scale = transform.localScale;
             scale.x = direction;
             transform.localScale = scale;
 
-            _rigidbody2D.velocity = new Vector2(transform.localScale.x * SPEED, _rigidbody2D.velocity.y);
+            bool isDashing = _animator.GetBool("isDashing");
+            float speed = isDashing ? DASHING_SPEED : RUNNING_SPEED;
+            _rigidbody2D.velocity = new Vector2(transform.localScale.x * speed, _rigidbody2D.velocity.y);
         } else {
+            _lastWaitingAt = Time.time;
+
             _animator.SetBool("isRunning", false);
+            _animator.SetBool("isDashing", false);
 
             _rigidbody2D.velocity = new Vector2(0, _rigidbody2D.velocity.y);
         }
