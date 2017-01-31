@@ -181,7 +181,7 @@ public class Player : MonoBehaviour {
         int direction = (axis == 0) ? 0 : ((axis > 0) ? 1 : -1);
         if (direction != 0) {
             float doubleTapTime = _lastWaitingAt - _lastRunningAt;
-            if (((doubleTapTime > 0) && (doubleTapTime < 0.15f)) && (_lastRunningDirection == direction)) {
+            if (((doubleTapTime > 0) && (doubleTapTime < 0.15f)) && (_lastRunningDirection == direction) && _isGrounded) {
                 _animator.SetBool("isDashing", true);
                 _ghostSprites.enabled = true;
                 isDashing = true;
