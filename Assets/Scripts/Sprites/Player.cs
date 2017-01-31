@@ -44,6 +44,12 @@ public class Player : MonoBehaviour {
         }
     }
 
+    bool IsAttacking {
+        get {
+            return _animator.IsPlaying("attacking1", "attacking2", "attacking3");
+        }
+    }
+
     // Use this for initialization
     void Start() {
         _animator = GetComponent<Animator>();
@@ -129,6 +135,7 @@ public class Player : MonoBehaviour {
         if (Input.GetButtonDown("Fire1")) {
             _animator.SetTrigger("attack");
             _animator.SetBool("isDashing", false);
+            _animator.SetBool("isRunning", false);
         }
 
         // 遠距離攻撃
@@ -179,7 +186,7 @@ public class Player : MonoBehaviour {
         // 左=-1、右=1
         float axis = Input.GetAxisRaw("Horizontal");
         int direction = (axis == 0) ? 0 : ((axis > 0) ? 1 : -1);
-        if (direction != 0) {
+        if (direction != 0 && !IsAttacking) {
             float doubleTapTime = _lastWaitingAt - _lastRunningAt;
             if (((doubleTapTime > 0) && (doubleTapTime < 0.15f)) && (_lastRunningDirection == direction) && _isGrounded) {
                 _animator.SetBool("isDashing", true);
