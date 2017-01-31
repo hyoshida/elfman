@@ -72,12 +72,24 @@ public class Player : MonoBehaviour {
         if (collision.gameObject.tag == "Enemy") {
             Damage();
         }
+    }
 
+    void OnCollisionStay2D(Collision2D collision) {
         CollisionUtil util = new CollisionUtil(collision);
         if (util.IsLayer("Ground")) {
             HitType hitType = util.HitTest();
             if (hitType == HitType.GROUND) {
                 _isGrounded = true;
+            }
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D collision) {
+        CollisionUtil util = new CollisionUtil(collision);
+        if (util.IsLayer("Ground")) {
+            HitType hitType = util.HitTest();
+            if (hitType == HitType.GROUND) {
+                _isGrounded = false;
             }
         }
     }
@@ -112,11 +124,6 @@ public class Player : MonoBehaviour {
         // アニメーションに反映する
         _animator.SetBool("isJumping", isJumping);
         _animator.SetBool("isFalling", isFalling);
-
-        // 着地してなさそう
-        if (isJumping || isFalling) {
-            //_isGrounded = false;
-        }
 
         // 近距離攻撃
         if (Input.GetButtonDown("Fire1")) {
