@@ -30,6 +30,7 @@ public class Player : MonoBehaviour {
     int _lastRunningDirection;
     float _lastRunningAt;
     float _lastWaitingAt;
+    bool _frozen;
 
     public bool IsDead {
         get {
@@ -66,8 +67,10 @@ public class Player : MonoBehaviour {
         if (GameManager.Instance.gameState == GameState.Pause) {
             return;
         }
-        ActionPlayer();
-        MovePlayer();
+        if (!_frozen) {
+            ActionPlayer();
+            MovePlayer();
+        }
         MoveCamera();
     }
 
@@ -134,9 +137,14 @@ public class Player : MonoBehaviour {
 
         // 近距離攻撃
         if (Input.GetButtonDown("Fire1")) {
+            bool isDashing = _animator.GetBool("isDashing");
+            if (isDashing) {
+                StartCoroutine(DashAttackingPhase());
+            } else {
+                _animator.SetBool("isDashing", false);
+                _animator.SetBool("isRunning", false);
+            }
             _animator.SetTrigger("attack");
-            _animator.SetBool("isDashing", false);
-            _animator.SetBool("isRunning", false);
         }
 
         // 遠距離攻撃
@@ -239,5 +247,28 @@ public class Player : MonoBehaviour {
 
         // レイヤーをPlayerに戻す
         gameObject.layer = LayerMask.NameToLayer("Player");
+    }
+
+    IEnumerator DashAttackingPhase() {
+        _frozen = true;
+
+        yield return new WaitForEndOfFrame();
+        _animator.SetBool("isDashing", false);
+        _animator.SetBool("isRunning", false);
+
+        const float SLIDING_SEC = 0.3f;
+
+        float time = 0f;
+        while (time < SLIDING_SEC) {
+            yield return new WaitForEndOfFrame();
+
+            float ratio = Mathf.SmoothStep(1f, 0f, time / SLIDING_SEC);
+            float speed = DASHING_SPEED * ratio;
+            _rigidbody2D.velocity = new Vector2(transform.localScale.x * speed, _rigidbody2D.velocity.y);
+
+            time += Time.deltaTime;
+        }
+
+        _frozen = false;
     }
 }
