@@ -43925,12 +43925,12 @@ Prefab:
     - target: {fileID: 60409106139251132, guid: 3f7966e9b974b3d4984f2664576038bb,
         type: 2}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[2].x
-      value: 0.34
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 60409106139251132, guid: 3f7966e9b974b3d4984f2664576038bb,
         type: 2}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[3].x
-      value: 0.34
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 60409106139251132, guid: 3f7966e9b974b3d4984f2664576038bb,
         type: 2}
@@ -43940,12 +43940,12 @@ Prefab:
     - target: {fileID: 60409106139251132, guid: 3f7966e9b974b3d4984f2664576038bb,
         type: 2}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[6].x
-      value: -0.34
+      value: -0.35
       objectReference: {fileID: 0}
     - target: {fileID: 60409106139251132, guid: 3f7966e9b974b3d4984f2664576038bb,
         type: 2}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[7].x
-      value: -0.34
+      value: -0.35
       objectReference: {fileID: 0}
     - target: {fileID: 60409106139251132, guid: 3f7966e9b974b3d4984f2664576038bb,
         type: 2}
