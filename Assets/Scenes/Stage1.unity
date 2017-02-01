@@ -24147,6 +24147,7 @@ GameObject:
   m_Component:
   - component: {fileID: 949285544}
   - component: {fileID: 949285545}
+  - component: {fileID: 949285546}
   m_Layer: 10
   m_Name: Sword
   m_TagString: Sword
@@ -24183,6 +24184,17 @@ BoxCollider2D:
   m_Offset: {x: 0.8, y: -0.09}
   serializedVersion: 2
   m_Size: {x: 1.27, y: 1.53}
+--- !u!114 &949285546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 949285543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 813425473834d394caea48b1f3e29992, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
 --- !u!1001 &950555213
 Prefab:
   m_ObjectHideFlags: 0
