@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using Assets.Scripts.Utils;
 using Assets.Scripts.Extensions;
+using System;
 
 public class Player : MonoBehaviour {
     public const float RUNNING_SPEED = 6f;
@@ -200,7 +201,7 @@ public class Player : MonoBehaviour {
             _animator.SetBool("isRunning", true);
 
             Vector2 scale = transform.localScale;
-            scale.x = direction;
+            scale.x = Math.Abs(scale.x) * direction;
             transform.localScale = scale;
 
             float speed = isDashing ? DASHING_SPEED : RUNNING_SPEED;
