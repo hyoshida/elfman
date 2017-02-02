@@ -31,6 +31,7 @@ public class Player : MonoBehaviour {
     float _lastRunningAt;
     float _lastWaitingAt;
     bool _frozen;
+    PlayerJumpingAction _jumpAction;
 
     public bool IsDead {
         get {
@@ -43,6 +44,16 @@ public class Player : MonoBehaviour {
             }
 
             return false;
+        }
+    }
+
+    public bool IsGrounded {
+        get {
+            return _isGrounded;
+        }
+
+        set {
+            _isGrounded = value;
         }
     }
 
@@ -60,6 +71,7 @@ public class Player : MonoBehaviour {
         _renderer = GetComponent<Renderer>();
         _lifeGaugeImage = _lifeGauge.GetComponent<Image>();
         _ghostSprites = GetComponent<GhostSprites>();
+        _jumpAction = new PlayerJumpingAction(this, JUMP_POWER);
     }
 
     // Update is called once per frame
@@ -111,19 +123,7 @@ public class Player : MonoBehaviour {
 
     void ActionPlayer() {
         // ジャンプボタンを押し
-        if (Input.GetButtonDown("Jump")) {
-            // 着地してたとき
-            if (_isGrounded && _animator.IsPlaying("waiting", "running", "running-attack1", "dashing", "jumping5")) {
-                _isGrounded = false;
-
-                // runアニメーションを止めて、jumpアニメーションを実行
-                _animator.SetBool("isRunning", false);
-                _animator.SetTrigger("jump");
-
-                // AddForceにて上方向へ力を加える
-                _rigidbody2D.AddForce(Vector2.up * JUMP_POWER);
-            }
-        }
+        _jumpAction.Update();
 
         // 上下への移動速度を取得
         float velY = _rigidbody2D.velocity.y;
