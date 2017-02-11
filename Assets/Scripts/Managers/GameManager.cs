@@ -52,6 +52,10 @@ public class GameManager {
         }
     }
 
+    public GameManager() {
+        Application.targetFrameRate = 30;
+    }
+
     public void Quit() {
         Application.Quit();
     }

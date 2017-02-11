@@ -90,7 +90,6 @@ public class Player : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        // カメラをプレイヤーに追従させる
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
