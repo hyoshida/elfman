@@ -137,12 +137,14 @@ public class Player : MonoBehaviour {
 
         // 近距離攻撃
         if (Input.GetButtonDown("Fire1")) {
-            bool isDashing = _animator.GetBool("isDashing");
-            if (isDashing) {
-                StartCoroutine(DashAttackingPhase());
-            } else {
-                _animator.SetBool("isDashing", false);
-                _animator.SetBool("isRunning", false);
+            if (_isGrounded) {
+                bool isDashing = _animator.GetBool("isDashing");
+                if (isDashing) {
+                    StartCoroutine(DashAttackingPhase());
+                } else {
+                    _animator.SetBool("isDashing", false);
+                    _animator.SetBool("isRunning", false);
+                }
             }
             _animator.SetTrigger("attack");
         }
