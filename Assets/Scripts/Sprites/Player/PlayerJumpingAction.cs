@@ -23,30 +23,35 @@ public class PlayerJumpingAction : MonoBehaviour {
         if (_player.IsFrozen) {
             return;
         }
+        Action();
+    }
 
+
+    void Action() {
         if (Input.GetButtonDown("Jump")) {
-            _timeHeld = 0f;
-            Jump();
+            bool jumped = Jump();
+            if (jumped) {
+                _timeHeld = 0f;
+            }
         }
 
         if (Input.GetButton("Jump")) {
             _timeHeld += Time.deltaTime;
         }
 
-        if ((Input.GetButtonUp("Jump") || _timeHeld >= TIME_FOR_FULL_JUMP) && !_player.IsGrounded) {
-            float ratio = Mathf.SmoothStep(1f, 0f, _timeHeld / TIME_FOR_FULL_JUMP);
-            _rigidbody2D.AddRelativeForce(Vector2.up * _jumpPower * ratio * -0.75f);
+        if (Input.GetButtonUp("Jump") || _timeHeld >= TIME_FOR_FULL_JUMP) {
+            takenGravity();
             _timeHeld = TIME_FOR_FULL_JUMP;
         }
     }
 
-    void Jump() {
+    bool Jump() {
         if (!_player.IsGrounded) {
-            return;
+            return false;
         }
 
         if (!_animator.IsPlaying("waiting", "running", "running-attack1", "dashing", "jumping5")) {
-            return;
+            return false;
         }
 
         _player.IsGrounded = false;
@@ -57,5 +62,15 @@ public class PlayerJumpingAction : MonoBehaviour {
 
         // AddForceにて上方向へ力を加える
         _rigidbody2D.AddForce(Vector2.up * _jumpPower);
+
+        return true;
+    }
+
+    void takenGravity() {
+        if (_player.IsGrounded) {
+            return;
+        }
+        float ratio = Mathf.SmoothStep(1f, 0f, _timeHeld / TIME_FOR_FULL_JUMP);
+        _rigidbody2D.AddRelativeForce(Vector2.up * _jumpPower * ratio * -0.75f);
     }
 }
