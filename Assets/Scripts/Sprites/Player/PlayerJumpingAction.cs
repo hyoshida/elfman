@@ -1,23 +1,29 @@
 ﻿using UnityEngine;
 using Assets.Scripts.Extensions;
 
-public class PlayerJumpingAction {
+[RequireComponent(typeof(Player))]
+public class PlayerJumpingAction : MonoBehaviour {
     public const float TIME_FOR_FULL_JUMP = 0.25f;
 
-    Player _player;
+    [SerializeField]
     int _jumpPower;
+
+    Player _player;
     Rigidbody2D _rigidbody2D;
     Animator _animator;
     float _timeHeld;
 
-    public PlayerJumpingAction(Player player, int jumpPower) {
-        _player = player;
-        _jumpPower = jumpPower;
-        _rigidbody2D = player.gameObject.GetComponent<Rigidbody2D>();
-        _animator = player.gameObject.GetComponent<Animator>();
+    void Start() {
+        _player = gameObject.GetComponent<Player>();
+        _rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
+        _animator = gameObject.GetComponent<Animator>();
     }
 
-    public void Update() {
+    void Update() {
+        if (_player.IsFrozen) {
+            return;
+        }
+
         if (Input.GetButtonDown("Jump")) {
             _timeHeld = 0f;
             Jump();

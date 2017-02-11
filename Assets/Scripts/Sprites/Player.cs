@@ -8,7 +8,6 @@ using System;
 public class Player : MonoBehaviour {
     public const float RUNNING_SPEED = 6f;
     public const float DASHING_SPEED = RUNNING_SPEED * 1.5f;
-    public const int JUMP_POWER = 700;
     public const int DASH_POWER = 7000;
 
     [SerializeField]
@@ -31,7 +30,6 @@ public class Player : MonoBehaviour {
     float _lastRunningAt;
     float _lastWaitingAt;
     bool _frozen;
-    PlayerJumpingAction _jumpAction;
 
     public bool IsDead {
         get {
@@ -57,6 +55,12 @@ public class Player : MonoBehaviour {
         }
     }
 
+    public bool IsFrozen {
+        get {
+            return _frozen;
+        }
+    }
+
     bool IsAttacking {
         get {
             return _animator.IsPlaying("attacking1", "attacking2", "attacking3");
@@ -71,7 +75,6 @@ public class Player : MonoBehaviour {
         _renderer = GetComponent<Renderer>();
         _lifeGaugeImage = _lifeGauge.GetComponent<Image>();
         _ghostSprites = GetComponent<GhostSprites>();
-        _jumpAction = new PlayerJumpingAction(this, JUMP_POWER);
     }
 
     // Update is called once per frame
@@ -122,9 +125,6 @@ public class Player : MonoBehaviour {
     }
 
     void ActionPlayer() {
-        // ジャンプボタンを押し
-        _jumpAction.Update();
-
         // 上下への移動速度を取得
         float velY = _rigidbody2D.velocity.y;
         // 移動速度が0.1より大きければ上昇
