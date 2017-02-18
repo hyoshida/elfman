@@ -17,11 +17,13 @@ public class Lift : MonoBehaviour {
     Vector3 _defaultPosition;
     Vector2 _velocity;
     GameObject _player;
+    BoxCollider2D _boxCollider2d;
 
     // Use this for initialization
     void Start() {
         _velocity = DegreeToVector2(_degree) * _speed;
         _defaultPosition = transform.position;
+        _boxCollider2d = GetComponent<BoxCollider2D>();
     }
 
     void FixedUpdate() {
@@ -40,8 +42,10 @@ public class Lift : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D collision) {
         GameObject player = collision.gameObject;
-        if (_player == null && player.tag == "Player") {
-            _player = player;
+        if (_player != null && player.tag == "Player") {
+            if (IsCarrying(collision)) {
+                _player = player;
+            }
         }
     }
 
@@ -50,6 +54,25 @@ public class Lift : MonoBehaviour {
         if (_player != null && player.tag == "Player") {
             _player = null;
         }
+    }
+
+    bool IsCarrying(Collision2D collision) {
+        GameObject target = collision.gameObject;
+
+        Vector2 targetSize = collision.collider.bounds.size;
+        Vector3 targetCenter = collision.collider.bounds.center;
+        float targetBottom = targetCenter.y - (targetSize.y / 2f);
+
+        foreach (ContactPoint2D contact in collision.contacts) {
+            Vector2 size = _boxCollider2d.size;
+            Vector3 center = _boxCollider2d.bounds.center;
+            float top = center.y + (size.y / 2f);
+
+            if (Mathf.Abs(targetBottom - top) < 0.05f) {
+                return true;
+            }
+        }
+        return true;
     }
 
     // TODO: この辺はUtil系のクラスにまとめたい
