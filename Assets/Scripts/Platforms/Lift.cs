@@ -42,9 +42,10 @@ public class Lift : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D collision) {
         GameObject player = collision.gameObject;
-        if (_player != null && player.tag == "Player") {
+        if (_player == null && player.tag == "Player") {
             if (IsCarrying(collision)) {
                 _player = player;
+                Debug.Log("[Lift] Grab Player!");
             }
         }
     }
@@ -53,6 +54,7 @@ public class Lift : MonoBehaviour {
         GameObject player = collision.gameObject;
         if (_player != null && player.tag == "Player") {
             _player = null;
+            Debug.Log("[Lift] Ungrab Player!");
         }
     }
 
@@ -63,16 +65,15 @@ public class Lift : MonoBehaviour {
         Vector3 targetCenter = collision.collider.bounds.center;
         float targetBottom = targetCenter.y - (targetSize.y / 2f);
 
-        foreach (ContactPoint2D contact in collision.contacts) {
-            Vector2 size = _boxCollider2d.size;
-            Vector3 center = _boxCollider2d.bounds.center;
-            float top = center.y + (size.y / 2f);
+        Vector2 size = _boxCollider2d.size;
+        Vector3 center = _boxCollider2d.bounds.center;
+        float top = center.y + (size.y / 2f);
 
-            if (Mathf.Abs(targetBottom - top) < 0.05f) {
-                return true;
-            }
+        if (Mathf.Abs(targetBottom - top) < 0.05f) {
+            return true;
         }
-        return true;
+
+        return false;
     }
 
     // TODO: この辺はUtil系のクラスにまとめたい
