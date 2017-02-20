@@ -31,6 +31,12 @@ public class Player : MonoBehaviour {
     float _lastWaitingAt;
     bool _frozen;
 
+    public float HpRatio {
+        get {
+            return _lifeGaugeImage.fillAmount;
+        }
+    }
+
     public bool IsDead {
         get {
             if (_lifeGaugeImage.fillAmount <= 0) {
