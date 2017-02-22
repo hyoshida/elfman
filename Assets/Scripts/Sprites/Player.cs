@@ -86,7 +86,6 @@ public class Player : MonoBehaviour {
             ActionPlayer();
             MovePlayer();
         }
-        MoveCamera();
     }
 
     void FixedUpdate() {
@@ -156,35 +155,6 @@ public class Player : MonoBehaviour {
             // _animator.SetTrigger("dash");
             // _rigidbody2D.AddForce(Vector2.right * DASH_POWER);
         }
-    }
-
-    void MoveCamera() {
-        if (GameManager.Instance.battleMode != BattleMode.Stage) {
-            return;
-        }
-
-        Vector3 cameraPosition = _camera.transform.position;
-
-        // Playerの位置から右に少し移動した位置を画面中央にする
-        cameraPosition.x = transform.position.x;
-
-        const float THRESHOLD_TOP = 5f;
-        const float THRESHOLD_BOTTOM = 2.15f;
-        var playerHeight = _renderer.bounds.size.y;
-        Vector2 min = _camera.ViewportToWorldPoint(new Vector2(0, 0));
-        Vector2 max = _camera.ViewportToWorldPoint(new Vector2(1, 1));
-        if ((transform.position.y - playerHeight) > max.y - THRESHOLD_TOP) {
-            cameraPosition.y += (transform.position.y - playerHeight) - (max.y - THRESHOLD_TOP);
-        } else if (transform.position.y < min.y + THRESHOLD_BOTTOM) {
-            cameraPosition.y += transform.position.y - (min.y + THRESHOLD_BOTTOM);
-
-            // TODO: 場所によってカメラの移動限界を変えたい・・・。やっぱりカメラコリジョン必要？
-            if (cameraPosition.y < 0) {
-                cameraPosition.y = 0;
-            }
-        }
-
-        _camera.transform.position = cameraPosition;
     }
 
     void MovePlayer() {
