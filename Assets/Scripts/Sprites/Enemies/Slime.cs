@@ -58,7 +58,7 @@ public class Slime : MonoBehaviour {
                 _aiState = AIState.Waiting;
                 break;
             case AIState.Waiting:
-                if (!_animator.IsPlaying("slime-wait")) {
+                if (!_animator.IsPlaying("slime-wait") || _animator.IsPlaying("Waiting")) {
                     _prevAiState = AIState.Waiting;
                     _aiState = AIState.Idle;
                 }
@@ -68,7 +68,7 @@ public class Slime : MonoBehaviour {
                 _animator.SetTrigger("walk");
                 break;
             case AIState.Walking:
-                if (_animator.IsPlaying("slime-walk")) {
+                if (_animator.IsPlaying("slime-walk") || _animator.IsPlaying("Walking")) {
                     float direction = gameObject.transform.localScale.x;
                     _rigidbody2D.velocity = new Vector2(SPEED * direction, _rigidbody2D.velocity.y);
                 } else {
