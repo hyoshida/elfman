@@ -15,7 +15,7 @@ enum AIState {
 }
 
 public class Slime : MonoBehaviour {
-    public const int SPEED = -3;
+    public const int SPEED = -6;
     public readonly float GROUND_ANGLE_TOLERANCE = Mathf.Cos(30.0f * Mathf.Deg2Rad);
 
     AIState _aiState;
