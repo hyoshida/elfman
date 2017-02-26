@@ -3,12 +3,14 @@ using DG.Tweening;
 
 [RequireComponent(typeof(Renderer))]
 public class PlayerCamera : MonoBehaviour {
-    const float THRESHOLD_TOP = 5f;
-    const float THRESHOLD_BOTTOM = 3.5f;
+    const float CAMERA_OFFSET_Y = 2.5f;
+    const float THRESHOLD_TOP = -4.0f;
+    const float THRESHOLD_BOTTOM = 4.1f;
 
     Camera _camera;
     Renderer _renderer;
     float _targetCameraPositionY;
+    bool _shouldUpdateImmediately;
 
     // Use this for initialization
     void Start() {
@@ -20,8 +22,8 @@ public class PlayerCamera : MonoBehaviour {
     void Update() {
         if (GameManager.Instance.battleMode == BattleMode.Stage) {
             MoveCameraX();
-            MoveCameraY();
             UpdateCameraY();
+            MoveCameraY();
         }
     }
 
@@ -36,6 +38,19 @@ public class PlayerCamera : MonoBehaviour {
         if (float.IsNaN(_targetCameraPositionY)) {
             return;
         }
+
+        // 画面からプレイヤーが見切れてるときは即座にカメラを移動する
+        if (_shouldUpdateImmediately) {
+            _camera.transform.DOKill();
+
+            Vector3 cameraPosition = _camera.transform.position;
+            cameraPosition.y = _targetCameraPositionY;
+            _camera.transform.position = new Vector3(cameraPosition.x, cameraPosition.y, cameraPosition.z);
+
+            _targetCameraPositionY = float.NaN;
+            return;
+        }
+
         float during = 1.5f;
         _camera.transform.DOMoveY(_targetCameraPositionY, during).OnComplete(() => _targetCameraPositionY = float.NaN);
     }
@@ -43,18 +58,29 @@ public class PlayerCamera : MonoBehaviour {
     void UpdateCameraY() {
         Vector3 cameraPosition = _camera.transform.position;
 
+        cameraPosition.y = transform.position.y + CAMERA_OFFSET_Y;
+
         var playerHeight = _renderer.bounds.size.y;
         Vector2 min = _camera.ViewportToWorldPoint(new Vector2(0, 0));
         Vector2 max = _camera.ViewportToWorldPoint(new Vector2(1, 1));
-        if ((transform.position.y - playerHeight) > max.y - THRESHOLD_TOP) {
-            cameraPosition.y += (transform.position.y - playerHeight) - (max.y - THRESHOLD_TOP);
-        } else {
-            cameraPosition.y += transform.position.y - (min.y + THRESHOLD_BOTTOM);
+        bool moveToTop = ((transform.position.y + (playerHeight / 2)) > max.y);
+        bool moveToBottom = (transform.position.y - (playerHeight / 2) < min.y);
+        if (moveToTop || moveToBottom) {
+            // プレイヤーが見切れていたらカメラを即移動させる
+            _shouldUpdateImmediately = true;
 
-            // TODO: 場所によってカメラの移動限界を変えたい・・・。やっぱりカメラコリジョン必要？
-            if (cameraPosition.y < 0) {
-                cameraPosition.y = 0;
+            if (moveToTop) {
+                cameraPosition.y = transform.position.y + THRESHOLD_TOP;
+            } else {
+                cameraPosition.y = transform.position.y + THRESHOLD_BOTTOM;
             }
+        } else {
+            _shouldUpdateImmediately = false;
+        }
+
+        // TODO: 場所によってカメラの移動限界を変えたい・・・。やっぱりカメラコリジョン必要？
+        if (cameraPosition.y < 0) {
+            cameraPosition.y = 0;
         }
 
         // Y座標は MoveCameraY 関数によって緩やかに移動させる
