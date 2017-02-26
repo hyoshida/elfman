@@ -50,7 +50,8 @@ public class Enemy : MonoBehaviour {
         }
 
         if (collider.tag == "Sword") {
-            Damage(2);
+            PlayerSword sowrd = collider.gameObject.GetComponent<PlayerSword>();
+            Damage(sowrd.Strength);
         }
 
         if (IsDead) {
