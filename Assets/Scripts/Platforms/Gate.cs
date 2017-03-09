@@ -9,6 +9,10 @@ public class Gate : MonoBehaviour {
     [SerializeField]
     GameObject _bossSpawner;
 
+    [SerializeField]
+    [Range(0f, 10f)]
+    float _during;
+
     GameObject _player;
     bool _closed;
     bool _playerMoved;
@@ -33,9 +37,13 @@ public class Gate : MonoBehaviour {
     }
 
     IEnumerator ForceMovePlayer() {
-        float during = 1.5f;
+        // プレイヤーの動きを止める
+        Rigidbody2D rigidbody2D = _player.GetComponent<Rigidbody2D>();
+        rigidbody2D.velocity = new Vector2(0, 0);
+
+        // プレイヤーを自動的に横移動させる
         Vector3 position = new Vector3(_goal.transform.position.x, _player.transform.position.y, _player.transform.position.z);
-        _player.transform.DOMove(position, during).OnComplete(() => _playerMoved = true);
+        _player.transform.DOMove(position, _during).OnComplete(() => _playerMoved = true);
 
         // TODO: ここ雑だからなんとかしたい
         while (!_playerMoved) {
