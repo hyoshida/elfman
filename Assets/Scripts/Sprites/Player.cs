@@ -4,6 +4,7 @@ using System.Collections;
 using Assets.Scripts.Utils;
 using Assets.Scripts.Extensions;
 using System;
+using DG.Tweening;
 
 public class Player : MonoBehaviour {
     public const float RUNNING_SPEED = 6f;
@@ -30,6 +31,7 @@ public class Player : MonoBehaviour {
     float _lastRunningAt;
     float _lastWaitingAt;
     bool _frozen;
+    CameraShaker _cameraShaker;
 
     public float HpRatio {
         get {
@@ -72,6 +74,7 @@ public class Player : MonoBehaviour {
         _animator = GetComponent<Animator>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _camera = Camera.main;
+        _cameraShaker = _camera.GetComponent<CameraShaker>();
         _renderer = GetComponent<Renderer>();
         _lifeGaugeImage = _lifeGauge.GetComponent<Image>();
         _ghostSprites = GetComponent<GhostSprites>();
@@ -121,7 +124,15 @@ public class Player : MonoBehaviour {
 
     void Damage() {
         _lifeGaugeImage.fillAmount -= 0.1f;
+        ShakeCamera();
         StartCoroutine(DamageAndInvinciblePhase());
+    }
+
+    void ShakeCamera() {
+        const float duration = 0.25f;
+        const float strength = 0.25f;
+        const int vibrato = 20;
+        _cameraShaker.Shake(duration, Vector3.one * strength, vibrato);
     }
 
     void ActionPlayer() {
