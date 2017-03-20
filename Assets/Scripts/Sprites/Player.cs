@@ -4,7 +4,6 @@ using System.Collections;
 using Assets.Scripts.Utils;
 using Assets.Scripts.Extensions;
 using System;
-using DG.Tweening;
 
 public class Player : MonoBehaviour {
     public const float RUNNING_SPEED = 6f;
@@ -19,9 +18,6 @@ public class Player : MonoBehaviour {
 
     [SerializeField]
     GameObject _lifeGauge;
-
-    [SerializeField]
-    GameObject _damageFrame;
 
     Animator _animator;
     Rigidbody2D _rigidbody2D;
@@ -125,16 +121,7 @@ public class Player : MonoBehaviour {
 
     void Damage() {
         _lifeGaugeImage.fillAmount -= 0.1f;
-        ShakeCamera();
         StartCoroutine(DamageAndInvinciblePhase());
-    }
-
-    void ShakeCamera() {
-        const float duration = 0.25f;
-        const float strength = 25f;
-        const int vibrato = 30;
-        const bool fadeOut = false;
-        _damageFrame.transform.DOShakePosition(duration, strength, vibrato);
     }
 
     void ActionPlayer() {
