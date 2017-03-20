@@ -125,6 +125,7 @@ public class Player : MonoBehaviour {
     void Damage() {
         _lifeGaugeImage.fillAmount -= 0.1f;
         ShakeCamera();
+        StartCoroutine(DamageVibrate());
         StartCoroutine(DamageAndInvinciblePhase());
     }
 
@@ -133,6 +134,18 @@ public class Player : MonoBehaviour {
         const float strength = 0.25f;
         const int vibrato = 20;
         _cameraShaker.Shake(duration, Vector3.one * strength, vibrato);
+    }
+
+    IEnumerator DamageVibrate() {
+        Vibrate(true);
+        yield return new WaitForSeconds(0.25f);
+        Vibrate(false);
+    }
+
+    void Vibrate(bool enabled) {
+        const int playerIndex = 0;
+        float motorPower = enabled ? 1.0f : 0.0f;
+        XInputDotNetPure.GamePad.SetVibration(playerIndex, motorPower, motorPower);
     }
 
     void ActionPlayer() {
