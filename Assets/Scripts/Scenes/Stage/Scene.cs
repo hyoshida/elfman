@@ -49,7 +49,7 @@ namespace Stage {
             }
             _state = State.GameOver;
             _gameOverLabel.SetActive(true);
-            Destroy(_player);
+            _playerInstance.Dispose();
         }
 
         public void GameClear() {
