@@ -24,7 +24,7 @@ public class Player : MonoBehaviour {
     Rigidbody2D _rigidbody2D;
     Camera _camera;
     bool _isGrounded;
-    Renderer _renderer;
+    SpriteRenderer _renderer;
     Image _lifeGaugeImage;
     GhostSprites _ghostSprites;
     int _lastRunningDirection;
@@ -32,6 +32,7 @@ public class Player : MonoBehaviour {
     float _lastWaitingAt;
     bool _frozen;
     CameraShaker _cameraShaker;
+    Vector2 _previousPosition;
 
     public float HpRatio {
         get {
@@ -42,10 +43,6 @@ public class Player : MonoBehaviour {
     public bool IsDead {
         get {
             if (_lifeGaugeImage.fillAmount <= 0) {
-                return true;
-            }
-
-            if (transform.position.y < _camera.transform.position.y - 10) {
                 return true;
             }
 
@@ -69,6 +66,12 @@ public class Player : MonoBehaviour {
         }
     }
 
+    bool IsFalldowned {
+        get {
+            return (transform.position.y < _camera.transform.position.y - 10);
+        }
+    }
+
     public void Dispose() {
         Destroy(gameObject);
 
@@ -82,7 +85,7 @@ public class Player : MonoBehaviour {
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _camera = Camera.main;
         _cameraShaker = _camera.GetComponent<CameraShaker>();
-        _renderer = GetComponent<Renderer>();
+        _renderer = GetComponent<SpriteRenderer>();
         _lifeGaugeImage = _lifeGauge.GetComponent<Image>();
         _ghostSprites = GetComponent<GhostSprites>();
     }
@@ -95,6 +98,11 @@ public class Player : MonoBehaviour {
         if (!_frozen) {
             ActionPlayer();
             MovePlayer();
+
+            if (IsFalldowned) {
+                PutBackPlayer();
+                Damage();
+            }
         }
     }
 
@@ -116,6 +124,10 @@ public class Player : MonoBehaviour {
         if (util.IsLayer("Ground")) {
             HitType hitType = util.HitTest();
             if (hitType == HitType.GROUND) {
+                float playerWidth = 0.6f;
+                int playerDirection = ((transform.localScale.x >= 0) ? 1 : -1);
+                _previousPosition = transform.position - new Vector3(playerWidth * playerDirection, 0);
+
                 _isGrounded = true;
             } else {
                 _isGrounded = false;
@@ -275,5 +287,13 @@ public class Player : MonoBehaviour {
         }
 
         _frozen = false;
+    }
+
+    void PutBackPlayer() {
+        if (_previousPosition == null) {
+            return;
+        }
+        transform.position = _previousPosition;
+        _rigidbody2D.velocity = Vector2.zero;
     }
 }
