@@ -69,6 +69,13 @@ public class Player : MonoBehaviour {
         }
     }
 
+    public void Dispose() {
+        Destroy(gameObject);
+
+        // バイブ消し忘れを防止する
+        Vibrate(false);
+    }
+
     // Use this for initialization
     void Start() {
         _animator = GetComponent<Animator>();
@@ -92,6 +99,10 @@ public class Player : MonoBehaviour {
     }
 
     void FixedUpdate() {
+    }
+
+    void OnDestroy() {
+        Dispose();
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
