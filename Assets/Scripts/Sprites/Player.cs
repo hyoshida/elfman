@@ -198,12 +198,6 @@ public class Player : MonoBehaviour {
             _animator.SetTrigger("shot");
             Instantiate(_bullet, transform.position + new Vector3(0f, 0f, 0f), transform.rotation);
         }
-
-        // ダッシュ
-        if (Input.GetButtonDown("Fire3")) {
-            // _animator.SetTrigger("dash");
-            // _rigidbody2D.AddForce(Vector2.right * DASH_POWER);
-        }
     }
 
     void MovePlayer() {
@@ -213,8 +207,16 @@ public class Player : MonoBehaviour {
         float axis = Input.GetAxisRaw("Horizontal");
         int direction = (axis == 0) ? 0 : ((axis > 0) ? 1 : -1);
         if (direction != 0) {
+            // 方向キー２度押しでダッシュ開始
             float doubleTapTime = _lastWaitingAt - _lastRunningAt;
             if (((doubleTapTime > 0) && (doubleTapTime < 0.15f)) && (_lastRunningDirection == direction) && _isGrounded) {
+                _animator.SetBool("isDashing", true);
+                _ghostSprites.enabled = true;
+                isDashing = true;
+            }
+
+            // Fire3ボタンでもダッシュ開始
+            if (Input.GetButtonDown("Fire3")) {
                 _animator.SetBool("isDashing", true);
                 _ghostSprites.enabled = true;
                 isDashing = true;
