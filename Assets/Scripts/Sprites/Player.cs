@@ -32,7 +32,7 @@ public class Player : MonoBehaviour {
     float _lastWaitingAt;
     bool _frozen;
     CameraShaker _cameraShaker;
-    Vector2 _previousPosition;
+    Vector3 _previousPosition;
 
     public float HpRatio {
         get {
