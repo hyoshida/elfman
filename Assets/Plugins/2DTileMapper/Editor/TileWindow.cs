@@ -214,7 +214,7 @@ public class TileWindow : EditorWindow
 			}
 		}
 	}
-
+/*
 	[CustomEditor(typeof(GameObject))]
 	public class SceneGUITest : Editor
 	{
@@ -235,7 +235,7 @@ public class TileWindow : EditorWindow
 		}
 
 	}
-
+*/
 	void OnGUI()
 	{
 		textureStyle = new GUIStyle(GUI.skin.button);
