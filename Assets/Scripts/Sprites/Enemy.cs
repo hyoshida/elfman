@@ -10,6 +10,9 @@ public class Enemy : MonoBehaviour {
     [SerializeField]
     Material _flashMaterial;
 
+    [SerializeField]
+    GameObject _boodParticlePrefab;
+
     Renderer _renderer;
     Material _defaultMaterial;
     CameraShaker _cameraShaker;
@@ -28,10 +31,14 @@ public class Enemy : MonoBehaviour {
         _cameraShaker = camera.GetComponent<CameraShaker>();
     }
 
+    void OnDestroy() {
+    }
+
     void Damage(int amount = 1) {
         hp -= amount;
         StartCoroutine(DamageAndInvinciblePhase());
         ShakeCamera();
+        PlayBloodParticle();
     }
 
     IEnumerator DamageAndInvinciblePhase() {
@@ -53,6 +60,14 @@ public class Enemy : MonoBehaviour {
         const float strength = 0.25f;
         const int vibrato = 20;
         _cameraShaker.Shake(duration, Vector3.one * strength, vibrato);
+    }
+
+    void PlayBloodParticle() {
+        Vector3 offset = Vector3.up * 1f;
+        GameObject bloodParticle = (GameObject)Instantiate(_boodParticlePrefab, transform.position + offset, Quaternion.identity);
+
+        const float timeToSucied = 1.5f;
+        Destroy(bloodParticle, timeToSucied);
     }
 
     void OnTriggerEnter2D(Collider2D collider) {
