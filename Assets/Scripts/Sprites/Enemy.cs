@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour {
 
     Renderer _renderer;
     Material _defaultMaterial;
+    CameraShaker _cameraShaker;
 
     bool IsDead {
         get {
@@ -22,11 +23,15 @@ public class Enemy : MonoBehaviour {
     void Start() {
         _renderer = GetComponent<Renderer>();
         _defaultMaterial = _renderer.material;
+
+        Camera camera = Camera.main;
+        _cameraShaker = camera.GetComponent<CameraShaker>();
     }
 
     void Damage(int amount = 1) {
         hp -= amount;
         StartCoroutine(DamageAndInvinciblePhase());
+        ShakeCamera();
     }
 
     IEnumerator DamageAndInvinciblePhase() {
@@ -41,6 +46,13 @@ public class Enemy : MonoBehaviour {
             // 0.05秒待つ
             yield return new WaitForSeconds(0.05f);
         }
+    }
+
+    void ShakeCamera() {
+        const float duration = 0.25f;
+        const float strength = 0.25f;
+        const int vibrato = 20;
+        _cameraShaker.Shake(duration, Vector3.one * strength, vibrato);
     }
 
     void OnTriggerEnter2D(Collider2D collider) {
