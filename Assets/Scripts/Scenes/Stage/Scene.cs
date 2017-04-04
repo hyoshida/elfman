@@ -112,28 +112,13 @@ namespace Stage {
 
         void OnChangeStateToScenario() {
             _scenarioViewer.SetActive(true);
-
-            // TODO: ちゃんとエンディングを再生できるようにする
-            bool openning = true;
-            _currentSceneMaster = Master.Instance.FindSceneMasterBy(GameManager.Instance.CurrentStageCode, openning);
         }
 
         void UpdateForScenarioState() {
-            // TODO: マスタを参照する
-            if (_currentSceneMaster == null) {
-                GameStart();
+            if (_scenarioViewer.activeSelf) {
                 return;
             }
-
-            if (!Input.GetButtonDown("Fire1")) {
-                return;
-            }
-
-            // TODO: シナリオを読む処理を実装する
-            bool finished = true;
-            if (finished) {
-                GameStart();
-            }
+            GameStart();
         }
 
         void UpdateForPlayingState() {
