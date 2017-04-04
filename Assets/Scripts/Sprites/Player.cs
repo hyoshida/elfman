@@ -216,7 +216,7 @@ public class Player : MonoBehaviour {
             }
 
             // Fire3ボタンでもダッシュ開始
-            if (Input.GetButtonDown("Fire3")) {
+            if (Input.GetButtonDown("Fire3") && _isGrounded) {
                 _animator.SetBool("isDashing", true);
                 _ghostSprites.enabled = true;
                 isDashing = true;
