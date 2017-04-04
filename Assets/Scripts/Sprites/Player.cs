@@ -292,7 +292,7 @@ public class Player : MonoBehaviour {
     }
 
     void PutBackPlayer() {
-        if (_previousPosition == null) {
+        if (_previousPosition == Vector3.zero) {
             return;
         }
         transform.position = _previousPosition;
