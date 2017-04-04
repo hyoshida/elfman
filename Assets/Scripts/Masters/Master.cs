@@ -34,11 +34,21 @@ class Master {
     }
 
     public List<StillMaster> stillMasters = new List<StillMaster> { };
+    public List<SceneMaster> sceneMasters = new List<SceneMaster> { };
 
     public StillMaster FindStillMasterBy(uint code, bool boss) {
         foreach (var stillMaster in stillMasters) {
             if (stillMaster.code == code && stillMaster.boss == boss) {
                 return stillMaster;
+            }
+        }
+        return null;
+    }
+
+    public SceneMaster FindSceneMasterBy(uint stageCode, bool opening) {
+        foreach (var sceneMaster in sceneMasters) {
+            if (sceneMaster.stageCode == stageCode && sceneMaster.opening == opening) {
+                return sceneMaster;
             }
         }
         return null;

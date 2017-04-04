@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 namespace Stage {
     enum State {
+        None,
         Scenario,
         Playing,
         GameOver,
@@ -30,12 +31,33 @@ namespace Stage {
         Player _playerInstance;
         bool _gameOvered;
         State _state;
+        SceneMaster _currentSceneMaster;
+
+        private State state {
+            get {
+                return _state;
+            }
+
+            set {
+                if (_state == value) {
+                    return;
+                }
+
+                _state = value;
+
+                switch (_state) {
+                    case State.Scenario:
+                        OnChangeStateToScenario();
+                        break;
+                }
+            }
+        }
 
         public void GameStart() {
-            if (_state == State.Playing) {
+            if (state == State.Playing) {
                 return;
             }
-            _state = State.Playing;
+            state = State.Playing;
 
             _hud.SetActive(true);
             _scenarioViewer.SetActive(false);
@@ -44,36 +66,35 @@ namespace Stage {
         }
 
         public void GameOver() {
-            if (_state == State.GameOver) {
+            if (state == State.GameOver) {
                 return;
             }
-            _state = State.GameOver;
+            state = State.GameOver;
             _gameOverLabel.SetActive(true);
             _playerInstance.Dispose();
         }
 
         public void GameClear() {
-            if (_state == State.GameClear) {
+            if (state == State.GameClear) {
                 return;
             }
-            _state = State.GameClear;
+            state = State.GameClear;
             _gameClearLabel.SetActive(true);
         }
 
         // Use this for initialization
         void Start() {
-            _state = State.Scenario;
+            state = State.Scenario;
             _playerInstance = _player.GetComponent<Player>();
 
             _hud.SetActive(false);
-            _scenarioViewer.SetActive(true);
 
             GameManager.Instance.gameState = GameState.Pause;
         }
 
         // Update is called once per frame
         void Update() {
-            switch (_state) {
+            switch (state) {
                 case State.Scenario:
                     UpdateForScenarioState();
                     break;
@@ -89,10 +110,28 @@ namespace Stage {
             }
         }
 
+        void OnChangeStateToScenario() {
+            _scenarioViewer.SetActive(true);
+
+            // TODO: ちゃんとエンディングを再生できるようにする
+            bool openning = true;
+            _currentSceneMaster = Master.Instance.FindSceneMasterBy(GameManager.Instance.CurrentStageCode, openning);
+        }
+
         void UpdateForScenarioState() {
             // TODO: マスタを参照する
+            if (_currentSceneMaster == null) {
+                GameStart();
+                return;
+            }
 
-            if (Input.GetButtonDown("Fire1")) {
+            if (!Input.GetButtonDown("Fire1")) {
+                return;
+            }
+
+            // TODO: シナリオを読む処理を実装する
+            bool finished = true;
+            if (finished) {
                 GameStart();
             }
         }

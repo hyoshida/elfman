@@ -1,4 +1,26 @@
 {
+    "sceneMasters": [
+      {
+            "code": 101,
+            "stageCode": 1,
+            "opening": true,
+            "texts": [
+                "[エルフ]",
+                "ここがお宝が眠るという森か・・・",
+                "早速奥に進んでみるか"
+            ]
+      },
+      {
+            "code": 102,
+            "stageCode": 1,
+            "opening": false,
+            "texts": [
+                "[エルフ]",
+                "こいつが宝を守っているスライムか",
+                "いくぞ！"
+            ]
+      }
+    ],
     "stillMasters": [
         {
             "code": 1,
