@@ -1,4 +1,39 @@
 {
+    "faceMasters": [
+        {
+            "code": 101,
+            "imagePath": "Masters/Images/Faces/normal.jpg"
+        },
+        {
+            "code": 102,
+            "imagePath": "Masters/Images/Faces/damaged.jpg"
+        }
+    ],
+    "sceneMasters": [
+        {
+            "code": 101,
+            "stageCode": 1,
+            "opening": true,
+            "texts": [
+                "/face 101",
+                "ここがお宝が眠るという森か",
+                "/face 102",
+                "スライムが生息していて危険だという話だが・・・",
+                "/face 101",
+                "いや、悩んでも仕方がない",
+                "いくぞ！"
+            ]
+        },
+        {
+            "code": 102,
+            "stageCode": 1,
+            "opening": false,
+            "texts": [
+                "/face 101",
+                "ボス前のセリフ予定"
+            ]
+        }
+    ],
     "stillMasters": [
         {
             "code": 1,

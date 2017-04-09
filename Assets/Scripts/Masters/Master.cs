@@ -25,6 +25,10 @@ class Master {
         foreach (var stillMaster in _instance.stillMasters) {
             yield return stillMaster.Load();
         }
+
+        foreach (var faceMaster in _instance.faceMasters) {
+            yield return faceMaster.Load();
+        }
     }
 
     public static Master Instance {
@@ -34,11 +38,31 @@ class Master {
     }
 
     public List<StillMaster> stillMasters = new List<StillMaster> { };
+    public List<SceneMaster> sceneMasters = new List<SceneMaster> { };
+    public List<FaceMaster> faceMasters = new List<FaceMaster> { };
 
     public StillMaster FindStillMasterBy(uint code, bool boss) {
         foreach (var stillMaster in stillMasters) {
             if (stillMaster.code == code && stillMaster.boss == boss) {
                 return stillMaster;
+            }
+        }
+        return null;
+    }
+
+    public SceneMaster FindSceneMasterBy(uint stageCode, bool opening) {
+        foreach (var sceneMaster in sceneMasters) {
+            if (sceneMaster.stageCode == stageCode && sceneMaster.opening == opening) {
+                return sceneMaster;
+            }
+        }
+        return null;
+    }
+
+    public FaceMaster FindFaceMasterBy(uint faceCode) {
+        foreach (var faceMaster in faceMasters) {
+            if (faceMaster.code == faceCode) {
+                return faceMaster;
             }
         }
         return null;
