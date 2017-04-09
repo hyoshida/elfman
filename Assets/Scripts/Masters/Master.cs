@@ -25,6 +25,10 @@ class Master {
         foreach (var stillMaster in _instance.stillMasters) {
             yield return stillMaster.Load();
         }
+
+        foreach (var faceMaster in _instance.faceMasters) {
+            yield return faceMaster.Load();
+        }
     }
 
     public static Master Instance {
@@ -55,7 +59,7 @@ class Master {
         return null;
     }
 
-    public SceneMaster FindFaceMasterBy(uint faceCode) {
+    public FaceMaster FindFaceMasterBy(uint faceCode) {
         foreach (var faceMaster in faceMasters) {
             if (faceMaster.code == faceCode) {
                 return faceMaster;

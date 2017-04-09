@@ -1,9 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class ScenarioViewer : MonoBehaviour {
     [SerializeField]
     Text _text;
+
+    [SerializeField]
+    Image _faceImage;
 
     SceneMaster _currentSceneMaster;
     int _textIndex;
@@ -41,13 +45,33 @@ public class ScenarioViewer : MonoBehaviour {
             return;
         }
 
-        string text = _currentSceneMaster.texts[_textIndex];
-        _text.text = text;
-
+        string script = _currentSceneMaster.texts[_textIndex];
         _textIndex++;
+        ParseScript(script);
     }
 
     void Finish() {
         gameObject.SetActive(false);
+    }
+
+    void ParseScript(string script) {
+        if (script.IndexOf("/") == 0) {
+            Queue<string> arguments = new Queue<string>(script.Split(' '));
+            string commandName = arguments.Dequeue();
+            ParseCommnad(commandName, arguments.ToArray());
+            return;
+        }
+        _text.text = script;
+    }
+
+    void ParseCommnad(string name, string[] arguments) {
+        switch (name) {
+            case "/face":
+                var faceCode = uint.Parse(arguments[0]);
+                var faceMaster = Master.Instance.FindFaceMasterBy(faceCode);
+                _faceImage.sprite = faceMaster.CreateImageSprite();
+                break;
+        }
+        Next();
     }
 }

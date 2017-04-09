@@ -77457,6 +77457,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 1777609821}
+  _faceImage: {fileID: 1007144356}
 --- !u!1 &1822735924
 GameObject:
   m_ObjectHideFlags: 0

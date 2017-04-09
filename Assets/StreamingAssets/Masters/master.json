@@ -2,11 +2,11 @@
     "faceMasters": [
         {
             "code": 101,
-            "imagePath": "Masters/Images/Faces/normal.jpg",
+            "imagePath": "Masters/Images/Faces/normal.jpg"
         },
         {
             "code": 102,
-            "imagePath": "Masters/Images/Faces/damaged.jpg",
+            "imagePath": "Masters/Images/Faces/damaged.jpg"
         }
     ],
     "sceneMasters": [
