@@ -35,6 +35,7 @@ class Master {
 
     public List<StillMaster> stillMasters = new List<StillMaster> { };
     public List<SceneMaster> sceneMasters = new List<SceneMaster> { };
+    public List<FaceMaster> faceMasters = new List<FaceMaster> { };
 
     public StillMaster FindStillMasterBy(uint code, bool boss) {
         foreach (var stillMaster in stillMasters) {
@@ -49,6 +50,15 @@ class Master {
         foreach (var sceneMaster in sceneMasters) {
             if (sceneMaster.stageCode == stageCode && sceneMaster.opening == opening) {
                 return sceneMaster;
+            }
+        }
+        return null;
+    }
+
+    public SceneMaster FindFaceMasterBy(uint faceCode) {
+        foreach (var faceMaster in faceMasters) {
+            if (faceMaster.code == faceCode) {
+                return faceMaster;
             }
         }
         return null;
