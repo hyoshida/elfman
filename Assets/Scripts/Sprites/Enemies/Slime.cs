@@ -42,7 +42,7 @@ public class Slime : MonoBehaviour {
         }
 
         HitType hitType = util.HitTest();
-        if (hitType == HitType.WALL) {
+        if ((hitType & HitType.WALL) != 0) {
             Vector2 scale = gameObject.transform.localScale;
             scale.x *= -1;
             gameObject.transform.localScale = scale;

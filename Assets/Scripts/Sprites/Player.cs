@@ -128,7 +128,7 @@ public class Player : MonoBehaviour {
         CollisionUtil util = new CollisionUtil(collision);
         if (util.IsLayer("Ground")) {
             HitType hitType = util.HitTest();
-            if (hitType == HitType.GROUND) {
+            if ((hitType & HitType.GROUND) != 0) {
                 float playerWidth = 0.6f;
                 int playerDirection = ((transform.localScale.x >= 0) ? 1 : -1);
                 _previousPosition = transform.position - new Vector3(playerWidth * playerDirection, 0);
@@ -144,7 +144,7 @@ public class Player : MonoBehaviour {
         CollisionUtil util = new CollisionUtil(collision);
         if (util.IsLayer("Ground")) {
             HitType hitType = util.HitTest();
-            if (hitType != HitType.GROUND) {
+            if ((hitType & HitType.GROUND) == 0) {
                 _isGrounded = false;
             }
         }

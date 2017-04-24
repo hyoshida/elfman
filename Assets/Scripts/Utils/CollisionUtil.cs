@@ -6,9 +6,13 @@ using UnityEngine;
 
 namespace Assets.Scripts.Utils {
     enum HitType {
-        NONE,
-        GROUND,
-        WALL
+        NONE    = 0x00,
+        GROUND  = 0x01,
+        WALL    = 0x02,
+        LEFT    = 0x04,
+        RIGHT   = 0x08,
+        TOP     = 0x10,
+        BOTTOM  = 0x20,
     }
 
     class CollisionUtil {
@@ -40,13 +44,27 @@ namespace Assets.Scripts.Utils {
                 }
             }
 
+            var hitType = HitType.NONE;
+
+            if (_collision.contacts.Length > 0) {
+                // from http://answers.unity3d.com/questions/783377/detect-side-of-collision-in-box-collider-2d.html#answer-783413
+                Vector3 contactPoint = _collision.contacts[0].point;
+                Vector3 center = _collision.collider.bounds.center;
+
+                bool right = contactPoint.x > center.x;
+                bool top = contactPoint.y > center.y;
+
+                hitType |= (right ? HitType.RIGHT : HitType.LEFT);
+                hitType |= (top ? HitType.TOP : HitType.BOTTOM);
+            }
+
             if (hitGround) {
-                return HitType.GROUND;
+                return HitType.GROUND | hitType;
             }
             if (hitWall) {
-                return HitType.WALL;
+                return HitType.WALL | hitType;
             }
-            return HitType.NONE;
+            return HitType.NONE | hitType;
         }
     }
 }
