@@ -268,6 +268,7 @@ GameObject:
   - component: {fileID: 2642}
   - component: {fileID: 114}
   - component: {fileID: 258}
+  - component: {fileID: 360}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -6441,6 +6442,17 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 15}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fe0093294047104aa4c59973f65159e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &361
 GameObject:
   m_ObjectHideFlags: 0
@@ -78722,6 +78734,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4321732539816824, guid: 3f7966e9b974b3d4984f2664576038bb, type: 2}
       propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 212820573268471284, guid: 3f7966e9b974b3d4984f2664576038bb,
+        type: 2}
+      propertyPath: m_FlipX
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:

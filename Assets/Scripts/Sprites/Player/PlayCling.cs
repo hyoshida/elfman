@@ -68,6 +68,8 @@ public class PlayCling : MonoBehaviour {
         } else {
             _isCling = false;
         }
+
+        _animator.SetBool("isCling", _isCling);
     }
 
     void UpdatePlayerPosition() {
