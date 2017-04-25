@@ -4,7 +4,7 @@ using Assets.Scripts.Utils;
 // プレイヤーの壁張り付きまわりを実現する
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayCling : MonoBehaviour {
+public class PlayerClingAction : MonoBehaviour {
     // 0.25秒間は再度張り付きできない
     const int CLING_RECAST_MSEC = 250;
 
