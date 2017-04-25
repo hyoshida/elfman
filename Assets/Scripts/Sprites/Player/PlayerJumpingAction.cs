@@ -2,6 +2,7 @@
 using Assets.Scripts.Extensions;
 
 [RequireComponent(typeof(Player))]
+[RequireComponent(typeof(PlayCling))]
 public class PlayerJumpingAction : MonoBehaviour {
     public const float TIME_FOR_FULL_JUMP = 0.25f;
 
@@ -9,12 +10,14 @@ public class PlayerJumpingAction : MonoBehaviour {
     int _jumpPower;
 
     Player _player;
+    PlayCling _playerCling;
     Rigidbody2D _rigidbody2D;
     Animator _animator;
     float _timeHeld;
 
     void Start() {
         _player = gameObject.GetComponent<Player>();
+        _playerCling = gameObject.GetComponent<PlayCling>();
         _rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
         _animator = gameObject.GetComponent<Animator>();
     }
@@ -46,8 +49,8 @@ public class PlayerJumpingAction : MonoBehaviour {
     }
 
     bool Jump() {
-        if (_animator.GetBool("isCling")) {
-            _animator.SetBool("isCling", false);
+        if (_playerCling.IsCling) {
+            _playerCling.IsCling = false;
         } else {
             if (!_player.IsGrounded) {
                 return false;

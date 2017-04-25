@@ -5,10 +5,34 @@ using Assets.Scripts.Utils;
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayCling : MonoBehaviour {
+    // 0.25秒間は再度張り付きできない
+    const int CLING_RECAST_MSEC = 250;
+
     Animator _animator;
     Rigidbody2D _rigidbody2D;
-    bool _isCling;
     int _collidDirection; // none=0, left=-1, right=1
+    float _leftRecastMsec;
+
+    public bool IsCling {
+        get {
+            return _animator.GetBool("isCling");
+        }
+
+        set {
+            bool wasCling = IsCling;
+            if (wasCling == value) {
+                return;
+            }
+
+            if (wasCling) {
+                _leftRecastMsec = CLING_RECAST_MSEC;
+            }
+
+            _animator.SetBool("isCling", value);
+
+            ChangeRigibodyType();
+        }
+    }
 
     void Start() {
         _animator = GetComponent<Animator>();
@@ -17,7 +41,6 @@ public class PlayCling : MonoBehaviour {
 
     void Update() {
         MovePlayer();
-        UpdatePlayerPosition();
     }
 
     void OnCollisionStay2D(Collision2D collision) {
@@ -47,7 +70,7 @@ public class PlayCling : MonoBehaviour {
     }
 
     void OnCollisionExit2D(Collision2D collision) {
-        if (_isCling) {
+        if (IsCling) {
             return;
         }
 
@@ -61,19 +84,25 @@ public class PlayCling : MonoBehaviour {
     }
 
     void MovePlayer() {
+        if (!IsCling) {
+            _leftRecastMsec -= Time.deltaTime * 1000;
+            if (_leftRecastMsec > 0) {
+                // リキャスト中は張り付けない
+                return;
+            }
+        }
+
         float axis = Input.GetAxisRaw("Horizontal");
         int direction = (axis == 0) ? 0 : ((axis > 0) ? 1 : -1);
         if (direction != 0) {
-            _isCling = (_collidDirection == direction);
+            IsCling = (_collidDirection == direction);
         } else {
-            _isCling = false;
+            IsCling = false;
         }
-
-        _animator.SetBool("isCling", _isCling);
     }
 
-    void UpdatePlayerPosition() {
-        if (_isCling) {
+    void ChangeRigibodyType() {
+        if (IsCling) {
             _rigidbody2D.bodyType = RigidbodyType2D.Static;
         } else {
             _rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
