@@ -46,12 +46,16 @@ public class PlayerJumpingAction : MonoBehaviour {
     }
 
     bool Jump() {
-        if (!_player.IsGrounded) {
-            return false;
-        }
+        if (_animator.GetBool("isCling")) {
+            _animator.SetBool("isCling", false);
+        } else {
+            if (!_player.IsGrounded) {
+                return false;
+            }
 
-        if (!_animator.IsPlaying("waiting", "running", "running-attack1", "dashing", "jumping5")) {
-            return false;
+            if (!_animator.IsPlaying("waiting", "running", "running-attack1", "dashing", "jumping5")) {
+                return false;
+            }
         }
 
         _player.IsGrounded = false;
