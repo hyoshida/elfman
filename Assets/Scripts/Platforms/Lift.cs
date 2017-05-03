@@ -17,6 +17,7 @@ public class Lift : MonoBehaviour {
     Vector3 _defaultPosition;
     Vector2 _velocity;
     GameObject _player;
+    bool _playerMoving;
     BoxCollider2D _boxCollider2d;
 
     // Use this for initialization
@@ -24,6 +25,10 @@ public class Lift : MonoBehaviour {
         _velocity = DegreeToVector2(_degree) * _speed;
         _defaultPosition = transform.position;
         _boxCollider2d = GetComponent<BoxCollider2D>();
+    }
+
+    void Update() {
+        _playerMoving = (Input.GetAxisRaw("Horizontal") != 0f);
     }
 
     void FixedUpdate() {
@@ -35,7 +40,7 @@ public class Lift : MonoBehaviour {
             _velocity *= -1;
         }
 
-        if (_player != null) {
+        if (_player != null && !_playerMoving) {
             _player.transform.position += (Vector3)(_velocity * Time.deltaTime);
         }
     }
