@@ -72226,6 +72226,7 @@ GameObject:
   - component: {fileID: 213631960}
   - component: {fileID: 213631959}
   - component: {fileID: 213631958}
+  - component: {fileID: 213631961}
   m_Layer: 8
   m_Name: elevator
   m_TagString: Untagged
@@ -72314,6 +72315,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &213631961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 213631957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccc59f57f1d25ae4580e7b1d2ef46957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &236283846
 GameObject:
   m_ObjectHideFlags: 0
