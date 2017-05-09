@@ -240,7 +240,8 @@ public class Player : MonoBehaviour {
             transform.localScale = scale;
 
             float speed = isDashing ? DASHING_SPEED : RUNNING_SPEED;
-            _rigidbody2D.velocity = new Vector2(transform.localScale.x * speed, _rigidbody2D.velocity.y);
+            float slopeFriction = calcSlopFriction();
+            _rigidbody2D.velocity = new Vector2(direction * speed * (1f - slopeFriction), _rigidbody2D.velocity.y);
         } else {
             _lastWaitingAt = Time.time;
 
@@ -254,6 +255,19 @@ public class Player : MonoBehaviour {
             // 立ち止まったら残像を消す
             _ghostSprites.enabled = false;
         }
+    }
+
+    float calcSlopFriction() {
+        float slopeFriction = 0f;
+
+        var playerSize = new Vector3(0, _renderer.bounds.size.y);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position - (playerSize / 2), -Vector2.up, 1f);
+
+        if (hit.collider != null) {
+            slopeFriction = 1f - Vector3.Dot(hit.normal, Vector3.up);
+        }
+
+        return slopeFriction;
     }
 
     IEnumerator DamageAndInvinciblePhase() {
