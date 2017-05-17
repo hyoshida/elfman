@@ -29,11 +29,13 @@ public class PlayerInteractAction : MonoBehaviour {
         }
 
         _interactiveObject = interactiveObject;
+        _interactiveObject.CanInteract = true;
 
         Debug.Log("Found a interactive object!");
     }
 
     void OnTriggerExit2D(Collider2D collider2d) {
+        _interactiveObject.CanInteract = false;
         _interactiveObject = null;
     }
 
