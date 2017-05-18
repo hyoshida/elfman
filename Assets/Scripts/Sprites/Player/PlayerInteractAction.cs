@@ -35,6 +35,9 @@ public class PlayerInteractAction : MonoBehaviour {
     }
 
     void OnTriggerExit2D(Collider2D collider2d) {
+        if (_interactiveObject == null) {
+            return;
+        }
         _interactiveObject.CanInteract = false;
         _interactiveObject = null;
     }

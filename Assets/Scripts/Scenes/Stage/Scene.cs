@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Stage {
     enum State {
@@ -10,6 +9,7 @@ namespace Stage {
         Playing,
         GameOver,
         GameClear,
+        Menu,
     }
 
     public class Scene : ApplicationScene {
@@ -32,6 +32,7 @@ namespace Stage {
         bool _gameOvered;
         State _state;
         SceneMaster _currentSceneMaster;
+        Action _onCloseMenu;
 
         private State state {
             get {
@@ -80,6 +81,21 @@ namespace Stage {
             }
             state = State.GameClear;
             _gameClearLabel.SetActive(true);
+        }
+
+        public void ChangeToMenuMode(Action onCloseMenu) {
+            state = State.Menu;
+            GameManager.Instance.gameState = GameState.Pause;
+            _onCloseMenu = onCloseMenu;
+        }
+
+        public void RevertFromMenuMode() {
+            if (_onCloseMenu == null) {
+                return;
+            }
+            _onCloseMenu();
+            state = State.Playing;
+            GameManager.Instance.gameState = GameState.Playing;
         }
 
         // Use this for initialization
