@@ -62,6 +62,9 @@ public class Player : MonoBehaviour {
 
     public bool IsFrozen {
         get {
+            if (GameManager.Instance.gameState == GameState.Pause) {
+                return true;
+            }
             return _frozen;
         }
     }
@@ -97,17 +100,16 @@ public class Player : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (GameManager.Instance.gameState == GameState.Pause) {
+        if (IsFrozen) {
             return;
         }
-        if (!_frozen) {
-            ActionPlayer();
-            MovePlayer();
 
-            if (IsFalldowned) {
-                PutBackPlayer();
-                Damage();
-            }
+        ActionPlayer();
+        MovePlayer();
+
+        if (IsFalldowned) {
+            PutBackPlayer();
+            Damage();
         }
     }
 

@@ -1,17 +1,24 @@
 ﻿using UnityEngine;
 
 // ↑ボタンを押すとプレイヤーの付近にあるものにインタラクトする
+[RequireComponent(typeof(Player))]
 public class PlayerInteractAction : MonoBehaviour {
     const int INTERACTION_INTERVAL_MSEC = 1000;
 
     int _intervalMsec;
     InteractiveObject _interactiveObject;
+    Player _player;
 
     void Start() {
         _intervalMsec = 0;
+        _player = GetComponent<Player>();
     }
 
     void Update() {
+        if (_player.IsFrozen) {
+            return;
+        }
+
         float axis = Input.GetAxisRaw("Vertical");
         int direction = (axis == 0) ? 0 : ((axis > 0) ? 1 : -1);
         if (direction == 1 && CanInteract) {
