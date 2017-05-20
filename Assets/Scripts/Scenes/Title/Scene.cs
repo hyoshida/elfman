@@ -11,13 +11,6 @@ namespace Title {
             _defaultButton.Select();
         }
 
-        // Update is called once per frame
-        void Update() {
-            if (Input.GetButtonDown("Submit")) {
-                onClickStartButton();
-            }
-        }
-
         public void onClickStartButton() {
             GameManager.Instance.GotoStage(1);
         }
