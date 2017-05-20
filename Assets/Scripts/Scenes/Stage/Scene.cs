@@ -85,7 +85,7 @@ namespace Stage {
 
         public void ChangeToMenuMode(Action onCloseMenu) {
             state = State.Menu;
-            GameManager.Instance.gameState = GameState.Pause;
+            GameManager.Instance.GameState = GameState.Pause;
             _onCloseMenu = onCloseMenu;
         }
 
@@ -95,7 +95,7 @@ namespace Stage {
             }
             _onCloseMenu();
             state = State.Playing;
-            GameManager.Instance.gameState = GameState.Playing;
+            GameManager.Instance.GameState = GameState.Playing;
         }
 
         // Use this for initialization
@@ -105,7 +105,7 @@ namespace Stage {
 
             _hud.SetActive(false);
 
-            GameManager.Instance.gameState = GameState.Pause;
+            GameManager.Instance.GameState = GameState.Pause;
         }
 
         // Update is called once per frame
@@ -158,7 +158,7 @@ namespace Stage {
         // NOTE: 決定キー後に攻撃モーションをとるのを避けるために１フレームだけポーズ解除をズラす
         IEnumerator PlayAfterCurrentFrame() {
             yield return new WaitForEndOfFrame();
-            GameManager.Instance.gameState = GameState.Playing;
+            GameManager.Instance.GameState = GameState.Playing;
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System;
 
 [RequireComponent(typeof(Renderer))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class Enemy : MonoBehaviour {
     [SerializeField]
     int hp;
@@ -16,11 +17,23 @@ public class Enemy : MonoBehaviour {
     Renderer _renderer;
     Material _defaultMaterial;
     CameraShaker _cameraShaker;
+    Rigidbody2D _rigibody2d;
+    bool _isFrozen;
 
-    bool IsDead {
+    public bool IsDead {
         get {
             return (hp <= 0);
         }
+    }
+
+    public bool IsFrozen {
+        get {
+            return _isFrozen;
+        }
+    }
+
+    public void Stop() {
+        _rigibody2d.velocity = new Vector2(0, _rigibody2d.velocity.y);
     }
 
     void Start() {
@@ -29,9 +42,23 @@ public class Enemy : MonoBehaviour {
 
         Camera camera = Camera.main;
         _cameraShaker = camera.GetComponent<CameraShaker>();
+
+        _rigibody2d = GetComponent<Rigidbody2D>();
+
+        GameManager.Instance.gameState.watcher += OnChangeGameState;
     }
 
     void OnDestroy() {
+        GameManager.Instance.gameState.watcher -= OnChangeGameState;
+    }
+
+    void OnChangeGameState(GameState newState, GameState oldState) {
+        if (newState == GameState.Pause) {
+            Stop();
+            _isFrozen = true;
+            return;
+        }
+        _isFrozen = false;
     }
 
     void Damage(int amount = 1) {

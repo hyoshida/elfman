@@ -14,24 +14,30 @@ enum AIState {
     Attacking,
 }
 
+[RequireComponent(typeof(Enemy))]
 public class Slime : MonoBehaviour {
     public const int SPEED = -6;
     public readonly float GROUND_ANGLE_TOLERANCE = Mathf.Cos(30.0f * Mathf.Deg2Rad);
 
     AIState _aiState;
     AIState _prevAiState;
+    Enemy _enemy;
     Animator _animator;
     Rigidbody2D _rigidbody2D;
 
     // Use this for initialization
     void Start() {
         _aiState = AIState.Idle;
+        _enemy = GetComponent<Enemy>();
         _animator = GetComponent<Animator>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update() {
+        if (_enemy.IsFrozen) {
+            return;
+        }
         UpdateForAI();
     }
 
