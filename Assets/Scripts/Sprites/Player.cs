@@ -80,6 +80,18 @@ public class Player : MonoBehaviour {
         }
     }
 
+    // すべての動きを止める
+    public void Stop() {
+        _lastWaitingAt = Time.time;
+
+        _animator.SetBool("isRunning", false);
+        _animator.SetBool("isDashing", false);
+
+        _rigidbody2D.velocity = new Vector2(0, _rigidbody2D.velocity.y);
+
+        // 残像を消す
+    }
+
     public void Dispose() {
         Destroy(gameObject);
 
@@ -245,12 +257,7 @@ public class Player : MonoBehaviour {
             float slopeFriction = calcSlopFriction();
             _rigidbody2D.velocity = new Vector2(direction * speed * (1f - slopeFriction), _rigidbody2D.velocity.y);
         } else {
-            _lastWaitingAt = Time.time;
-
-            _animator.SetBool("isRunning", false);
-            _animator.SetBool("isDashing", false);
-
-            _rigidbody2D.velocity = new Vector2(0, _rigidbody2D.velocity.y);
+            Stop();
         }
 
         if (!isDashing && !_ghostSprites.HasGhosts()) {

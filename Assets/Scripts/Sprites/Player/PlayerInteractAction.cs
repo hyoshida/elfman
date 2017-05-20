@@ -60,6 +60,9 @@ public class PlayerInteractAction : MonoBehaviour {
             return;
         }
 
+        // プレイヤーの動きを止める
+        _player.Stop();
+
         _interactiveObject.Interact();
     }
 }
