@@ -30,7 +30,7 @@ public class Player : MonoBehaviour {
     int _lastRunningDirection;
     float _lastRunningAt;
     float _lastWaitingAt;
-    bool _frozen;
+    bool _isFrozen;
     CameraShaker _cameraShaker;
     Vector3 _previousPosition;
 
@@ -62,10 +62,7 @@ public class Player : MonoBehaviour {
 
     public bool IsFrozen {
         get {
-            if (GameManager.Instance.GameState == GameState.Pause) {
-                return true;
-            }
-            return _frozen;
+            return _isFrozen;
         }
     }
 
@@ -88,11 +85,11 @@ public class Player : MonoBehaviour {
         _animator.SetBool("isDashing", false);
 
         _rigidbody2D.velocity = new Vector2(0, _rigidbody2D.velocity.y);
-
-        // 残像を消す
     }
 
     public void Dispose() {
+        GameManager.Instance.gameState.watcher -= OnChangeGameState;
+
         Destroy(gameObject);
 
         // バイブ消し忘れを防止する
@@ -108,6 +105,8 @@ public class Player : MonoBehaviour {
         _renderer = GetComponent<SpriteRenderer>();
         _lifeGaugeImage = _lifeGauge.GetComponent<Image>();
         _ghostSprites = GetComponent<GhostSprites>();
+
+        GameManager.Instance.gameState.watcher += OnChangeGameState;
     }
 
     // Update is called once per frame
@@ -130,6 +129,15 @@ public class Player : MonoBehaviour {
 
     void OnDestroy() {
         Dispose();
+    }
+
+    void OnChangeGameState(GameState newState, GameState oldState) {
+        if (newState == GameState.Pause) {
+            Stop();
+            _isFrozen = true;
+            return;
+        }
+        _isFrozen = false;
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
@@ -300,7 +308,7 @@ public class Player : MonoBehaviour {
     }
 
     IEnumerator DashAttackingPhase() {
-        _frozen = true;
+        _isFrozen = true;
 
         yield return new WaitForEndOfFrame();
         _animator.SetBool("isDashing", false);
@@ -319,7 +327,7 @@ public class Player : MonoBehaviour {
             time += Time.deltaTime;
         }
 
-        _frozen = false;
+        _isFrozen = false;
     }
 
     void PutBackPlayer() {
