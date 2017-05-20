@@ -28152,7 +28152,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!60 &1316
 PolygonCollider2D:
@@ -79984,7 +79984,7 @@ Prefab:
     - target: {fileID: 50525341663670462, guid: 3f7966e9b974b3d4984f2664576038bb,
         type: 2}
       propertyPath: m_CollisionDetection
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
