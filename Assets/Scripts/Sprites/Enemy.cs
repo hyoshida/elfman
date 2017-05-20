@@ -17,9 +17,15 @@ public class Enemy : MonoBehaviour {
     Material _defaultMaterial;
     CameraShaker _cameraShaker;
 
-    bool IsDead {
+    public bool IsDead {
         get {
             return (hp <= 0);
+        }
+    }
+
+    public bool IsFrozen {
+        get {
+            return (GameManager.Instance.gameState == GameState.Pause);
         }
     }
 
