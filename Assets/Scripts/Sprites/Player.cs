@@ -107,6 +107,9 @@ public class Player : MonoBehaviour {
         _ghostSprites = GetComponent<GhostSprites>();
 
         GameManager.Instance.gameState.watcher += OnChangeGameState;
+
+        // ゲーム初期化時にポーズかどうかを確認しておく
+        _isFrozen = (GameManager.Instance.GameState == GameState.Pause);
     }
 
     // Update is called once per frame
