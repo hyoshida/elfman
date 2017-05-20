@@ -31,7 +31,7 @@ public class PlayerCamera : MonoBehaviour {
         // Playerの位置から右に少し移動した位置を画面中央にする
         Vector3 cameraPosition = _camera.transform.position;
         cameraPosition.x = transform.position.x;
-        _camera.transform.position = new Vector3(cameraPosition.x, cameraPosition.y, cameraPosition.z);
+        _camera.transform.position = cameraPosition;
     }
 
     void MoveCameraY() {
@@ -45,7 +45,7 @@ public class PlayerCamera : MonoBehaviour {
 
             Vector3 cameraPosition = _camera.transform.position;
             cameraPosition.y = _targetCameraPositionY;
-            _camera.transform.position = new Vector3(cameraPosition.x, cameraPosition.y, cameraPosition.z);
+            _camera.transform.position = cameraPosition;
 
             _targetCameraPositionY = float.NaN;
             return;
