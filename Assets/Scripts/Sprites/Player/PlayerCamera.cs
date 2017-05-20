@@ -4,8 +4,8 @@ using DG.Tweening;
 [RequireComponent(typeof(Renderer))]
 public class PlayerCamera : MonoBehaviour {
     const float CAMERA_OFFSET_Y = 0.5f;
-    const float THRESHOLD_TOP = -4.0f;
-    const float THRESHOLD_BOTTOM = 4.0f;
+    const float THRESHOLD_TOP = -4.5f;
+    const float THRESHOLD_BOTTOM = 4.5f;
 
     Camera _camera;
     Renderer _renderer;
@@ -31,7 +31,7 @@ public class PlayerCamera : MonoBehaviour {
         // Playerの位置から右に少し移動した位置を画面中央にする
         Vector3 cameraPosition = _camera.transform.position;
         cameraPosition.x = transform.position.x;
-        _camera.transform.position = new Vector3(cameraPosition.x, cameraPosition.y, cameraPosition.z);
+        _camera.transform.position = cameraPosition;
     }
 
     void MoveCameraY() {
@@ -45,7 +45,7 @@ public class PlayerCamera : MonoBehaviour {
 
             Vector3 cameraPosition = _camera.transform.position;
             cameraPosition.y = _targetCameraPositionY;
-            _camera.transform.position = new Vector3(cameraPosition.x, cameraPosition.y, cameraPosition.z);
+            _camera.transform.position = cameraPosition;
 
             _targetCameraPositionY = float.NaN;
             return;
