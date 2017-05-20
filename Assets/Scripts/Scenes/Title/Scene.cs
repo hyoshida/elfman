@@ -1,10 +1,14 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace Title {
     public class Scene : ApplicationScene {
+        [SerializeField]
+        Button _defaultButton;
+
         // Use this for initialization
         void Start() {
+            _defaultButton.Select();
         }
 
         // Update is called once per frame
