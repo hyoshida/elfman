@@ -4,8 +4,8 @@ using DG.Tweening;
 [RequireComponent(typeof(Renderer))]
 public class PlayerCamera : MonoBehaviour {
     const float CAMERA_OFFSET_Y = 0.5f;
-    const float THRESHOLD_TOP = -4.0f;
-    const float THRESHOLD_BOTTOM = 4.0f;
+    const float THRESHOLD_TOP = -4.5f;
+    const float THRESHOLD_BOTTOM = 4.5f;
 
     Camera _camera;
     Renderer _renderer;
