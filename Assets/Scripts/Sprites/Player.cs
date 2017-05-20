@@ -62,7 +62,7 @@ public class Player : MonoBehaviour {
 
     public bool IsFrozen {
         get {
-            if (GameManager.Instance.gameState == GameState.Pause) {
+            if (GameManager.Instance.GameState == GameState.Pause) {
                 return true;
             }
             return _frozen;

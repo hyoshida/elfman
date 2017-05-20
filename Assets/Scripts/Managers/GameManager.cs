@@ -34,11 +34,20 @@ public class GameManager {
         }
     }
 
-    public GameState gameState;
     public BattleMode battleMode;
+    public NotificationObject<GameState> gameState;
 
     GameScene _currentScene;
     uint _currentStageCode;
+
+    public GameState GameState {
+        get {
+            return gameState.Value;
+        }
+        set {
+            gameState.Value = value;
+        }
+    }
 
     public GameScene CurrentScene {
         get {
@@ -54,6 +63,8 @@ public class GameManager {
 
     public GameManager() {
         Application.targetFrameRate = 30;
+
+        gameState = new NotificationObject<GameState>(GameState.Playing);
     }
 
     public void Quit() {

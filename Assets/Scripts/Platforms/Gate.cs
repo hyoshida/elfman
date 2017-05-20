@@ -31,7 +31,7 @@ public class Gate : MonoBehaviour {
         _closed = true;
 
         _player = collider.gameObject;
-        GameManager.Instance.gameState = GameState.Pause;
+        GameManager.Instance.GameState = GameState.Pause;
 
         StartCoroutine(ForceMovePlayer());
     }
@@ -56,7 +56,7 @@ public class Gate : MonoBehaviour {
 
         yield return new WaitForSeconds(1f);
 
-        GameManager.Instance.gameState = GameState.Playing;
+        GameManager.Instance.GameState = GameState.Playing;
         GameManager.Instance.battleMode = BattleMode.Boss;
     }
 }
