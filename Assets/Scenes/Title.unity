@@ -175,7 +175,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Exit
+  m_Text: Collection
 --- !u!222 &157956499
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -354,7 +354,7 @@ GameObject:
   - component: {fileID: 487656346}
   - component: {fileID: 487656345}
   m_Layer: 5
-  m_Name: Collection Button
+  m_Name: ContinueButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -419,7 +419,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 183538852}
-        m_MethodName: onClickCollectionButton
+        m_MethodName: onClickContinueButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -504,7 +504,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Start Game
+  m_Text: New Game
 --- !u!222 &517484166
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -714,7 +714,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Collection
+  m_Text: Continue
 --- !u!222 &1035960409
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -732,7 +732,7 @@ GameObject:
   - component: {fileID: 1539837490}
   - component: {fileID: 1539837488}
   m_Layer: 5
-  m_Name: Exit Button
+  m_Name: CollectionButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -797,7 +797,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 183538852}
-        m_MethodName: onClickExitButton
+        m_MethodName: onClickCollectionButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -990,7 +990,7 @@ GameObject:
   - component: {fileID: 1907309369}
   - component: {fileID: 1907309367}
   m_Layer: 5
-  m_Name: Start Button
+  m_Name: NewGameButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1055,7 +1055,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 183538852}
-        m_MethodName: onClickStartButton
+        m_MethodName: onClickNewGameButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -83,6 +83,10 @@ namespace Stage {
             _gameClearLabel.SetActive(true);
         }
 
+        public void Save() {
+            SaveData.Save(_player);
+        }
+
         public void ChangeToMenuMode(Action onCloseMenu) {
             state = State.Menu;
             GameManager.Instance.GameState = GameState.Pause;

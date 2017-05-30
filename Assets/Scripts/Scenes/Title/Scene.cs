@@ -11,16 +11,16 @@ namespace Title {
             _defaultButton.Select();
         }
 
-        public void onClickStartButton() {
+        public void onClickNewGameButton() {
             GameManager.Instance.GotoStage(1);
+        }
+
+        public void onClickContinueButton() {
+            SaveData.Load();
         }
 
         public void onClickCollectionButton() {
             GameManager.Instance.GotoCollection();
-        }
-
-        public void onClickExitButton() {
-            GameManager.Instance.Quit();
         }
     }
 }
