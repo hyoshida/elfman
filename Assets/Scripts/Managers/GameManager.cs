@@ -87,18 +87,21 @@ public class GameManager {
         SwitchScene(GameScene.StageSelect);
     }
 
-    public void GotoStage(uint stageCode) {
+    public void GotoStage(uint stageCode, Action callback = null) {
         battleMode = BattleMode.Stage;
 
         // TODO: ステージ選択できるようにする
-        SwitchScene(GameScene.Stage1);
+        SwitchScene(GameScene.Stage1, callback);
         _currentStageCode = stageCode;
     }
 
-    void SwitchScene(GameScene scene) {
-        FadeManager.Instance.Run(() =>
-            SceneManager.LoadScene(scene.ToString())
-        );
+    void SwitchScene(GameScene scene, Action callback = null) {
+        FadeManager.Instance.Run(() => {
+            if (callback != null) {
+                SceneManager.sceneLoaded += (Scene _sceneName, LoadSceneMode _sceneMode) => callback();
+            }
+            SceneManager.LoadScene(scene.ToString());
+        });
         _currentScene = scene;
     }
 }
