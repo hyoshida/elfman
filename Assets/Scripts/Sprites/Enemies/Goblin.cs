@@ -13,7 +13,7 @@ public class Goblin : MonoBehaviour {
         Attacking,
     }
 
-    public const int SPEED = -3;
+    public const int SPEED = -4;
     public const float WALKING_DISTANCE = 10f;
     public const float ATTACKING_DISTANCE = 1.25f;
 
