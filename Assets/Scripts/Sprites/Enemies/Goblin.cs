@@ -1,11 +1,8 @@
-﻿using Assets.Scripts.Utils;
-using Assets.Scripts.Extensions;
-using System.Collections;
-using System.Collections.Generic;
+﻿using Assets.Scripts.Extensions;
 using UnityEngine;
 
 [RequireComponent(typeof(Enemy))]
-public class Slime : MonoBehaviour {
+public class Goblin : MonoBehaviour {
     enum AIState {
         Idle,
         Wait,
@@ -16,8 +13,10 @@ public class Slime : MonoBehaviour {
         Attacking,
     }
 
-    public const int SPEED = -6;
-    public readonly float GROUND_ANGLE_TOLERANCE = Mathf.Cos(30.0f * Mathf.Deg2Rad);
+    public const int SPEED = -3;
+
+    [SerializeField]
+    GameObject _target;
 
     AIState _aiState;
     AIState _prevAiState;
@@ -41,20 +40,6 @@ public class Slime : MonoBehaviour {
         UpdateForAI();
     }
 
-    void OnCollisionEnter2D(Collision2D collision) {
-        CollisionUtil util = new CollisionUtil(collision);
-        if (!util.IsLayer("Ground")) {
-            return;
-        }
-
-        HitType hitType = util.HitTest();
-        if ((hitType & HitType.WALL) != 0) {
-            Vector2 scale = gameObject.transform.localScale;
-            scale.x *= -1;
-            gameObject.transform.localScale = scale;
-        }
-    }
-
     void UpdateForAI() {
         switch (_aiState) {
             case AIState.Idle:
@@ -64,7 +49,7 @@ public class Slime : MonoBehaviour {
                 _aiState = AIState.Waiting;
                 break;
             case AIState.Waiting:
-                if (!_animator.IsPlaying("slime-wait") || _animator.IsPlaying("Waiting")) {
+                if (_animator.IsPlaying("Waiting")) {
                     _prevAiState = AIState.Waiting;
                     _aiState = AIState.Idle;
                 }
@@ -74,8 +59,9 @@ public class Slime : MonoBehaviour {
                 _animator.SetTrigger("walk");
                 break;
             case AIState.Walking:
-                if (_animator.IsPlaying("slime-walk") || _animator.IsPlaying("Walking")) {
-                    float direction = gameObject.transform.localScale.x;
+                if (_animator.IsPlaying("Walking")) {
+                    int direction = GetPlayerDirection();
+                    transform.localScale = new Vector2(direction, transform.localScale.y);
                     _rigidbody2D.velocity = new Vector2(SPEED * direction, _rigidbody2D.velocity.y);
                 } else {
                     _rigidbody2D.velocity = new Vector2(0, _rigidbody2D.velocity.y);
@@ -84,5 +70,9 @@ public class Slime : MonoBehaviour {
                 }
                 break;
         }
+    }
+
+    int GetPlayerDirection() {
+        return ((transform.position.x - _target.transform.position.x) > 0) ? 1 : -1;
     }
 }
