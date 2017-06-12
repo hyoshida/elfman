@@ -80868,8 +80868,9 @@ GameObject:
   - component: {fileID: 1828675325}
   - component: {fileID: 1828675324}
   - component: {fileID: 1828675329}
-  - component: {fileID: 1828675328}
   - component: {fileID: 1828675330}
+  - component: {fileID: 1828675328}
+  - component: {fileID: 1828675331}
   m_Layer: 11
   m_Name: Goblin
   m_TagString: Enemy
@@ -81022,6 +81023,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &1828675331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1828675323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fac443ab0c54b3a42a75e784dfe77dab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _target: {fileID: 15}
 --- !u!1 &1875336800
 GameObject:
   m_ObjectHideFlags: 0
