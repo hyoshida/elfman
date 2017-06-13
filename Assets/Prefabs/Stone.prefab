@@ -21,11 +21,11 @@ GameObject:
   - component: {fileID: 4066194886933492}
   - component: {fileID: 212587022854282642}
   - component: {fileID: 61391361888077734}
-  - component: {fileID: 50322963085224472}
+  - component: {fileID: 50545433634896806}
   - component: {fileID: 114157554648502834}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Stone
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -43,7 +43,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &50322963085224472
+--- !u!50 &50545433634896806
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 1

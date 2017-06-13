@@ -4,7 +4,7 @@ using UnityEngine;
 public class Stone : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D collision) {
         CollisionUtil util = new CollisionUtil(collision);
-        if (util.IsLayer("Ground")) {
+        if (util.IsLayer("Ground") || collision.gameObject.tag == "Player") {
             Destroy(gameObject);
         }
     }
