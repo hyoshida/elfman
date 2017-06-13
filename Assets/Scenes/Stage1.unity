@@ -81090,6 +81090,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 15}
+  _thorwablePrefab: {fileID: 1535450646515948, guid: 726cadbbcb9e3e14da54a563db1b2a93,
+    type: 2}
 --- !u!1 &1875336800
 GameObject:
   m_ObjectHideFlags: 0

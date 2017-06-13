@@ -11,14 +11,20 @@ public class Goblin : MonoBehaviour {
         Walking,
         Attack,
         Attacking,
+        LongRangeAttack,
+        LongRangeAttacking,
     }
 
     public const int SPEED = -4;
-    public const float WALKING_DISTANCE = 10f;
+    public const float LONG_RANGE_ATTACKING_DISTANCE = 10f;
+    public const float WALKING_DISTANCE = 5f;
     public const float ATTACKING_DISTANCE = 1.25f;
 
     [SerializeField]
     GameObject _target;
+
+    [SerializeField]
+    GameObject _thorwablePrefab;
 
     AIState _aiState;
     AIState _prevAiState;
@@ -26,9 +32,9 @@ public class Goblin : MonoBehaviour {
     Animator _animator;
     Rigidbody2D _rigidbody2D;
 
-    bool CanAttack {
+    bool CanLongRangeAttack {
         get {
-            return Mathf.Abs(GetDistanceForTarget()) < ATTACKING_DISTANCE;
+            return Mathf.Abs(GetDistanceForTarget()) < LONG_RANGE_ATTACKING_DISTANCE;
         }
     }
 
@@ -38,6 +44,11 @@ public class Goblin : MonoBehaviour {
         }
     }
 
+    bool CanAttack {
+        get {
+            return Mathf.Abs(GetDistanceForTarget()) < ATTACKING_DISTANCE;
+        }
+    }
 
     // Use this for initialization
     void Start() {
@@ -62,6 +73,8 @@ public class Goblin : MonoBehaviour {
                     _aiState = AIState.Attack;
                 } else if (CanWalk) {
                     _aiState = AIState.Walk;
+                } else if (CanLongRangeAttack) {
+                    _aiState = AIState.LongRangeAttack;
                 } else {
                     _aiState = AIState.Wait;
                 }
@@ -106,6 +119,18 @@ public class Goblin : MonoBehaviour {
                     _aiState = AIState.Idle;
                 }
                 break;
+            case AIState.LongRangeAttack:
+                _aiState = AIState.LongRangeAttacking;
+                _animator.SetTrigger("attack");
+                _rigidbody2D.velocity = new Vector2(0, _rigidbody2D.velocity.y);
+                ThrowToPlayer();
+                break;
+            case AIState.LongRangeAttacking:
+                if (!_animator.IsPlaying("Attacking")) {
+                    _prevAiState = AIState.Waiting;
+                    _aiState = AIState.Idle;
+                }
+                break;
         }
     }
 
@@ -115,5 +140,17 @@ public class Goblin : MonoBehaviour {
 
     int GetTargetDirection() {
         return (GetDistanceForTarget() > 0) ? 1 : -1;
+    }
+
+    void ThrowToPlayer() {
+        var thorwable = Instantiate(_thorwablePrefab, transform.position, transform.rotation);
+        thorwable.transform.SetParent(transform.parent);
+
+        // TODO: プレイヤーに向かって投げつける
+        var direction = transform.localScale.x;
+        var throwForce = 50f;
+        var throwVector = new Vector2(-5f * direction, 5f);
+        var rigidbody2d = thorwable.GetComponent<Rigidbody2D>();
+        rigidbody2d.AddForce(throwVector * throwForce);
     }
 }
