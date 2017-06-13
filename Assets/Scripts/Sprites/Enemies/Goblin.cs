@@ -100,7 +100,10 @@ public class Goblin : MonoBehaviour {
                     _aiState = AIState.Attack;
                 } else if (_animator.IsPlaying("Walking")) {
                     int direction = GetTargetDirection();
+
                     transform.localScale = new Vector2(direction, transform.localScale.y);
+                    // transform.rotation = Quaternion.LookRotation(_target.transform.position - transform.position);
+
                     _rigidbody2D.velocity = new Vector2(SPEED * direction, _rigidbody2D.velocity.y);
                 } else {
                     _rigidbody2D.velocity = new Vector2(0, _rigidbody2D.velocity.y);
@@ -146,11 +149,23 @@ public class Goblin : MonoBehaviour {
         var thorwable = Instantiate(_thorwablePrefab, transform.position, transform.rotation);
         thorwable.transform.SetParent(transform.parent);
 
-        // TODO: プレイヤーに向かって投げつける
-        var direction = transform.localScale.x;
-        var throwForce = 50f;
-        var throwVector = new Vector2(-5f * direction, 5f);
+        const float firingAngle = 45.0f;
+        const float gravity = 10.0f;
+
+        // Calculate distance to target
+        float distance = Vector2.Distance(transform.position, _target.transform.position);
+
+        // Calculate the velocity needed to throw the object to the target at specified angle.
+        float velocity = distance / (Mathf.Sin(2 * firingAngle * Mathf.Deg2Rad) / gravity);
+
+        // Extract the X/Y componenent of the velocity.
+        float vx = Mathf.Sqrt(velocity) * Mathf.Cos(firingAngle * Mathf.Deg2Rad);
+        float vy = Mathf.Sqrt(velocity) * Mathf.Sin(firingAngle * Mathf.Deg2Rad);
+
+        // Change the direction to face the target.
+        vx *= -transform.localScale.x;
+
         var rigidbody2d = thorwable.GetComponent<Rigidbody2D>();
-        rigidbody2d.AddForce(throwVector * throwForce);
+        rigidbody2d.AddForce(new Vector2(vx, vy), ForceMode2D.Impulse);
     }
 }
