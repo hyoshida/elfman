@@ -4,18 +4,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-enum AIState {
-    Idle,
-    Wait,
-    Waiting,
-    Walk,
-    Walking,
-    Attack,
-    Attacking,
-}
-
 [RequireComponent(typeof(Enemy))]
 public class Slime : MonoBehaviour {
+    enum AIState {
+        Idle,
+        Wait,
+        Waiting,
+        Walk,
+        Walking,
+        Attack,
+        Attacking,
+    }
+
     public const int SPEED = -6;
     public readonly float GROUND_ANGLE_TOLERANCE = Mathf.Cos(30.0f * Mathf.Deg2Rad);
 
