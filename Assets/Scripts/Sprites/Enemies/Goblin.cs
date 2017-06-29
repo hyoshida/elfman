@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Extensions;
+using Stage;
 using UnityEngine;
 
 [RequireComponent(typeof(Enemy))]
@@ -21,9 +22,6 @@ public class Goblin : MonoBehaviour {
     public const float ATTACKING_DISTANCE = 1.25f;
 
     [SerializeField]
-    GameObject _target;
-
-    [SerializeField]
     GameObject _thorwablePrefab;
 
     AIState _aiState;
@@ -31,6 +29,8 @@ public class Goblin : MonoBehaviour {
     Enemy _enemy;
     Animator _animator;
     Rigidbody2D _rigidbody2D;
+    GameObject _target;
+    float _height;
 
     bool CanLongRangeAttack {
         get {
@@ -56,6 +56,8 @@ public class Goblin : MonoBehaviour {
         _enemy = GetComponent<Enemy>();
         _animator = GetComponent<Animator>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
+        _target = ((Scene)ApplicationScene.Instance).Player;
+        _height = GetComponent<SpriteRenderer>().bounds.size.y;
     }
 
     // Update is called once per frame
@@ -146,7 +148,7 @@ public class Goblin : MonoBehaviour {
     }
 
     void ThrowToPlayer() {
-        var thorwable = Instantiate(_thorwablePrefab, transform.position, transform.rotation);
+        var thorwable = Instantiate(_thorwablePrefab, transform.position + (Vector3.up * _height * 0.5f), transform.rotation);
         thorwable.transform.SetParent(transform.parent);
 
         const float firingAngle = 45.0f;

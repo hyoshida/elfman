@@ -34,7 +34,11 @@ namespace Stage {
         SceneMaster _currentSceneMaster;
         Action _onCloseMenu;
 
-        private State state {
+        public GameObject Player {
+            get { return _player; }
+        }
+
+        State state {
             get {
                 return _state;
             }
