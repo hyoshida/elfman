@@ -121,10 +121,10 @@ public class Player : MonoBehaviour {
         ActionPlayer();
         MovePlayer();
 
-        if (IsFalldowned) {
-            PutBackPlayer();
-            Damage();
-        }
+        // if (IsFalldowned) {
+        //     PutBackPlayer();
+        //     Damage();
+        // }
     }
 
     void FixedUpdate() {

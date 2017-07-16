@@ -4,8 +4,8 @@ using DG.Tweening;
 [RequireComponent(typeof(Renderer))]
 public class PlayerCamera : MonoBehaviour {
     const float CAMERA_OFFSET_Y = 0.5f;
-    const float THRESHOLD_TOP = -4.5f;
-    const float THRESHOLD_BOTTOM = 4.5f;
+    const float THRESHOLD_TOP = -4.75f;
+    const float THRESHOLD_BOTTOM = 4.75f;
 
     Camera _camera;
     Renderer _renderer;
@@ -79,9 +79,9 @@ public class PlayerCamera : MonoBehaviour {
         }
 
         // TODO: 場所によってカメラの移動限界を変えたい・・・。やっぱりカメラコリジョン必要？
-        if (cameraPosition.y < 0) {
-            cameraPosition.y = 0;
-        }
+        // if (cameraPosition.y < 0) {
+        //     cameraPosition.y = 0;
+        // }
 
         // Y座標は MoveCameraY 関数によって緩やかに移動させる
         _targetCameraPositionY = cameraPosition.y;
