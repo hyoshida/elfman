@@ -65,9 +65,22 @@ public class Player : PhysicsObject {
             return (transform.position.y < _camera.transform.position.y - 10);
         }
     }
+
     bool IsAttacking {
         get {
             return _animator.IsPlaying("attacking1", "attacking2", "attacking3");
+        }
+    }
+
+    bool FlipX {
+        get {
+            return transform.localScale.x < 0;
+        }
+
+        set {
+            Vector2 scale = transform.localScale;
+            scale.x = Math.Abs(scale.x) * (value ? -1 : 1);
+            transform.localScale = scale;
         }
     }
 
@@ -83,6 +96,11 @@ public class Player : PhysicsObject {
             velocity.y = jumpTakeOffSpeed;
         } else if (Input.GetButtonUp("Jump") && (velocity.y > 0)) {
             velocity.y = velocity.y * 0.5f;
+        }
+
+        var fliped = FlipX ? (movement.x > 0.01f) : (movement.x < -0.01f);
+        if (fliped) {
+            FlipX = !FlipX;
         }
 
         targetVelocity = movement * maxSpeed;
