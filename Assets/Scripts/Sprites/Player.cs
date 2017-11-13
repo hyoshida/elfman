@@ -103,6 +103,14 @@ public class Player : PhysicsObject {
             FlipX = !FlipX;
         }
 
+        // 移動速度が0.1より大きければ上昇
+        var isJumping = (velocity.y > 0.1f);
+        // 移動速度が-0.1より小さければ下降
+        var isFalling = (velocity.y < -0.1f);
+        // アニメーションに反映する
+        _animator.SetBool("isJumping", isJumping);
+        _animator.SetBool("isFalling", isFalling);
+
         targetVelocity = movement * maxSpeed;
     }
 
