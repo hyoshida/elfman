@@ -84,15 +84,7 @@ public class Player : PhysicsObject {
         }
     }
 
-    float jumpTakeOffSpeed = 7;
-
     protected override void ComputeVelocity() {
-        if (Input.GetButtonDown("Jump") && IsGrounded) {
-            velocity.y = jumpTakeOffSpeed;
-        } else if (Input.GetButtonUp("Jump") && (velocity.y > 0)) {
-            velocity.y = velocity.y * 0.5f;
-        }
-
         MovePlayer();
     }
 

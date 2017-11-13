@@ -7,12 +7,12 @@ using UnityEngine;
 public class PhysicsObject : MonoBehaviour {
     public float gravityModifier = 1f;
     public float minGroundNomalY = 0.65f;
+    public Vector2 velocity;
 
     protected Vector2 targetVelocity;
     protected bool grounded;
     protected Vector2 groundNomal;
     protected Rigidbody2D rigibody2d;
-    protected Vector2 velocity;
     protected ContactFilter2D contactFilter2d;
     protected RaycastHit2D[] hitBuffer = new RaycastHit2D[16];
     protected List<RaycastHit2D> hitBufferList = new List<RaycastHit2D>(16);

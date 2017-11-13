@@ -2254,8 +2254,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 905367f25e8e545c8b8612166679302d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityModifier: 1
+  gravityModifier: 3
   minGroundNomalY: 0.65
+  velocity: {x: 0, y: 0}
   _groundLayer:
     serializedVersion: 2
     m_Bits: 256
