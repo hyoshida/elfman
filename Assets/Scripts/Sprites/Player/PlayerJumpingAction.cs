@@ -11,24 +11,22 @@ public class PlayerJumpingAction : MonoBehaviour {
 
     Player _player;
     PlayerClingAction _playerClingAction;
-    Rigidbody2D _rigidbody2D;
+    PhysicsObject _physicsObject;
     Animator _animator;
     float _timeHeld;
 
     void Start() {
         _player = gameObject.GetComponent<Player>();
         _playerClingAction = gameObject.GetComponent<PlayerClingAction>();
-        _rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
         _animator = gameObject.GetComponent<Animator>();
     }
 
-    void Update() {
+    void FixedUpdate() {
         if (_player.IsFrozen) {
             return;
         }
         Action();
     }
-
 
     void Action() {
         if (Input.GetButtonDown("Jump")) {
@@ -61,14 +59,12 @@ public class PlayerJumpingAction : MonoBehaviour {
             }
         }
 
-        _player.IsGrounded = false;
-
         // runアニメーションを止めて、jumpアニメーションを実行
         _animator.SetBool("isRunning", false);
         _animator.SetTrigger("jump");
 
         // AddForceにて上方向へ力を加える
-        _rigidbody2D.AddForce(Vector2.up * _jumpPower);
+        _player.velocity.y += _jumpPower * Time.deltaTime;
 
         return true;
     }
@@ -78,6 +74,6 @@ public class PlayerJumpingAction : MonoBehaviour {
             return;
         }
         float ratio = Mathf.SmoothStep(1f, 0f, _timeHeld / TIME_FOR_FULL_JUMP);
-        _rigidbody2D.AddRelativeForce(Vector2.up * _jumpPower * ratio * -0.75f);
+        _player.velocity.y += (_jumpPower * ratio * -0.75f) * Time.deltaTime;
     }
 }

@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using Assets.Scripts.Utils;
 using Assets.Scripts.Extensions;
 using System;
 using DG.Tweening;
 
-public class Player : MonoBehaviour {
+public class Player : PhysicsObject {
     public const float RUNNING_SPEED = 6f;
     public const float DASHING_SPEED = RUNNING_SPEED * 1.5f;
     public const int DASH_POWER = 7000;
@@ -23,7 +22,6 @@ public class Player : MonoBehaviour {
     Animator _animator;
     Rigidbody2D _rigidbody2D;
     Camera _camera;
-    bool _isGrounded;
     SpriteRenderer _renderer;
     Image _lifeGaugeImage;
     GhostSprites _ghostSprites;
@@ -52,11 +50,7 @@ public class Player : MonoBehaviour {
 
     public bool IsGrounded {
         get {
-            return _isGrounded;
-        }
-
-        set {
-            _isGrounded = value;
+            return grounded;
         }
     }
 
@@ -71,9 +65,22 @@ public class Player : MonoBehaviour {
             return (transform.position.y < _camera.transform.position.y - 10);
         }
     }
+
     bool IsAttacking {
         get {
             return _animator.IsPlaying("attacking1", "attacking2", "attacking3");
+        }
+    }
+
+    bool FlipX {
+        get {
+            return transform.localScale.x < 0;
+        }
+
+        set {
+            Vector2 scale = transform.localScale;
+            scale.x = Math.Abs(scale.x) * (value ? -1 : 1);
+            transform.localScale = scale;
         }
     }
 
@@ -97,7 +104,7 @@ public class Player : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start() {
+    void Awake() {
         _animator = GetComponent<Animator>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _camera = Camera.main;
@@ -112,22 +119,18 @@ public class Player : MonoBehaviour {
         _isFrozen = (GameManager.Instance.GameState == GameState.Pause);
     }
 
-    // Update is called once per frame
-    void Update() {
+    protected override void ComputeVelocity() {
         if (IsFrozen) {
             return;
         }
 
-        ActionPlayer();
         MovePlayer();
+        ActionPlayer();
 
         // if (IsFalldowned) {
         //     PutBackPlayer();
         //     Damage();
         // }
-    }
-
-    void FixedUpdate() {
     }
 
     void OnDestroy() {
@@ -146,32 +149,6 @@ public class Player : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.tag == "Enemy") {
             Damage();
-        }
-    }
-
-    void OnCollisionStay2D(Collision2D collision) {
-        CollisionUtil util = new CollisionUtil(collision);
-        if (util.IsLayer("Ground")) {
-            HitType hitType = util.HitTest();
-            if ((hitType & HitType.GROUND) != 0) {
-                float playerWidth = 0.6f;
-                int playerDirection = ((transform.localScale.x >= 0) ? 1 : -1);
-                _previousPosition = transform.position - new Vector3(playerWidth * playerDirection, 0);
-
-                _isGrounded = true;
-            } else {
-                _isGrounded = false;
-            }
-        }
-    }
-
-    void OnCollisionExit2D(Collision2D collision) {
-        CollisionUtil util = new CollisionUtil(collision);
-        if (util.IsLayer("Ground")) {
-            HitType hitType = util.HitTest();
-            if ((hitType & HitType.GROUND) == 0) {
-                _isGrounded = false;
-            }
         }
     }
 
@@ -202,19 +179,17 @@ public class Player : MonoBehaviour {
     }
 
     void ActionPlayer() {
-        // 上下への移動速度を取得
-        float velY = _rigidbody2D.velocity.y;
         // 移動速度が0.1より大きければ上昇
-        bool isJumping = (velY > 0.1f);
+        var isJumping = (velocity.y > 1f);
         // 移動速度が-0.1より小さければ下降
-        bool isFalling = (velY < -0.1f);
+        var isFalling = (velocity.y < -1f);
         // アニメーションに反映する
         _animator.SetBool("isJumping", isJumping);
         _animator.SetBool("isFalling", isFalling);
 
         // 近距離攻撃
         if (Input.GetButtonDown("Fire1")) {
-            if (_isGrounded) {
+            if (IsGrounded) {
                 bool isDashing = _animator.GetBool("isDashing");
                 if (isDashing) {
                     StartCoroutine(DashAttackingPhase());
@@ -242,14 +217,14 @@ public class Player : MonoBehaviour {
         if (direction != 0 && !IsAttacking) {
             // 方向キー２度押しでダッシュ開始
             float doubleTapTime = _lastWaitingAt - _lastRunningAt;
-            if (((doubleTapTime > 0) && (doubleTapTime < 0.15f)) && (_lastRunningDirection == direction) && _isGrounded) {
+            if (((doubleTapTime > 0) && (doubleTapTime < 0.15f)) && (_lastRunningDirection == direction) && IsGrounded) {
                 _animator.SetBool("isDashing", true);
                 _ghostSprites.enabled = true;
                 isDashing = true;
             }
 
             // Fire3ボタンでもダッシュ開始
-            if (Input.GetButtonDown("Fire3") && _isGrounded) {
+            if (Input.GetButtonDown("Fire3") && IsGrounded) {
                 _animator.SetBool("isDashing", true);
                 _ghostSprites.enabled = true;
                 isDashing = true;
@@ -260,13 +235,10 @@ public class Player : MonoBehaviour {
 
             _animator.SetBool("isRunning", true);
 
-            Vector2 scale = transform.localScale;
-            scale.x = Math.Abs(scale.x) * direction;
-            transform.localScale = scale;
+            FlipX = (direction == -1);
 
             float speed = isDashing ? DASHING_SPEED : RUNNING_SPEED;
-            float slopeFriction = calcSlopFriction();
-            _rigidbody2D.velocity = new Vector2(direction * speed * (1f - slopeFriction), _rigidbody2D.velocity.y);
+            targetVelocity = new Vector2(direction * speed, 0);
         } else {
             Stop();
         }
@@ -275,19 +247,6 @@ public class Player : MonoBehaviour {
             // 立ち止まったら残像を消す
             _ghostSprites.enabled = false;
         }
-    }
-
-    float calcSlopFriction() {
-        float slopeFriction = 0f;
-
-        var playerSize = new Vector3(0, _renderer.bounds.size.y);
-        RaycastHit2D hit = Physics2D.Raycast(transform.position - (playerSize / 2), -Vector2.up, 1f);
-
-        if (hit.collider != null) {
-            slopeFriction = 1f - Vector3.Dot(hit.normal, Vector3.up);
-        }
-
-        return slopeFriction;
     }
 
     IEnumerator DamageAndInvinciblePhase() {
