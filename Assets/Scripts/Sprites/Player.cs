@@ -180,9 +180,9 @@ public class Player : PhysicsObject {
 
     void ActionPlayer() {
         // 移動速度が0.1より大きければ上昇
-        var isJumping = (velocity.y > 0.1f);
+        var isJumping = (velocity.y > 1f);
         // 移動速度が-0.1より小さければ下降
-        var isFalling = (velocity.y < -0.1f);
+        var isFalling = (velocity.y < -1f);
         // アニメーションに反映する
         _animator.SetBool("isJumping", isJumping);
         _animator.SetBool("isFalling", isFalling);
@@ -238,8 +238,7 @@ public class Player : PhysicsObject {
             FlipX = (direction == -1);
 
             float speed = isDashing ? DASHING_SPEED : RUNNING_SPEED;
-            float slopeFriction = calcSlopFriction();
-            targetVelocity = new Vector2(direction * speed * (1f - slopeFriction), 0);
+            targetVelocity = new Vector2(direction * speed, 0);
         } else {
             Stop();
         }
@@ -248,19 +247,6 @@ public class Player : PhysicsObject {
             // 立ち止まったら残像を消す
             _ghostSprites.enabled = false;
         }
-    }
-
-    float calcSlopFriction() {
-        float slopeFriction = 0f;
-
-        var playerSize = new Vector3(0, _renderer.bounds.size.y);
-        RaycastHit2D hit = Physics2D.Raycast(transform.position - (playerSize / 2), -Vector2.up, 1f);
-
-        if (hit.collider != null) {
-            slopeFriction = 1f - Vector3.Dot(hit.normal, Vector3.up);
-        }
-
-        return slopeFriction;
     }
 
     IEnumerator DamageAndInvinciblePhase() {
