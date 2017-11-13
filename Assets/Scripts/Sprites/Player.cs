@@ -71,6 +71,23 @@ public class Player : PhysicsObject {
         }
     }
 
+    float jumpTakeOffSpeed = 7;
+    float maxSpeed = 8;
+
+    protected override void ComputeVelocity() {
+        var movement = Vector2.zero;
+
+        movement.x = Input.GetAxis("Horizontal");
+
+        if (Input.GetButtonDown("Jump") && IsGrounded) {
+            velocity.y = jumpTakeOffSpeed;
+        } else if (Input.GetButtonUp("Jump") && (velocity.y > 0)) {
+            velocity.y = velocity.y * 0.5f;
+        }
+
+        targetVelocity = movement * maxSpeed;
+    }
+
     // すべての動きを止める
     public void Stop() {
         _lastWaitingAt = Time.time;
@@ -91,7 +108,7 @@ public class Player : PhysicsObject {
     }
 
     // Use this for initialization
-    void Start() {
+    void Awake() {
         _animator = GetComponent<Animator>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _camera = Camera.main;
@@ -107,22 +124,22 @@ public class Player : PhysicsObject {
     }
 
     // Update is called once per frame
-    void Update() {
-        if (IsFrozen) {
-            return;
-        }
+    // void Update() {
+    //     if (IsFrozen) {
+    //         return;
+    //     }
 
-        ActionPlayer();
-        MovePlayer();
+    //     ActionPlayer();
+    //     MovePlayer();
 
-        // if (IsFalldowned) {
-        //     PutBackPlayer();
-        //     Damage();
-        // }
-    }
+    //     // if (IsFalldowned) {
+    //     //     PutBackPlayer();
+    //     //     Damage();
+    //     // }
+    // }
 
-    void FixedUpdate() {
-    }
+    // void FixedUpdate() {
+    // }
 
     void OnDestroy() {
         Dispose();

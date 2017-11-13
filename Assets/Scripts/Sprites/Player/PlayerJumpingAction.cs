@@ -26,7 +26,7 @@ public class PlayerJumpingAction : MonoBehaviour {
         if (_player.IsFrozen) {
             return;
         }
-        Action();
+        // Action();
     }
 
     void Action() {

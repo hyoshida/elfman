@@ -20,14 +20,20 @@ public class PhysicsObject : MonoBehaviour {
     protected const float minMovementDistance = 0.001f;
     protected const float shellRadius = 0.01f;
 
-    void Start() {
-        contactFilter2d.useTriggers = false;
-        contactFilter2d.useLayerMask = true;
-        contactFilter2d.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
+    protected virtual void ComputeVelocity() {
     }
 
-    void OnEnabled() {
+    void Start() {
+        contactFilter2d.useTriggers = false;
+        contactFilter2d.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
+        contactFilter2d.useLayerMask = true;
+
         rigibody2d = GetComponent<Rigidbody2D>();
+    }
+
+    void Update() {
+        targetVelocity = Vector2.zero;
+        ComputeVelocity();
     }
 
     void FixedUpdate() {
@@ -59,7 +65,7 @@ public class PhysicsObject : MonoBehaviour {
 
             for (var i = 0; i < hitBufferList.Count; i++) {
                 var currentNomal = hitBufferList[i].normal;
-                if (currentNomal.y >  minGroundNomalY) {
+                if (currentNomal.y > minGroundNomalY) {
                     grounded = true;
                     if (vertical) {
                         groundNomal = currentNomal;
@@ -68,7 +74,7 @@ public class PhysicsObject : MonoBehaviour {
                 }
 
                 var projection = Vector2.Dot(velocity, currentNomal);
-                if (projection > 0) {
+                if (projection < 0) {
                     velocity = velocity - projection * currentNomal;
                 }
 
