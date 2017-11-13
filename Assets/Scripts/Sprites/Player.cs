@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using Assets.Scripts.Utils;
 using Assets.Scripts.Extensions;
 using System;
 using DG.Tweening;
 
-public class Player : MonoBehaviour {
+public class Player : PhysicsObject {
     public const float RUNNING_SPEED = 6f;
     public const float DASHING_SPEED = RUNNING_SPEED * 1.5f;
     public const int DASH_POWER = 7000;
@@ -23,7 +22,6 @@ public class Player : MonoBehaviour {
     Animator _animator;
     Rigidbody2D _rigidbody2D;
     Camera _camera;
-    bool _isGrounded;
     SpriteRenderer _renderer;
     Image _lifeGaugeImage;
     GhostSprites _ghostSprites;
@@ -52,11 +50,7 @@ public class Player : MonoBehaviour {
 
     public bool IsGrounded {
         get {
-            return _isGrounded;
-        }
-
-        set {
-            _isGrounded = value;
+            return grounded;
         }
     }
 
@@ -149,32 +143,6 @@ public class Player : MonoBehaviour {
         }
     }
 
-    void OnCollisionStay2D(Collision2D collision) {
-        CollisionUtil util = new CollisionUtil(collision);
-        if (util.IsLayer("Ground")) {
-            HitType hitType = util.HitTest();
-            if ((hitType & HitType.GROUND) != 0) {
-                float playerWidth = 0.6f;
-                int playerDirection = ((transform.localScale.x >= 0) ? 1 : -1);
-                _previousPosition = transform.position - new Vector3(playerWidth * playerDirection, 0);
-
-                _isGrounded = true;
-            } else {
-                _isGrounded = false;
-            }
-        }
-    }
-
-    void OnCollisionExit2D(Collision2D collision) {
-        CollisionUtil util = new CollisionUtil(collision);
-        if (util.IsLayer("Ground")) {
-            HitType hitType = util.HitTest();
-            if ((hitType & HitType.GROUND) == 0) {
-                _isGrounded = false;
-            }
-        }
-    }
-
     void Damage() {
         _lifeGaugeImage.fillAmount -= 0.1f;
         ShakeCamera();
@@ -214,7 +182,7 @@ public class Player : MonoBehaviour {
 
         // 近距離攻撃
         if (Input.GetButtonDown("Fire1")) {
-            if (_isGrounded) {
+            if (IsGrounded) {
                 bool isDashing = _animator.GetBool("isDashing");
                 if (isDashing) {
                     StartCoroutine(DashAttackingPhase());
@@ -242,14 +210,14 @@ public class Player : MonoBehaviour {
         if (direction != 0 && !IsAttacking) {
             // 方向キー２度押しでダッシュ開始
             float doubleTapTime = _lastWaitingAt - _lastRunningAt;
-            if (((doubleTapTime > 0) && (doubleTapTime < 0.15f)) && (_lastRunningDirection == direction) && _isGrounded) {
+            if (((doubleTapTime > 0) && (doubleTapTime < 0.15f)) && (_lastRunningDirection == direction) && IsGrounded) {
                 _animator.SetBool("isDashing", true);
                 _ghostSprites.enabled = true;
                 isDashing = true;
             }
 
             // Fire3ボタンでもダッシュ開始
-            if (Input.GetButtonDown("Fire3") && _isGrounded) {
+            if (Input.GetButtonDown("Fire3") && IsGrounded) {
                 _animator.SetBool("isDashing", true);
                 _ghostSprites.enabled = true;
                 isDashing = true;

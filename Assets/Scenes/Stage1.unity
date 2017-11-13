@@ -998,7 +998,7 @@ Rigidbody2D:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 15}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -1009,7 +1009,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 4
 --- !u!61 &1471
 BoxCollider2D:
@@ -2254,6 +2254,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 905367f25e8e545c8b8612166679302d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gravityModifier: 1
+  minGroundNomalY: 0.65
   _groundLayer:
     serializedVersion: 2
     m_Bits: 256

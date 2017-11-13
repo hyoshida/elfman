@@ -29,7 +29,6 @@ public class PlayerJumpingAction : MonoBehaviour {
         Action();
     }
 
-
     void Action() {
         if (Input.GetButtonDown("Jump")) {
             bool jumped = Jump();
@@ -60,8 +59,6 @@ public class PlayerJumpingAction : MonoBehaviour {
                 return false;
             }
         }
-
-        _player.IsGrounded = false;
 
         // runアニメーションを止めて、jumpアニメーションを実行
         _animator.SetBool("isRunning", false);
