@@ -21,7 +21,7 @@ public class PlayerJumpingAction : MonoBehaviour {
         _animator = gameObject.GetComponent<Animator>();
     }
 
-    void Update() {
+    void FixedUpdate() {
         if (_player.IsFrozen) {
             return;
         }
@@ -64,7 +64,7 @@ public class PlayerJumpingAction : MonoBehaviour {
         _animator.SetTrigger("jump");
 
         // AddForceにて上方向へ力を加える
-        _player.velocity.y += _jumpPower * Time.fixedDeltaTime;
+        _player.velocity.y += _jumpPower * Time.deltaTime;
 
         return true;
     }
@@ -74,6 +74,6 @@ public class PlayerJumpingAction : MonoBehaviour {
             return;
         }
         float ratio = Mathf.SmoothStep(1f, 0f, _timeHeld / TIME_FOR_FULL_JUMP);
-        _player.velocity.y += (_jumpPower * ratio * -0.75f) * Time.fixedDeltaTime;
+        _player.velocity.y += (_jumpPower * ratio * -0.75f) * Time.deltaTime;
     }
 }

@@ -9,7 +9,7 @@ public class PlayerClingAction : MonoBehaviour {
     const int CLING_RECAST_MSEC = 250;
 
     Animator _animator;
-    Rigidbody2D _rigidbody2D;
+    PhysicsObject _physicsObject;
     int _collidDirection; // none=0, left=-1, right=1
     float _leftRecastMsec;
 
@@ -36,11 +36,11 @@ public class PlayerClingAction : MonoBehaviour {
 
     void Start() {
         _animator = GetComponent<Animator>();
-        _rigidbody2D = GetComponent<Rigidbody2D>();
+        _physicsObject = GetComponent<PhysicsObject>();
     }
 
     void Update() {
-        MovePlayer();
+        ClingAction();
     }
 
     void OnCollisionStay2D(Collision2D collision) {
@@ -83,7 +83,7 @@ public class PlayerClingAction : MonoBehaviour {
         }
     }
 
-    void MovePlayer() {
+    void ClingAction() {
         if (!IsCling) {
             _leftRecastMsec -= Time.deltaTime * 1000;
             if (_leftRecastMsec > 0) {
@@ -103,9 +103,10 @@ public class PlayerClingAction : MonoBehaviour {
 
     void ChangeRigibodyType() {
         if (IsCling) {
-            _rigidbody2D.bodyType = RigidbodyType2D.Static;
+            _physicsObject.frozen = true;
+            _physicsObject.velocity = Vector2.zero;
         } else {
-            _rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
+            _physicsObject.frozen = false;
         }
     }
 }

@@ -84,10 +84,6 @@ public class Player : PhysicsObject {
         }
     }
 
-    protected override void ComputeVelocity() {
-        MovePlayer();
-    }
-
     // すべての動きを止める
     public void Stop() {
         _lastWaitingAt = Time.time;
@@ -123,23 +119,19 @@ public class Player : PhysicsObject {
         _isFrozen = (GameManager.Instance.GameState == GameState.Pause);
     }
 
-    // Update is called once per frame
-    // void Update() {
-    //     if (IsFrozen) {
-    //         return;
-    //     }
+    protected override void ComputeVelocity() {
+        if (IsFrozen) {
+            return;
+        }
 
-    //     ActionPlayer();
-    //     MovePlayer();
+        MovePlayer();
+        ActionPlayer();
 
-    //     // if (IsFalldowned) {
-    //     //     PutBackPlayer();
-    //     //     Damage();
-    //     // }
-    // }
-
-    // void FixedUpdate() {
-    // }
+        // if (IsFalldowned) {
+        //     PutBackPlayer();
+        //     Damage();
+        // }
+    }
 
     void OnDestroy() {
         Dispose();

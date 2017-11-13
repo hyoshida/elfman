@@ -8,6 +8,7 @@ public class PhysicsObject : MonoBehaviour {
     public float gravityModifier = 1f;
     public float minGroundNomalY = 0.65f;
     public Vector2 velocity;
+    public bool frozen;
 
     protected Vector2 targetVelocity;
     protected bool grounded;
@@ -32,11 +33,19 @@ public class PhysicsObject : MonoBehaviour {
     }
 
     void Update() {
+        if (frozen) {
+            return;
+        }
+
         targetVelocity = Vector2.zero;
         ComputeVelocity();
     }
 
     void FixedUpdate() {
+        if (frozen) {
+            return;
+        }
+
         velocity += gravityModifier * Physics2D.gravity * Time.deltaTime;
         velocity.x = targetVelocity.x;
 
