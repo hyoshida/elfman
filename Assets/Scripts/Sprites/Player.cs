@@ -85,33 +85,15 @@ public class Player : PhysicsObject {
     }
 
     float jumpTakeOffSpeed = 7;
-    float maxSpeed = 8;
 
     protected override void ComputeVelocity() {
-        var movement = Vector2.zero;
-
-        movement.x = Input.GetAxis("Horizontal");
-
         if (Input.GetButtonDown("Jump") && IsGrounded) {
             velocity.y = jumpTakeOffSpeed;
         } else if (Input.GetButtonUp("Jump") && (velocity.y > 0)) {
             velocity.y = velocity.y * 0.5f;
         }
 
-        var fliped = FlipX ? (movement.x > 0.01f) : (movement.x < -0.01f);
-        if (fliped) {
-            FlipX = !FlipX;
-        }
-
-        // 移動速度が0.1より大きければ上昇
-        var isJumping = (velocity.y > 0.1f);
-        // 移動速度が-0.1より小さければ下降
-        var isFalling = (velocity.y < -0.1f);
-        // アニメーションに反映する
-        _animator.SetBool("isJumping", isJumping);
-        _animator.SetBool("isFalling", isFalling);
-
-        targetVelocity = movement * maxSpeed;
+        MovePlayer();
     }
 
     // すべての動きを止める
@@ -213,12 +195,10 @@ public class Player : PhysicsObject {
     }
 
     void ActionPlayer() {
-        // 上下への移動速度を取得
-        float velY = _rigidbody2D.velocity.y;
         // 移動速度が0.1より大きければ上昇
-        bool isJumping = (velY > 0.1f);
+        var isJumping = (velocity.y > 0.1f);
         // 移動速度が-0.1より小さければ下降
-        bool isFalling = (velY < -0.1f);
+        var isFalling = (velocity.y < -0.1f);
         // アニメーションに反映する
         _animator.SetBool("isJumping", isJumping);
         _animator.SetBool("isFalling", isFalling);
@@ -271,13 +251,11 @@ public class Player : PhysicsObject {
 
             _animator.SetBool("isRunning", true);
 
-            Vector2 scale = transform.localScale;
-            scale.x = Math.Abs(scale.x) * direction;
-            transform.localScale = scale;
+            FlipX = (direction == -1);
 
             float speed = isDashing ? DASHING_SPEED : RUNNING_SPEED;
             float slopeFriction = calcSlopFriction();
-            _rigidbody2D.velocity = new Vector2(direction * speed * (1f - slopeFriction), _rigidbody2D.velocity.y);
+            targetVelocity = new Vector2(direction * speed * (1f - slopeFriction), 0);
         } else {
             Stop();
         }
