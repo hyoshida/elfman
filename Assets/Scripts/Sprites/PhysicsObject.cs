@@ -60,6 +60,7 @@ public class PhysicsObject : MonoBehaviour {
         var movementVertical = Vector2.up * deltaPosition.y;
         Move(movementVertical, vertical: true);
 
+        Debug.DrawRay(transform.position, groundNomal, Color.green);
         Debug.DrawRay(transform.position, movementAlongGround, Color.yellow);
         Debug.DrawRay(transform.position, movementHorizontal * 10, Color.red);
         Debug.DrawRay(transform.position, movementVertical * 10, Color.blue);
