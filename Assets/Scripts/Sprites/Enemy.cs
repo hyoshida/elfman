@@ -4,7 +4,7 @@ using System;
 
 [RequireComponent(typeof(Renderer))]
 [RequireComponent(typeof(Rigidbody2D))]
-public class Enemy : MonoBehaviour {
+public class Enemy : PhysicsObject {
     [SerializeField]
     int hp;
 
@@ -36,7 +36,15 @@ public class Enemy : MonoBehaviour {
         _rigibody2d.velocity = new Vector2(0, _rigibody2d.velocity.y);
     }
 
-    void Start() {
+    protected override void ComputeVelocity() {
+        if (frozen) {
+            return;
+        }
+
+        // todo...
+    }
+
+    void Awake() {
         _renderer = GetComponent<Renderer>();
         _defaultMaterial = _renderer.material;
 
