@@ -1,7 +1,5 @@
 ﻿using Assets.Scripts.Utils;
 using Assets.Scripts.Extensions;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Enemy))]
@@ -23,14 +21,12 @@ public class Slime : MonoBehaviour {
     AIState _prevAiState;
     Enemy _enemy;
     Animator _animator;
-    Rigidbody2D _rigidbody2D;
 
     // Use this for initialization
     void Start() {
         _aiState = AIState.Idle;
         _enemy = GetComponent<Enemy>();
         _animator = GetComponent<Animator>();
-        _rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -41,6 +37,8 @@ public class Slime : MonoBehaviour {
         UpdateForAI();
     }
 
+    // TODO: 下記の形式で書き直す
+    // var count = rigibody2d.Cast(movement, contactFilter2d, hitBuffer, distance + shellRadius);
     void OnCollisionEnter2D(Collision2D collision) {
         CollisionUtil util = new CollisionUtil(collision);
         if (!util.IsLayer("Ground")) {
@@ -76,9 +74,9 @@ public class Slime : MonoBehaviour {
             case AIState.Walking:
                 if (_animator.IsPlaying("slime-walk") || _animator.IsPlaying("Walking")) {
                     float direction = gameObject.transform.localScale.x;
-                    _rigidbody2D.velocity = new Vector2(SPEED * direction, _rigidbody2D.velocity.y);
+                    _enemy.movementX = SPEED * direction;
                 } else {
-                    _rigidbody2D.velocity = new Vector2(0, _rigidbody2D.velocity.y);
+                    _enemy.movementX = 0;
                     _prevAiState = AIState.Walking;
                     _aiState = AIState.Idle;
                 }

@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System;
 
 [RequireComponent(typeof(Renderer))]
 [RequireComponent(typeof(Rigidbody2D))]
@@ -17,7 +16,12 @@ public class Enemy : PhysicsObject {
     Renderer _renderer;
     Material _defaultMaterial;
     CameraShaker _cameraShaker;
-    Rigidbody2D _rigibody2d;
+
+    public float movementX {
+        set {
+            targetVelocity.x = value;
+        }
+    }
 
     public bool IsDead {
         get {
@@ -26,7 +30,7 @@ public class Enemy : PhysicsObject {
     }
 
     public void Stop() {
-        _rigibody2d.velocity = new Vector2(0, _rigibody2d.velocity.y);
+        targetVelocity = new Vector2(0, 0);
     }
 
     protected override void ComputeVelocity() {
@@ -43,8 +47,6 @@ public class Enemy : PhysicsObject {
 
         Camera camera = Camera.main;
         _cameraShaker = camera.GetComponent<CameraShaker>();
-
-        _rigibody2d = GetComponent<Rigidbody2D>();
 
         GameManager.Instance.gameState.watcher += OnChangeGameState;
     }
