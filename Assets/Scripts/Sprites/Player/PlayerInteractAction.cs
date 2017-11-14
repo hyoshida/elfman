@@ -15,7 +15,7 @@ public class PlayerInteractAction : MonoBehaviour {
     }
 
     void Update() {
-        if (_player.IsFrozen) {
+        if (_player.frozen) {
             return;
         }
 

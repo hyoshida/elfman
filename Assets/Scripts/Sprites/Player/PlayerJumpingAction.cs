@@ -22,7 +22,7 @@ public class PlayerJumpingAction : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        if (_player.IsFrozen) {
+        if (_player.frozen) {
             return;
         }
         Action();

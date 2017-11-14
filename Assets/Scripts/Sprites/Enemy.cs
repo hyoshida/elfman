@@ -18,17 +18,10 @@ public class Enemy : PhysicsObject {
     Material _defaultMaterial;
     CameraShaker _cameraShaker;
     Rigidbody2D _rigibody2d;
-    bool _isFrozen;
 
     public bool IsDead {
         get {
             return (hp <= 0);
-        }
-    }
-
-    public bool IsFrozen {
-        get {
-            return _isFrozen;
         }
     }
 
@@ -63,10 +56,10 @@ public class Enemy : PhysicsObject {
     void OnChangeGameState(GameState newState, GameState oldState) {
         if (newState == GameState.Pause) {
             Stop();
-            _isFrozen = true;
+            frozen = true;
             return;
         }
-        _isFrozen = false;
+        frozen = false;
     }
 
     void Damage(int amount = 1) {

@@ -35,7 +35,7 @@ public class Slime : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (_enemy.IsFrozen) {
+        if (_enemy.frozen) {
             return;
         }
         UpdateForAI();
