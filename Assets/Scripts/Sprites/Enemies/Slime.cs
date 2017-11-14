@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Utils;
-using Assets.Scripts.Extensions;
+﻿using Assets.Scripts.Extensions;
 using UnityEngine;
 
 [RequireComponent(typeof(Enemy))]
@@ -21,12 +20,23 @@ public class Slime : MonoBehaviour {
     AIState _prevAiState;
     Enemy _enemy;
     Animator _animator;
+    Rigidbody2D _rigibody2d;
+    ContactFilter2D _contactFilter2d;
+
+    float direction {
+        get { return gameObject.transform.localScale.x; }
+    }
 
     // Use this for initialization
     void Start() {
         _aiState = AIState.Idle;
         _enemy = GetComponent<Enemy>();
         _animator = GetComponent<Animator>();
+        _rigibody2d = GetComponent<Rigidbody2D>();
+
+        _contactFilter2d.useTriggers = false;
+        _contactFilter2d.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
+        _contactFilter2d.useLayerMask = true;
     }
 
     // Update is called once per frame
@@ -37,19 +47,36 @@ public class Slime : MonoBehaviour {
         UpdateForAI();
     }
 
-    // TODO: 下記の形式で書き直す
-    // var count = rigibody2d.Cast(movement, contactFilter2d, hitBuffer, distance + shellRadius);
-    void OnCollisionEnter2D(Collision2D collision) {
-        CollisionUtil util = new CollisionUtil(collision);
-        if (!util.IsLayer("Ground")) {
+    void FixedUpdate() {
+        if (_enemy.frozen) {
             return;
         }
 
-        HitType hitType = util.HitTest();
-        if ((hitType & HitType.WALL) != 0) {
+        var movement = new Vector2(SPEED * direction, 0);
+        var distance = movement.x;
+        if (Mathf.Abs(distance) <= 0.01f) {
+            return;
+        }
+
+        int groundLayer = LayerMask.NameToLayer("Ground");
+        var raycastHit2d = new RaycastHit2D[16];
+        var count = _rigibody2d.Cast(movement, _contactFilter2d, raycastHit2d, 0.1f);
+
+        for (var i = 0; i < count; i++) {
+            if (raycastHit2d[i].collider.gameObject.layer != groundLayer) {
+                continue;
+            }
+
+            var currentNomal = raycastHit2d[i].normal;
+            if (currentNomal.y != 0) {
+                // 直角な壁でないなら
+                continue;
+            }
+
             Vector2 scale = gameObject.transform.localScale;
             scale.x *= -1;
             gameObject.transform.localScale = scale;
+            return;
         }
     }
 
@@ -73,7 +100,6 @@ public class Slime : MonoBehaviour {
                 break;
             case AIState.Walking:
                 if (_animator.IsPlaying("slime-walk") || _animator.IsPlaying("Walking")) {
-                    float direction = gameObject.transform.localScale.x;
                     _enemy.movementX = SPEED * direction;
                 } else {
                     _enemy.movementX = 0;
