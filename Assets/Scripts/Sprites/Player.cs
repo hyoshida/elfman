@@ -28,6 +28,7 @@ public class Player : PhysicsObject {
     int _lastRunningDirection;
     float _lastRunningAt;
     float _lastWaitingAt;
+    bool _isFrozen;
     CameraShaker _cameraShaker;
     Vector3 _previousPosition;
 
@@ -50,6 +51,12 @@ public class Player : PhysicsObject {
     public bool IsGrounded {
         get {
             return grounded;
+        }
+    }
+
+    public bool IsFrozen {
+        get {
+            return _isFrozen;
         }
     }
 
@@ -109,11 +116,11 @@ public class Player : PhysicsObject {
         GameManager.Instance.gameState.watcher += OnChangeGameState;
 
         // ゲーム初期化時にポーズかどうかを確認しておく
-        frozen = (GameManager.Instance.GameState == GameState.Pause);
+        _isFrozen = (GameManager.Instance.GameState == GameState.Pause);
     }
 
     protected override void ComputeVelocity() {
-        if (frozen) {
+        if (IsFrozen) {
             return;
         }
 
@@ -133,10 +140,10 @@ public class Player : PhysicsObject {
     void OnChangeGameState(GameState newState, GameState oldState) {
         if (newState == GameState.Pause) {
             Stop();
-            frozen = true;
+            _isFrozen = true;
             return;
         }
-        frozen = false;
+        _isFrozen = false;
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
@@ -263,7 +270,7 @@ public class Player : PhysicsObject {
     }
 
     IEnumerator DashAttackingPhase() {
-        frozen = true;
+        _isFrozen = true;
 
         yield return new WaitForEndOfFrame();
         _animator.SetBool("isDashing", false);
@@ -282,7 +289,7 @@ public class Player : PhysicsObject {
             time += Time.deltaTime;
         }
 
-        frozen = false;
+        _isFrozen = false;
     }
 
     void PutBackPlayer() {

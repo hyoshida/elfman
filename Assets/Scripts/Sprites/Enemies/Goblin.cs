@@ -62,7 +62,7 @@ public class Goblin : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (_enemy.frozen) {
+        if (_enemy.IsFrozen) {
             return;
         }
         UpdateForAI();
