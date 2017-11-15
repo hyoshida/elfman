@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System;
 
 [RequireComponent(typeof(Renderer))]
 [RequireComponent(typeof(Rigidbody2D))]
-public class Enemy : MonoBehaviour {
+public class Enemy : PhysicsObject {
     [SerializeField]
     int hp;
 
@@ -17,8 +16,13 @@ public class Enemy : MonoBehaviour {
     Renderer _renderer;
     Material _defaultMaterial;
     CameraShaker _cameraShaker;
-    Rigidbody2D _rigibody2d;
     bool _isFrozen;
+
+    public float movementX {
+        set {
+            targetVelocity.x = value;
+        }
+    }
 
     public bool IsDead {
         get {
@@ -33,17 +37,23 @@ public class Enemy : MonoBehaviour {
     }
 
     public void Stop() {
-        _rigibody2d.velocity = new Vector2(0, _rigibody2d.velocity.y);
+        targetVelocity = new Vector2(0, 0);
     }
 
-    void Start() {
+    protected override void ComputeVelocity() {
+        if (frozen) {
+            return;
+        }
+
+        // todo...
+    }
+
+    void Awake() {
         _renderer = GetComponent<Renderer>();
         _defaultMaterial = _renderer.material;
 
         Camera camera = Camera.main;
         _cameraShaker = camera.GetComponent<CameraShaker>();
-
-        _rigibody2d = GetComponent<Rigidbody2D>();
 
         GameManager.Instance.gameState.watcher += OnChangeGameState;
     }
