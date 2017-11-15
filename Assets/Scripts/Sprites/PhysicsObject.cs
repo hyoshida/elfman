@@ -21,6 +21,11 @@ public class PhysicsObject : MonoBehaviour {
     protected const float minMovementDistance = 0.001f;
     protected const float shellRadius = 0.01f;
 
+    public void SetLayer(int layer) {
+        gameObject.layer = layer;
+        contactFilter2d.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
+    }
+
     protected virtual void ComputeVelocity() {
     }
 

@@ -251,7 +251,7 @@ public class Player : PhysicsObject {
 
     IEnumerator DamageAndInvinciblePhase() {
         // レイヤーをInvincibleに変更
-        gameObject.layer = LayerMask.NameToLayer("Invincible");
+        SetLayer(LayerMask.NameToLayer("Invincible"));
 
         // 10回点滅
         for (int i = 0; i < 10; i++) {
@@ -266,7 +266,7 @@ public class Player : PhysicsObject {
         }
 
         // レイヤーをPlayerに戻す
-        gameObject.layer = LayerMask.NameToLayer("Player");
+        SetLayer(LayerMask.NameToLayer("Player"));
     }
 
     IEnumerator DashAttackingPhase() {
