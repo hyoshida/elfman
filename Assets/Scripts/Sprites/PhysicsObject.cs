@@ -58,8 +58,13 @@ public class PhysicsObject : MonoBehaviour {
 
         var deltaPosition = velocity * Time.deltaTime;
 
+        // オブジェクトが地面についていればスロープを考慮する
+        // 空中にいるときなどは地面の形状を考慮しない
+        var count = rigibody2d.Cast(Vector2.down, contactFilter2d, hitBuffer, shellRadius);
+        var currentGrounded = (count >= 1);
+
         var movementAlongGround = new Vector2(groundNomal.y, -groundNomal.x);
-        var movementHorizontal = movementAlongGround * deltaPosition.x;
+        var movementHorizontal = currentGrounded ? movementAlongGround * deltaPosition.x : new Vector2(deltaPosition.x, 0);
         Move(movementHorizontal);
 
         var movementVertical = Vector2.up * deltaPosition.y;
