@@ -60,10 +60,10 @@ public class PhysicsObject : MonoBehaviour {
 
         var movementAlongGround = new Vector2(groundNomal.y, -groundNomal.x);
         var movementHorizontal = movementAlongGround * deltaPosition.x;
-        Move(movementHorizontal, vertical: false);
+        Move(movementHorizontal);
 
         var movementVertical = Vector2.up * deltaPosition.y;
-        Move(movementVertical, vertical: true);
+        Move(movementVertical);
 
         Debug.DrawRay(transform.position, groundNomal, Color.green);
         Debug.DrawRay(transform.position, movementAlongGround, Color.yellow);
@@ -71,7 +71,7 @@ public class PhysicsObject : MonoBehaviour {
         Debug.DrawRay(transform.position, movementVertical * 10, Color.blue);
     }
 
-    void Move(Vector2 movement, bool vertical) {
+    void Move(Vector2 movement) {
         var distance = movement.magnitude;
         if (distance > minMovementDistance) {
             var count = rigibody2d.Cast(movement, contactFilter2d, hitBuffer, distance + shellRadius);
@@ -86,10 +86,8 @@ public class PhysicsObject : MonoBehaviour {
                 var currentNomal = hitBufferList[i].normal;
                 if (currentNomal.y > minGroundNomalY) {
                     grounded = true;
-                    if (vertical) {
-                        groundNomal = currentNomal;
-                        currentNomal.x = 0;
-                    }
+                    groundNomal = currentNomal;
+                    currentNomal.x = 0;
                 }
 
                 var projection = Vector2.Dot(velocity, currentNomal);
