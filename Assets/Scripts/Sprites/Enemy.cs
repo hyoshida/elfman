@@ -103,7 +103,8 @@ public class Enemy : PhysicsObject {
     }
 
     void PlayBloodParticle() {
-        Vector3 offset = Vector3.up * 1f;
+        var height = _renderer.bounds.size.y / transform.localScale.y;
+        Vector3 offset = Vector3.up * height * 0.5f;
         GameObject bloodParticle = (GameObject)Instantiate(_boodParticlePrefab, transform.position + offset, Quaternion.identity);
 
         const float timeToSucied = 1.5f;
