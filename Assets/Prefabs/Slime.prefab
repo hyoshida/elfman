@@ -113,6 +113,7 @@ MonoBehaviour:
   velocity: {x: 0, y: 0}
   frozen: 0
   hp: 3
+  power: 1
   _flashMaterial: {fileID: 2100000, guid: 0346e02091c67b148b17b49470c417a6, type: 2}
   _boodParticlePrefab: {fileID: 1954113266869064, guid: ffae04da3dba8bc4391afe43416e469d,
     type: 2}

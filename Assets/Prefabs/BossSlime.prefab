@@ -39,8 +39,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1746871884108018}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.54, y: 0.1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 10, y: -1.1, z: 0}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -123,9 +123,10 @@ MonoBehaviour:
   minGroundNomalY: 0.65
   velocity: {x: 0, y: 0}
   frozen: 0
-  hp: 3
+  hp: 30
+  power: 3
   _flashMaterial: {fileID: 2100000, guid: 0346e02091c67b148b17b49470c417a6, type: 2}
-  _boodParticlePrefab: {fileID: 1954113266869064, guid: ffae04da3dba8bc4391afe43416e469d,
+  _boodParticlePrefab: {fileID: 1335163241667908, guid: 5c348968e47968e48810bd3e74846331,
     type: 2}
 --- !u!212 &212797495270732030
 SpriteRenderer:

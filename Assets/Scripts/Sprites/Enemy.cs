@@ -5,7 +5,10 @@ using System.Collections;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Enemy : PhysicsObject {
     [SerializeField]
-    int hp;
+    public int hp;
+
+    [SerializeField]
+    public int power;
 
     [SerializeField]
     Material _flashMaterial;

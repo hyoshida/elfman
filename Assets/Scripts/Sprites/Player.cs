@@ -148,13 +148,20 @@ public class Player : PhysicsObject {
 
     void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.tag == "Enemy") {
-            Damage();
+            DamageFrom(collision.gameObject);
         }
     }
 
-    void Damage() {
-        _lifeGaugeImage.fillAmount -= 0.1f;
+    void DamageFrom(GameObject attacker) {
+        var enemy = attacker.GetComponent<Enemy>();
+        if (enemy == null) {
+            return;
+        }
+
+        _lifeGaugeImage.fillAmount -= enemy.power * 0.1f;
+
         ShakeCamera();
+
         StartCoroutine(DamageVibrate());
         StartCoroutine(DamageAndInvinciblePhase());
     }
