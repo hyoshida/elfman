@@ -20,8 +20,8 @@ TagManager:
   - Invincible
   - Player
   - Enemy
-  - Flying Enemy
-  - 
+  - FlyingEnemy
+  - PhysicsObject
   - 
   - 
   - 

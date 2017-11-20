@@ -21,18 +21,13 @@ public class PhysicsObject : MonoBehaviour {
     protected const float minMovementDistance = 0.001f;
     protected const float shellRadius = 0.01f;
 
-    public void SetLayer(int layer) {
-        gameObject.layer = layer;
-        contactFilter2d.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
-    }
-
     protected virtual void ComputeVelocity() {
     }
 
     void Start() {
         contactFilter2d.useTriggers = false;
-        contactFilter2d.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
         contactFilter2d.useLayerMask = true;
+        contactFilter2d.SetLayerMask(BuildLayerMask());
 
         rigibody2d = GetComponent<Rigidbody2D>();
     }
@@ -106,5 +101,10 @@ public class PhysicsObject : MonoBehaviour {
         }
 
         rigibody2d.position = rigibody2d.position + movement.normalized * distance;
+    }
+
+    LayerMask BuildLayerMask() {
+        var layer = LayerMask.NameToLayer("PhysicsObject");
+        return Physics2D.GetLayerCollisionMask(layer);
     }
 }
