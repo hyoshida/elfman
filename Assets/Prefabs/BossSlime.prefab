@@ -22,9 +22,9 @@ GameObject:
   - component: {fileID: 212797495270732030}
   - component: {fileID: 95324015156570868}
   - component: {fileID: 58912908868006998}
-  - component: {fileID: 114453234126127280}
   - component: {fileID: 50151918098592636}
   - component: {fileID: 114488896779577032}
+  - component: {fileID: 114004701157416080}
   m_Layer: 11
   m_Name: BossSlime
   m_TagString: Enemy
@@ -97,7 +97,7 @@ Animator:
   m_WarningMessage:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114453234126127280
+--- !u!114 &114004701157416080
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -105,7 +105,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1746871884108018}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6777068b4c5d2b64badd166d3a9788fd, type: 3}
+  m_Script: {fileID: 11500000, guid: 2ac9c33202900cc408f06afcf6413ea0, type: 3}
   m_Name:
   m_EditorClassIdentifier:
 --- !u!114 &114488896779577032
