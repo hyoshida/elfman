@@ -83,7 +83,9 @@ public class Enemy : PhysicsObject {
         // 点滅から戻っていないうちにダメージをうけたとき対策
         _renderer.material = _defaultMaterial;
 
-        OnDamage(amount);
+        if (OnDamage != null) {
+            OnDamage(amount);
+        }
 
         StartCoroutine(DamageAndInvinciblePhase());
         ShakeCamera();

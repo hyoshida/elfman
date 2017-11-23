@@ -3,7 +3,9 @@ using UnityEngine;
 
 [RequireComponent(typeof(Enemy))]
 public class Slime : MonoBehaviour {
-    enum AIState {
+    public readonly float GROUND_ANGLE_TOLERANCE = Mathf.Cos(30.0f * Mathf.Deg2Rad);
+
+    protected enum AIState {
         Idle,
         Wait,
         Waiting,
@@ -13,22 +15,22 @@ public class Slime : MonoBehaviour {
         Attacking,
     }
 
-    public const int SPEED = -6;
-    public readonly float GROUND_ANGLE_TOLERANCE = Mathf.Cos(30.0f * Mathf.Deg2Rad);
+    [SerializeField]
+    int speed = 6;
 
-    AIState _aiState;
-    AIState _prevAiState;
-    Enemy _enemy;
-    Animator _animator;
-    Rigidbody2D _rigibody2d;
-    ContactFilter2D _contactFilter2d;
+    protected AIState _aiState;
+    protected AIState _prevAiState;
+    protected Enemy _enemy;
+    protected Animator _animator;
+    protected Rigidbody2D _rigibody2d;
+    protected ContactFilter2D _contactFilter2d;
 
     float direction {
         get { return gameObject.transform.localScale.x; }
     }
 
     // Use this for initialization
-    void Start() {
+    protected void Start() {
         _aiState = AIState.Idle;
         _enemy = GetComponent<Enemy>();
         _animator = GetComponent<Animator>();
@@ -40,19 +42,19 @@ public class Slime : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
+    protected void Update() {
         if (_enemy.IsFrozen) {
             return;
         }
         UpdateForAI();
     }
 
-    void FixedUpdate() {
+    protected void FixedUpdate() {
         if (_enemy.frozen) {
             return;
         }
 
-        var movement = new Vector2(SPEED * direction, 0);
+        var movement = new Vector2(-speed * direction, 0);
         var distance = movement.x;
         if (Mathf.Abs(distance) <= 0.01f) {
             return;
@@ -80,7 +82,7 @@ public class Slime : MonoBehaviour {
         }
     }
 
-    void UpdateForAI() {
+    protected void UpdateForAI() {
         switch (_aiState) {
             case AIState.Idle:
                 _aiState = (_prevAiState == AIState.Waiting) ? AIState.Walk : AIState.Wait;
@@ -100,7 +102,7 @@ public class Slime : MonoBehaviour {
                 break;
             case AIState.Walking:
                 if (_animator.IsPlaying("slime-walk") || _animator.IsPlaying("Walking")) {
-                    _enemy.movementX = SPEED * direction;
+                    _enemy.movementX = -speed * direction;
                 } else {
                     _enemy.movementX = 0;
                     _prevAiState = AIState.Walking;
