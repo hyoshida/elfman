@@ -16,12 +16,17 @@ public class BossSlime : MonoBehaviour {
     public const int SPEED = -3;
     public readonly float GROUND_ANGLE_TOLERANCE = Mathf.Cos(30.0f * Mathf.Deg2Rad);
 
+    [SerializeField]
+    public int maxDivisionHp;
+
     AIState _aiState;
     AIState _prevAiState;
     Enemy _enemy;
     Animator _animator;
     Rigidbody2D _rigibody2d;
     ContactFilter2D _contactFilter2d;
+    Renderer _renderer;
+    int _divisionHp;
 
     float direction {
         get { return gameObject.transform.localScale.x; }
@@ -31,12 +36,16 @@ public class BossSlime : MonoBehaviour {
     void Start() {
         _aiState = AIState.Idle;
         _enemy = GetComponent<Enemy>();
+        _enemy.OnDamage += OnDamage;
         _animator = GetComponent<Animator>();
         _rigibody2d = GetComponent<Rigidbody2D>();
+        _renderer = GetComponent<Renderer>();
 
         _contactFilter2d.useTriggers = false;
         _contactFilter2d.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
         _contactFilter2d.useLayerMask = true;
+
+        _divisionHp = maxDivisionHp;
     }
 
     // Update is called once per frame
@@ -108,5 +117,25 @@ public class BossSlime : MonoBehaviour {
                 }
                 break;
         }
+    }
+
+    void OnDamage(int amount) {
+        if (_enemy.IsDead) {
+            return;
+        }
+
+        _divisionHp -= amount;
+        if (_divisionHp <= 0) {
+            _divisionHp = maxDivisionHp;
+            Divide();
+        }
+    }
+
+    void Divide() {
+        Debug.Log("Divide");
+        var height = _renderer.bounds.size.y / transform.localScale.y;
+        transform.localScale *= 0.75f;
+        transform.position += (Vector3.up * height * 0.5f);
+        Instantiate(gameObject);
     }
 }

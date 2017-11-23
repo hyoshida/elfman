@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 [RequireComponent(typeof(Renderer))]
 [RequireComponent(typeof(Rigidbody2D))]
 public class Enemy : PhysicsObject {
+    public Action<int> OnDamage;
+
     [SerializeField]
     public int hp;
 
@@ -76,9 +79,19 @@ public class Enemy : PhysicsObject {
 
     void Damage(int amount = 1) {
         hp -= amount;
+
+        // 点滅から戻っていないうちにダメージをうけたとき対策
+        _renderer.material = _defaultMaterial;
+
+        OnDamage(amount);
+
         StartCoroutine(DamageAndInvinciblePhase());
         ShakeCamera();
         PlayBloodParticle();
+
+        if (IsDead) {
+            Destroy(gameObject);
+        }
     }
 
     IEnumerator DamageAndInvinciblePhase() {
@@ -120,10 +133,6 @@ public class Enemy : PhysicsObject {
         if (collider.tag == "Sword") {
             PlayerSword sowrd = collider.gameObject.GetComponent<PlayerSword>();
             Damage(sowrd.Strength);
-        }
-
-        if (IsDead) {
-            Destroy(gameObject);
         }
     }
 }
