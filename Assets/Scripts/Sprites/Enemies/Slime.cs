@@ -75,7 +75,7 @@ public class Slime : MonoBehaviour {
                 continue;
             }
 
-            Vector2 scale = gameObject.transform.localScale;
+            var scale = gameObject.transform.localScale;
             scale.x *= -1;
             gameObject.transform.localScale = scale;
             return;

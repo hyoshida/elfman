@@ -78,7 +78,7 @@ public class Player : PhysicsObject {
         }
 
         set {
-            Vector2 scale = transform.localScale;
+            var scale = transform.localScale;
             scale.x = Math.Abs(scale.x) * (value ? -1 : 1);
             transform.localScale = scale;
         }
