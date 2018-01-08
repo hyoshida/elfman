@@ -23,10 +23,11 @@ public class Enemy : PhysicsObject {
     Material _defaultMaterial;
     CameraShaker _cameraShaker;
     bool _isFrozen;
+    float _movementX;
 
     public float movementX {
         set {
-            targetVelocity.x = value;
+            _movementX = value;
         }
     }
 
@@ -50,8 +51,7 @@ public class Enemy : PhysicsObject {
         if (frozen) {
             return;
         }
-
-        // todo...
+        targetVelocity.x = _movementX;
     }
 
     void Awake() {
