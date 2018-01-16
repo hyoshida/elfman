@@ -82,7 +82,7 @@ public class Slime : MonoBehaviour {
         }
     }
 
-    protected void UpdateForAI() {
+    virtual protected void UpdateForAI() {
         switch (_aiState) {
             case AIState.Idle:
                 _aiState = (_prevAiState == AIState.Waiting) ? AIState.Walk : AIState.Wait;
