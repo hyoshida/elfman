@@ -152,7 +152,7 @@ public class Player : PhysicsObject {
         }
     }
 
-    void DamageFrom(GameObject attacker) {
+    public void DamageFrom(GameObject attacker) {
         var enemy = attacker.GetComponent<Enemy>();
         if (enemy == null) {
             return;

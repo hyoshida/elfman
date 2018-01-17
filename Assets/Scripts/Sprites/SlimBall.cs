@@ -1,12 +1,19 @@
-﻿using UnityEngine;
+﻿using Stage;
+using UnityEngine;
 
 public class SlimBall : MonoBehaviour {
     public const int SPEED = 10;
 
     GameObject _parent;
+    Player _player;
 
     public void Initialize(GameObject parent) {
         _parent = parent;
+
+        var scene = Camera.main.GetComponent<Scene>();
+        var playerGameObject = scene.Player;
+        _player = playerGameObject.GetComponent<Player>();
+
         Lanch();
     }
 
@@ -24,5 +31,12 @@ public class SlimBall : MonoBehaviour {
 
         // 5秒後に消滅
         Destroy(gameObject, 5);
+    }
+
+    void OnTriggerEnter2D(Collider2D collider) {
+        if (collider.tag == "Player") {
+            Destroy(gameObject);
+            _player.DamageFrom(_parent);
+        }
     }
 }
