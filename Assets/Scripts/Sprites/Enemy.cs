@@ -16,6 +16,12 @@ public class Enemy : PhysicsObject {
     [SerializeField]
     GameObject _boodParticlePrefab;
 
+    [SerializeField]
+    GameObject _zennyPrefab;
+
+    [SerializeField]
+    int _zennyAmount;
+
     Renderer _renderer;
     Material _defaultMaterial;
     CameraShaker _cameraShaker;
@@ -37,6 +43,10 @@ public class Enemy : PhysicsObject {
         get {
             return _isFrozen;
         }
+    }
+
+    float Height {
+        get { return _renderer.bounds.size.y / transform.localScale.y; }
     }
 
     public void Stop() {
@@ -103,12 +113,20 @@ public class Enemy : PhysicsObject {
     }
 
     void PlayBloodParticle() {
-        var height = _renderer.bounds.size.y / transform.localScale.y;
-        Vector3 offset = Vector3.up * height * 0.5f;
+        Vector3 offset = Vector3.up * Height * 0.5f;
         GameObject bloodParticle = (GameObject)Instantiate(_boodParticlePrefab, transform.position + offset, Quaternion.identity);
 
         const float timeToSucied = 1.5f;
         Destroy(bloodParticle, timeToSucied);
+    }
+
+    void Die() {
+        Vector3 offset = Vector3.up * Height * 0.5f;
+        for (var i = 0; i < _zennyAmount; i++) {
+            Instantiate(_zennyPrefab, transform.position + offset, Quaternion.identity);
+        }
+
+        Destroy(gameObject);
     }
 
     void OnTriggerEnter2D(Collider2D collider) {
@@ -123,7 +141,7 @@ public class Enemy : PhysicsObject {
         }
 
         if (IsDead) {
-            Destroy(gameObject);
+            Die();
         }
     }
 }
