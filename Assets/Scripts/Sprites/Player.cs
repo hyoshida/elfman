@@ -19,11 +19,15 @@ public class Player : PhysicsObject {
     [SerializeField]
     GameObject _lifeGauge;
 
+    [SerializeField]
+    GameObject _zennyLabel;
+
     Animator _animator;
     Rigidbody2D _rigidbody2D;
     Camera _camera;
     SpriteRenderer _renderer;
     Image _lifeGaugeImage;
+    Text _zennyLabelText;
     GhostSprites _ghostSprites;
     int _lastRunningDirection;
     float _lastRunningAt;
@@ -35,6 +39,15 @@ public class Player : PhysicsObject {
     public float HpRatio {
         get {
             return _lifeGaugeImage.fillAmount;
+        }
+    }
+
+    public int Zenny {
+        set {
+            _zennyLabelText.text = value.ToString();
+        }
+        get {
+            return int.Parse(_zennyLabelText.text);
         }
     }
 
@@ -84,6 +97,11 @@ public class Player : PhysicsObject {
         }
     }
 
+    // お金をひろう
+    public void TakeZenny(int amount) {
+        Zenny += amount;
+    }
+
     // すべての動きを止める
     public void Stop() {
         _lastWaitingAt = Time.time;
@@ -111,6 +129,7 @@ public class Player : PhysicsObject {
         _cameraShaker = _camera.GetComponent<CameraShaker>();
         _renderer = GetComponent<SpriteRenderer>();
         _lifeGaugeImage = _lifeGauge.GetComponent<Image>();
+        _zennyLabelText = _zennyLabel.GetComponent<Text>();
         _ghostSprites = GetComponent<GhostSprites>();
 
         GameManager.Instance.gameState.watcher += OnChangeGameState;

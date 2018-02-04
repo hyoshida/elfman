@@ -7,6 +7,7 @@ TagManager:
   - Bullet
   - Enemy
   - Sword
+  - Item
   layers:
   - Default
   - TransparentFX
