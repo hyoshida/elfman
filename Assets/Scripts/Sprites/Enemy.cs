@@ -123,7 +123,15 @@ public class Enemy : PhysicsObject {
     void Die() {
         Vector3 offset = Vector3.up * Height * 0.5f;
         for (var i = 0; i < _zennyAmount; i++) {
-            Instantiate(_zennyPrefab, transform.position + offset, Quaternion.identity);
+            var gameObject = Instantiate(_zennyPrefab, transform.position + offset, Quaternion.identity);
+            var rigidbody2d = gameObject.GetComponent<Rigidbody2D>();
+
+            float angle = Random.Range(0f, Mathf.PI * 2);
+            var x = Mathf.Sin(angle);
+            var y = Mathf.Cos(angle);
+            var forward = new Vector2(x, y);
+
+            rigidbody2d.AddForce(forward * 200f);
         }
 
         Destroy(gameObject);

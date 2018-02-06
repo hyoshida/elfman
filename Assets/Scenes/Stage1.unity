@@ -49041,6 +49041,11 @@ Prefab:
       propertyPath: _zennyLabel
       value: 
       objectReference: {fileID: 282699956}
+    - target: {fileID: 50264252326112900, guid: 03827e6f8e226ab4fb37aba6f5e8e8f3,
+        type: 2}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: 921f60abd4a3a014f90e634569f50373, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 03827e6f8e226ab4fb37aba6f5e8e8f3, type: 2}
   m_IsPrefabParent: 0
