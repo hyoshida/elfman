@@ -128,10 +128,10 @@ public class Enemy : PhysicsObject {
 
             float angle = Random.Range(0f, Mathf.PI * 2);
             var x = Mathf.Sin(angle);
-            var y = Mathf.Cos(angle);
+            var y = Mathf.Abs(Mathf.Cos(angle));
             var forward = new Vector2(x, y);
 
-            rigidbody2d.AddForce(forward * 200f);
+            rigidbody2d.AddForce(forward * 10f * Random.Range(0f, 15f));
         }
 
         Destroy(gameObject);

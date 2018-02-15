@@ -2,7 +2,7 @@
 using UnityEngine;
 
 public class Zenny : MonoBehaviour {
-    public const float FOLLOWING_SPEED = 50f;
+    public const float FOLLOWING_SPEED = 100f;
 
     [SerializeField]
     int _amount;
