@@ -31,6 +31,7 @@ public class Player : PhysicsObject {
     bool _isFrozen;
     CameraShaker _cameraShaker;
     Vector3 _previousPosition;
+    private bool _damageEffecting;
 
     public float HpRatio {
         get {
@@ -162,6 +163,10 @@ public class Player : PhysicsObject {
 
         ShakeCamera();
 
+        if (_damageEffecting) {
+            return;
+        }
+
         StartCoroutine(DamageVibrate());
         StartCoroutine(DamageAndInvinciblePhase());
     }
@@ -257,6 +262,8 @@ public class Player : PhysicsObject {
     }
 
     IEnumerator DamageAndInvinciblePhase() {
+        _damageEffecting = true;
+
         // レイヤーをInvincibleに変更
         gameObject.layer = LayerMask.NameToLayer("Invincible");
 
@@ -274,6 +281,8 @@ public class Player : PhysicsObject {
 
         // レイヤーをPlayerに戻す
         gameObject.layer = LayerMask.NameToLayer("Player");
+
+        _damageEffecting = false;
     }
 
     IEnumerator DashAttackingPhase() {

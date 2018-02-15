@@ -18,6 +18,9 @@ sealed public class CameraShaker : MonoBehaviour {
 
     // 以前の座標
     private Vector3? m_previousPosition = null;
+
+    // いま振動しているかどうか
+    private bool m_shaked;
     #endregion
 
     #region event
@@ -51,7 +54,13 @@ sealed public class CameraShaker : MonoBehaviour {
     /// <param name="vibrato">振動数</param>
     /// <param name="randomness">振動のランダム性 0.0f ≦ randomness ≦ 180.0f</param>
     /// <param name="isStopped">カメラが停止しているか？ 他にカメラを移動させるスクリプトがアタッチされている場合falseにしてください</param>
-    public void Shake(float duration = 1.0f, Vector3? strength = null, int vibrato = 10, float randomness = 90.0f, bool isStopped = false) {
+    /// <param name="force">すでにカメラが振動していても追加で振動させるか？</param>
+    public void Shake(float duration = 1.0f, Vector3? strength = null, int vibrato = 10, float randomness = 90.0f, bool isStopped = false, bool force = false) {
+        if (m_shaked && !force) {
+            return;
+        }
+        m_shaked = true;
+
         m_previousPosition = m_shakeTweeners.Count == 0 ? null : m_previousPosition;
         m_previousPosition = isStopped ? m_previousPosition ?? (Vector3?)transform.position : null;
 
@@ -77,6 +86,7 @@ sealed public class CameraShaker : MonoBehaviour {
                         break;
                     }
                 }
+                m_shaked = false;
             })
         );
     }
